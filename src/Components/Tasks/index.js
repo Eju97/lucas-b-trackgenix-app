@@ -1,10 +1,10 @@
-import styles from './tasks.module.css';
 import { useEffect, useState } from 'react';
+import FormTask from './FormTask';
 
 function Tasks() {
   const [tasks, setTask] = useState([]);
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}tasks`)
+    fetch(`${process.env.REACT_APP_API_URL}/tasks`)
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
@@ -12,25 +12,14 @@ function Tasks() {
       });
   }, []);
 
+  const deleteTask = (id) => {
+    setTask([...tasks.filter((newListItem) => newListItem._id !== id)]);
+  };
+
   return (
-    <section className={styles.container}>
-      <h2>Tasks</h2>
-      <table>
-        <tr>
-          <th>Tasks</th>
-          <th>Description</th>
-        </tr>
-        <div>
-          {tasks.map((task) => {
-            return (
-              <tr key={task._id}>
-                <td>{task.description}</td>
-              </tr>
-            );
-          })}
-        </div>
-      </table>
-    </section>
+    <div>
+      <FormTask list={tasks} setTask={setTask} deleteTask={deleteTask} />
+    </div>
   );
 }
 
