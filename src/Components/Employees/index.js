@@ -1,24 +1,30 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
+import ListEmployees from './listEmployees';
 
 function Employees() {
-  const [employees, saveEmployees] = useState([]);
+  const [listEmployes, saveEmployees] = useState([]);
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/users`)
+    fetch(`http://localhost:4000/employees`)
       .then((response) => response.json())
       .then((response) => {
-        saveEmployees(response);
+        saveEmployees(response.data);
       });
   }, []);
 
+  const deleteItem = (_id) => {
+    saveEmployees([...listEmployes.filter((employee) => employee._id !== _id)]);
+  };
   return (
     <section className={styles.container}>
       <h2>Employees</h2>
       <div>
-        {employees.map((employee) => {
-          return <div key={employee.id}>{employee.name}</div>;
-        })}
+        <ListEmployees
+          listEmployes={listEmployes}
+          saveEmployees={saveEmployees}
+          deleteItem={deleteItem}
+        />
       </div>
     </section>
   );
