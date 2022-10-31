@@ -4,7 +4,7 @@ import Modal from './ModalDelete/modalDelete';
 
 function TimeSheets() {
   const [timesheets, saveTimesheet] = useState([]);
-  const [timesheetId, setTimesheetId] = useState([]);
+  const [timesheetId, setTimesheetId] = useState();
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/time-sheets`)
@@ -14,15 +14,19 @@ function TimeSheets() {
       });
   }, []);
 
-  const deleteTimesheet = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
+  const deleteTimesheet = async (id) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
       method: 'DELETE'
     });
-    saveTimesheet(timesheets.filter((timesheet) => timesheet._id !== id));
+    const data = await response.json();
+    if (!data.error) {
+      saveTimesheet([...timesheets.filter((timesheet) => timesheet._id !== id)]);
+    }
   };
 
   const handleDelete = () => {
     deleteTimesheet(timesheetId);
+    closeModal(false);
   };
 
   const closeModal = () => {
@@ -35,7 +39,7 @@ function TimeSheets() {
       {timesheets.length > 0 ? (
         <>
           <table>
-            <thead>
+            <thead className={styles.theadContainer}>
               <tr>
                 <th>Description</th>
                 <th>Date</th>
@@ -49,7 +53,7 @@ function TimeSheets() {
             </thead>
             {timesheets.map((timesheet) => {
               return (
-                <tbody key={timesheet._id}>
+                <tbody key={timesheet._id} className={styles.tbodyContainer}>
                   <tr>
                     <td>{timesheet.description}</td>
                     <td>{timesheet.date}</td>
@@ -59,6 +63,7 @@ function TimeSheets() {
                     <td>{timesheet.employee.name}</td>
                     <td>{timesheet.task.description}</td>
                     <button
+                      className={styles.deleteBtn}
                       onClick={() => {
                         setTimesheetId(timesheet._id);
                         setShowModal(true);
