@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import Modal from './ModalDelete/modalDelete';
+import DeleteConfirmationModal from './ModalDelete/modalDelete';
 
-function TimeSheets() {
+const TimeSheets = () => {
   const [timesheets, saveTimesheet] = useState([]);
   const [timesheetId, setTimesheetId] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -76,13 +76,17 @@ function TimeSheets() {
               );
             })}
           </table>
-          <Modal showModal={showModal} closeModal={closeModal} handleDelete={handleDelete} />
+          <DeleteConfirmationModal
+            showModal={showModal}
+            closeModal={closeModal}
+            handleDelete={handleDelete}
+          />
         </>
       ) : (
         <h3>There are no Timesheets</h3>
       )}
     </section>
   );
-}
+};
 
 export default TimeSheets;
