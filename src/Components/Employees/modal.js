@@ -1,11 +1,11 @@
-import styles from './modal.css';
+import styles from './modal.module.css';
 
 function Modal(props) {
   if (!props.show) {
     return null;
   }
-  const onCloseModal = () => {
-    props.onCloseModal();
+  const onComfirm = () => {
+    props.onComfirm();
     props.closeModal();
   };
   const closeModal = () => {
@@ -17,7 +17,7 @@ function Modal(props) {
       <div className={styles.modal}>
         <h3>Modal</h3>
         <button onClick={closeModal}>Close</button>
-        <button onClick={onCloseModal}>Confirm</button>
+        <button onClick={onComfirm}>Confirm</button>
       </div>
     </div>
   );

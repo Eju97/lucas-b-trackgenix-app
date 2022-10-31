@@ -31,5 +31,3 @@ const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelecterEmpl
 };
 
 export default ListEmployees;
-
-//showModal={showModal}

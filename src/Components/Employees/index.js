@@ -33,15 +33,8 @@ function Employees() {
 
   return (
     <section className={styles.container}>
-      <Modal show={showModal} closeModal={closeModal} onCloseModal={onComfirm} />
+      <Modal show={showModal} closeModal={closeModal} onComfirm={onComfirm} />
       <h2>Employees</h2>
-      <button
-        onClick={() => {
-          setShowModal(true);
-        }}
-      >
-        Delete
-      </button>
       <div>
         <ListEmployees
           listEmployes={listEmployes}
