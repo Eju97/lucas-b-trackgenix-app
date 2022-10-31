@@ -16,12 +16,13 @@ function Employees() {
       });
   }, []);
 
-  const deleteItem = (_id) => {
-    saveEmployees([...listEmployes.filter((employee) => employee._id !== _id)]);
-    // aca iria la request para eliminar?
-    fetch(`${process.env.REACT_APP_API_URL}/employees/${_id}`, {
+  const deleteItem = async (_id) => {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${_id}`, {
       method: 'DELETE'
     });
+    if (response.ok) {
+      saveEmployees([...listEmployes.filter((employee) => employee._id !== _id)]);
+    }
   };
 
   const closeModal = () => {

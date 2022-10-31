@@ -9,9 +9,7 @@ const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelecterEmpl
           <tr>
             <th id="id">ID</th>
             <th id="Name">Name</th>
-            <th id="UserName">UserName</th>
             <th id="Email">Email</th>
-            <th id="Phone">Phone</th>
           </tr>
         </thread>
         <tbody>

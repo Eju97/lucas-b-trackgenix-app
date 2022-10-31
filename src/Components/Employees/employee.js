@@ -5,9 +5,7 @@ const Employee = ({ employee, setShowModal, setSelecterEmployee }) => {
     <tr className="rows">
       <td> {employee._id} </td>
       <td> {employee.name} </td>
-      <td> {employee.userName} </td>
       <td> {employee.email} </td>
-      <td> {employee.phone} </td>
       <td>
         <button
           onClick={() => {
