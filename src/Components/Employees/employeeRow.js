@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Employee = ({ employee, setShowModal, setSelecterEmployee }) => {
+const EmployeeRow = ({ employee, setShowModal, setSelecterEmployee }) => {
   return (
     <tr className="rows">
       <td> {employee._id} </td>
@@ -20,4 +20,4 @@ const Employee = ({ employee, setShowModal, setSelecterEmployee }) => {
   );
 };
 
-export default Employee;
+export default EmployeeRow;

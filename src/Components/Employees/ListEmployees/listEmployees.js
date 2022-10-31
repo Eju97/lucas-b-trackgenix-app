@@ -1,5 +1,5 @@
 import React from 'react';
-import Employee from './employee';
+import EmployeeRow from '../employeeRow';
 
 const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelecterEmployee }) => {
   return (
@@ -14,7 +14,7 @@ const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelecterEmpl
         </thread>
         <tbody>
           {listEmployes.map((item) => (
-            <Employee
+            <EmployeeRow
               key={item._id}
               employee={item}
               deleteItem={deleteItem}

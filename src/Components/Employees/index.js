@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-import ListEmployees from './listEmployees';
-import Modal from './modal';
+import ListEmployees from './ListEmployees/listEmployees';
+import DeleteConfirmationModal from './Modal/modal';
 
-function Employees() {
+const Employees = () => {
   const [listEmployes, saveEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selecterEmployee, setSelecterEmployee] = useState(null);
+  const [selecterEmployee, setSelecterEmployee] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:4000/employees`)
+    fetch(`${process.env.REACT_APP_API_URL}/employees`)
       .then((response) => response.json())
       .then((response) => {
         saveEmployees(response.data);
@@ -28,13 +28,15 @@ function Employees() {
   const closeModal = () => {
     setShowModal(false);
   };
-  const onComfirm = () => {
+
+  const onConfirm = () => {
     deleteItem(selecterEmployee);
+    setShowModal(false);
   };
 
   return (
     <section className={styles.container}>
-      <Modal show={showModal} closeModal={closeModal} onComfirm={onComfirm} />
+      <DeleteConfirmationModal show={showModal} closeModal={closeModal} onConfirm={onConfirm} />
       <h2>Employees</h2>
       <div>
         <ListEmployees
@@ -47,6 +49,6 @@ function Employees() {
       </div>
     </section>
   );
-}
+};
 
 export default Employees;
