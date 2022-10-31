@@ -76,6 +76,7 @@ const TimeSheets = () => {
               );
             })}
           </table>
+          <a href="/time-sheets/form">Add</a>
           <DeleteConfirmationModal
             showModal={showModal}
             closeModal={closeModal}
