@@ -1,5 +1,5 @@
 import React from 'react';
-import EmployeeRow from '../employeeRow';
+import EmployeeRow from '../EmployeeRow';
 
 const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelecterEmployee }) => {
   return (
