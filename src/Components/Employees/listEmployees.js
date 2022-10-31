@@ -1,7 +1,7 @@
 import React from 'react';
 import Employee from './employee';
 
-const ListEmployees = ({ listEmployes, deleteItem }) => {
+const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelecterEmployee }) => {
   return (
     <div className="table-container">
       <table>
@@ -16,7 +16,13 @@ const ListEmployees = ({ listEmployes, deleteItem }) => {
         </thread>
         <tbody>
           {listEmployes.map((item) => (
-            <Employee key={item._id} employee={item} deleteItem={deleteItem} />
+            <Employee
+              key={item._id}
+              employee={item}
+              deleteItem={deleteItem}
+              setShowModal={setShowModal}
+              setSelecterEmployee={setSelecterEmployee}
+            />
           ))}
         </tbody>
       </table>
@@ -25,3 +31,5 @@ const ListEmployees = ({ listEmployes, deleteItem }) => {
 };
 
 export default ListEmployees;
+
+//showModal={showModal}

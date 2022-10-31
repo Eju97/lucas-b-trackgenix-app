@@ -1,0 +1,15 @@
+.container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: aqua;
+}
+.modal {
+  width: 400px;
+  height: 200px;
+  background-color: blue;
+  border-radius: 5px;
+}

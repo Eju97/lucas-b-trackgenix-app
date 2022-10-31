@@ -1,9 +1,6 @@
 import React from 'react';
 
-const Employee = ({ employee, deleteItem }) => {
-  const handleDelete = () => {
-    deleteItem(employee._id);
-  };
+const Employee = ({ employee, setShowModal, setSelecterEmployee }) => {
   return (
     <tr className="rows">
       <td> {employee._id} </td>
@@ -12,7 +9,14 @@ const Employee = ({ employee, deleteItem }) => {
       <td> {employee.email} </td>
       <td> {employee.phone} </td>
       <td>
-        <button onClick={() => handleDelete(employee._id)}>X</button>
+        <button
+          onClick={() => {
+            setSelecterEmployee(employee._id);
+            setShowModal(true);
+          }}
+        >
+          X
+        </button>
       </td>
     </tr>
   );
