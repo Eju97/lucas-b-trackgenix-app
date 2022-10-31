@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from './ModalProject/Modal.js';
 
-function Projects() {
+const Projects = () => {
   const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [project, setProject] = useState();
@@ -30,6 +30,7 @@ function Projects() {
 
   const onConfirmModal = () => {
     deleteTask(project);
+    setShowModal(false);
   };
 
   return (
@@ -89,6 +90,6 @@ function Projects() {
       </table>
     </section>
   );
-}
+};
 
 export default Projects;
