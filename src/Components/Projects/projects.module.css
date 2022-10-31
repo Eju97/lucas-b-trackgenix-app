@@ -31,3 +31,7 @@ td {
 tbody tr:hover {
   background-color: #ea335567;
 }
+
+img {
+  cursor: pointer;
+}
