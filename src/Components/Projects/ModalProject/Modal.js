@@ -5,8 +5,8 @@ const Modal = (props) => {
     return null;
   }
 
-  const onCloseModal = () => {
-    props.onCloseModal();
+  const onConfirmModal = () => {
+    props.onConfirmModal();
     props.closeModal();
   };
 
@@ -17,7 +17,7 @@ const Modal = (props) => {
           X
         </button>
         <h3>Are you sure you want to delete the project?</h3>
-        <button onClick={onCloseModal}>Accept</button>
+        <button onClick={onConfirmModal}>Accept</button>
         <button onClick={props.closeModal}>Cancel</button>
       </div>
     </div>
