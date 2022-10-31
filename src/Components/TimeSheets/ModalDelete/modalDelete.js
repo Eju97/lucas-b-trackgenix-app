@@ -1,6 +1,6 @@
 import styles from './modalDelete.module.css';
 
-const TimesheetDeleter = (props) => {
+const DeleteConfirmationModal = (props) => {
   if (!props.showModal) {
     return null;
   }
@@ -21,4 +21,4 @@ const TimesheetDeleter = (props) => {
   );
 };
 
-export default TimesheetDeleter;
+export default DeleteConfirmationModal;
