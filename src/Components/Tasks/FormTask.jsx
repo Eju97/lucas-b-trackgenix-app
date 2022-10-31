@@ -1,7 +1,7 @@
 import React from 'react';
 import ListTask from './listTask';
 
-const List = ({ list, deleteTask }) => {
+const List = ({ list, handleDelete }) => {
   return (
     <div>
       <table>
@@ -11,9 +11,13 @@ const List = ({ list, deleteTask }) => {
           </tr>
         </thead>
         <tbody>
-          {list.map((task) => {
-            return <ListTask key={task._id} listTask={task} deleteTask={deleteTask} />;
-          })}
+          {list === undefined || list.length === 0 ? (
+            <td>No task yet!</td>
+          ) : (
+            list.map((task) => {
+              return <ListTask key={task._id} listTask={task} handleDelete={handleDelete} />;
+            })
+          )}
         </tbody>
       </table>
     </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import FormTask from './FormTask';
+import styles from './tasks.module.css';
 
 function Tasks() {
   const [tasks, setTask] = useState([]);
@@ -12,13 +13,16 @@ function Tasks() {
       });
   }, []);
 
-  const deleteTask = (id) => {
+  const handleDelete = (id) => {
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+      method: 'DELETE'
+    });
     setTask([...tasks.filter((newListItem) => newListItem._id !== id)]);
   };
 
   return (
-    <div>
-      <FormTask list={tasks} setTask={setTask} deleteTask={deleteTask} />
+    <div className={styles.container}>
+      <FormTask list={tasks} setTask={setTask} handleDelete={handleDelete} />
     </div>
   );
 }

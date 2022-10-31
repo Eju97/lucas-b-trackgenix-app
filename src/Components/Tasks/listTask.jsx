@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from './Modal/modalIndex';
 
-const ListTask = ({ listTask, deleteTask }) => {
-  const handleDelete = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
-    });
-    deleteTask(listTask._id);
+const ListTask = ({ listTask, handleDelete }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const openModal = () => {
+    setShowModal(true);
   };
 
   return (
     <tr>
       <td>{listTask.description}</td>
       <td>
-        <button type="submit">Edit</button>
-      </td>
-      <td>
-        <button onClick={() => handleDelete(listTask._id)}>Delete</button>
+        <button onClick={openModal}>X</button>
+        <Modal
+          listTask={listTask}
+          closeModal={closeModal}
+          showModal={showModal}
+          handleDelete={handleDelete}
+        />
       </td>
     </tr>
   );
 };
+
 export default ListTask;
