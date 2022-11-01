@@ -12,8 +12,8 @@ function SuperAdminsForm() {
   });
 
   useEffect(() => {
-    if (window.location.href.includes('id')) {
-      fetch(`http://localhost:3000/super-admins/${id}`)
+    if (id) {
+      fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setInputData({
@@ -27,15 +27,15 @@ function SuperAdminsForm() {
   }, []);
 
   const FormMode = () => {
-    if (window.location.href.includes('id')) {
-      EditSuperAdmin();
+    if (id) {
+      onEditSuperAdmin();
     } else {
-      AddSuperAdmin();
+      onCreateSuperAdmin();
     }
   };
 
-  const AddSuperAdmin = () => {
-    fetch(`http://localhost:3000/super-admins/`, {
+  const onCreateSuperAdmin = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,8 +52,8 @@ function SuperAdminsForm() {
       });
   };
 
-  const EditSuperAdmin = () => {
-    fetch(`http://localhost:3000/super-admins/${id}`, {
+  const onEditSuperAdmin = () => {
+    fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
