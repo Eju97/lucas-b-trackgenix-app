@@ -59,9 +59,17 @@ const TimeSheets = () => {
                     <td>{timesheet.date}</td>
                     <td>{timesheet.hours}</td>
                     <td>{timesheet.tasks}</td>
-                    <td>{timesheet.project.name}</td>
-                    <td>{timesheet.employee.name}</td>
-                    <td>{timesheet.task.description}</td>
+                    <td>
+                      {timesheet.project === null ? 'There is no project' : timesheet.project.name}
+                    </td>
+                    <td>
+                      {timesheet.employee === null
+                        ? 'There is no employee'
+                        : timesheet.employee.name}
+                    </td>
+                    <td>
+                      {timesheet.task === null ? 'There is no task' : timesheet.task.description}
+                    </td>
                     <button
                       className={styles.deleteBtn}
                       onClick={() => {
@@ -84,7 +92,7 @@ const TimeSheets = () => {
           />
         </>
       ) : (
-        <h3>There are no Timesheets</h3>
+        <h3>Loading Timesheets...</h3>
       )}
     </section>
   );
