@@ -32,37 +32,33 @@ const Form = () => {
     return dateIso;
   };
 
-  const formatEmployees = (employees) => {
-    const employeeList = [];
-    employees.map((item) => {
-      delete item.employee.name;
-      delete item.employee.email;
-      delete item.employee.lastName;
-      delete item.employee.password;
-      delete item.employee.phone;
-      let employeeId = item.employee._id;
-      item.employee = employeeId;
-      employeeList.push(item);
-    });
-    return employeeList;
-  };
-
   useEffect(async () => {
-    const url = window.location.href;
-    if (url.includes('id')) {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (id) {
       try {
-        const id = url.substring(url.lastIndexOf('=') + 1);
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
           method: 'GET'
         });
         const project = await response.json();
+        const employeeList = [];
+        project.data.employees.map((item) => {
+          delete item.employee.name;
+          delete item.employee.email;
+          delete item.employee.lastName;
+          delete item.employee.password;
+          delete item.employee.phone;
+          let employeeId = item.employee._id;
+          item.employee = employeeId;
+          employeeList.push(item);
+        });
         setProjectAdd({
           name: project.data.name,
           clientName: project.data.clientName,
           description: project.data.description,
           startDate: project.data.startDate,
           endDate: project.data.endDate,
-          employees: formatEmployees(project.data.employees)
+          employees: employeeList
         });
         setForm(false);
       } catch (error) {
@@ -90,7 +86,6 @@ const Form = () => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
           method: 'POST',
           headers: {
-            Accept: 'application/json',
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(projectAdd)
@@ -111,7 +106,6 @@ const Form = () => {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
           method: 'PUT',
           headers: {
-            Accept: 'application/json',
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(projectAdd)
@@ -282,42 +276,22 @@ const Form = () => {
         </div>
         <div>
           {projectAdd.employees.map((employee) => {
-            if (form) {
-              const currentEmployee = employeeList.find((item) => item._id === employee.employee);
-              if (currentEmployee) {
-                return (
-                  <tr key={employee.employee}>
-                    <td>{currentEmployee.name}</td>
-                    <td>{employee.role}</td>
-                    <td>{employee.rate}</td>
-                    <button
-                      onClick={() => {
-                        deleteEmployees(employee.employee);
-                      }}
-                    >
-                      X
-                    </button>
-                  </tr>
-                );
-              }
-            } else {
-              const currentEmployee = employeeList.find((item) => item._id === employee.employee);
-              if (currentEmployee) {
-                return (
-                  <tr key={employee.employee}>
-                    <td>{currentEmployee.name}</td>
-                    <td>{employee.role}</td>
-                    <td>{employee.rate}</td>
-                    <button
-                      onClick={() => {
-                        deleteEmployees(employee.employee);
-                      }}
-                    >
-                      X
-                    </button>
-                  </tr>
-                );
-              }
+            const currentEmployee = employeeList.find((item) => item._id === employee.employee);
+            if (currentEmployee) {
+              return (
+                <tr key={employee.employee}>
+                  <td>{currentEmployee.name}</td>
+                  <td>{employee.role}</td>
+                  <td>{employee.rate}</td>
+                  <button
+                    onClick={() => {
+                      deleteEmployees(employee.employee);
+                    }}
+                  >
+                    X
+                  </button>
+                </tr>
+              );
             }
           })}
         </div>
