@@ -3,9 +3,15 @@ import React from 'react';
 const EmployeeRow = ({ employee, setShowModal, setSelectedEmployee }) => {
   return (
     <tr className="rows">
-      <td> {employee._id} </td>
-      <td> {employee.name} </td>
-      <td> {employee.email} </td>
+      <td onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}>
+        {employee._id}
+      </td>
+      <td onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}>
+        {employee.name}
+      </td>
+      <td onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}>
+        {employee.email}
+      </td>
       <td>
         <button
           onClick={() => {
@@ -15,6 +21,7 @@ const EmployeeRow = ({ employee, setShowModal, setSelectedEmployee }) => {
         >
           X
         </button>
+        <a href={`employees/form?id=${employee._id}`}>Edit</a>
       </td>
     </tr>
   );
