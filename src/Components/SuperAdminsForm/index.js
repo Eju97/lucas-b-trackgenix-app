@@ -1,14 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './super-admins-form.module.css';
 
-function SuperAdminsForm(props) {
+function SuperAdminsForm() {
+  const url = window.location.href;
+  const id = url.substring(url.lastIndexOf('=') + 1);
   const [inputData, setInputData] = useState({
-    name: null,
-    last_name: null,
-    email: null,
-    password: null
+    name: '',
+    last_name: '',
+    email: '',
+    password: ''
   });
-  const addSuperAdmin = () => {
+
+  useEffect(() => {
+    if (window.location.href.includes('id')) {
+      fetch(`http://localhost:3000/super-admins/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setInputData({
+            name: data.data.name,
+            last_name: data.data.last_name,
+            email: data.data.email,
+            password: data.data.password
+          });
+        });
+    }
+  }, []);
+
+  const FormMode = () => {
+    if (window.location.href.includes('id')) {
+      EditSuperAdmin();
+    } else {
+      AddSuperAdmin();
+    }
+  };
+
+  const AddSuperAdmin = () => {
     fetch(`http://localhost:3000/super-admins/`, {
       method: 'POST',
       headers: {
@@ -19,20 +45,31 @@ function SuperAdminsForm(props) {
       .then((response) => response.json())
       .then((response) => {
         alert(response.message);
+        window.location.assign('/super-admins');
       })
-      .then(() => {
-        fetch(`http://localhost:3000/super-admins/`)
-          .then((response) => response.json())
-          .then(() => {
-            props.setPrueba(!props.prueba);
-          });
+      .catch((error) => {
+        alert(error);
       });
   };
 
-  console.log(props);
-  /* const onClick = () => {
-    window.location.assign('/super-admins')
-  } */
+  const EditSuperAdmin = () => {
+    fetch(`http://localhost:3000/super-admins/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(inputData)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        alert(response.message);
+        window.location.assign('/super-admins');
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   return (
     <section className={styles.container}>
       <table>
@@ -52,6 +89,7 @@ function SuperAdminsForm(props) {
                   setInputData({ ...inputData, name: e.target.value });
                 }}
                 type="text"
+                value={inputData.name}
               />
             </td>
             <td>
@@ -60,6 +98,7 @@ function SuperAdminsForm(props) {
                   setInputData({ ...inputData, last_name: e.target.value });
                 }}
                 type="text"
+                value={inputData.last_name}
               />
             </td>
             <td>
@@ -68,6 +107,7 @@ function SuperAdminsForm(props) {
                   setInputData({ ...inputData, email: e.target.value });
                 }}
                 type="text"
+                value={inputData.email}
               />
             </td>
             <td>
@@ -75,14 +115,15 @@ function SuperAdminsForm(props) {
                 onChange={(e) => {
                   setInputData({ ...inputData, password: e.target.value });
                 }}
-                type="text"
+                type="password"
+                value={inputData.password}
               />
             </td>
           </tr>
         </tbody>
       </table>
       <div>
-        <button onClick={addSuperAdmin} type="submit">
+        <button onClick={FormMode} type="submit">
           Create
         </button>
       </div>

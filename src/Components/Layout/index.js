@@ -11,19 +11,17 @@ import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
 import { React, useState } from 'react';
 
-function Layout(props) {
-  console.log(props.history);
-  const [prueba, setPrueba] = useState(true);
+function Layout() {
   let currentScreen = <Home />;
   switch (window.location.pathname) {
     case '/admins':
       currentScreen = <Admins />;
       break;
     case '/super-admins':
-      currentScreen = <SuperAdmins prueba={prueba} setPrueba={setPrueba} />;
+      currentScreen = <SuperAdmins />;
       break;
     case '/super-admins/form':
-      currentScreen = <SuperAdminsForm prueba={prueba} setPrueba={setPrueba} />;
+      currentScreen = <SuperAdminsForm />;
       break;
     case '/employees':
       currentScreen = <Employees />;

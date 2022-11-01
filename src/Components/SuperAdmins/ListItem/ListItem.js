@@ -7,7 +7,13 @@ const ListItem = ({ listItem }) => {
       <td>{listItem.password}</td>
       <td>
         <button>X</button>
-        <button>E</button>
+        <button
+          onClick={() => {
+            window.location.assign(`/super-admins/form?id=${listItem._id}`);
+          }}
+        >
+          E
+        </button>
       </td>
     </tr>
   );
