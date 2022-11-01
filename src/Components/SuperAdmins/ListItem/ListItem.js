@@ -7,6 +7,7 @@ const ListItem = ({ listItem }) => {
       <td>{listItem.password}</td>
       <td>
         <button>X</button>
+        <button>E</button>
       </td>
     </tr>
   );

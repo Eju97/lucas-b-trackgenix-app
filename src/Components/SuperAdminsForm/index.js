@@ -28,13 +28,17 @@ function SuperAdminsForm(props) {
           });
       });
   };
+
   console.log(props);
+  /* const onClick = () => {
+    window.location.assign('/super-admins')
+  } */
   return (
     <section className={styles.container}>
       <table>
         <thead>
           <tr>
-            <th id="Name">Name</th>
+            <th>Name</th>
             <th>Last Name</th>
             <th>Email</th>
             <th>Password</th>
