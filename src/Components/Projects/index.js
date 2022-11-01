@@ -53,12 +53,22 @@ const Projects = () => {
           {projects.map((project) => {
             return (
               <tr key={project._id}>
-                <td>{project.name}</td>
-                <td>{project.clientName}</td>
-                <td>{project.description}</td>
-                <td>{project.startDate}</td>
-                <td>{project.endDate}</td>
-                <div>
+                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
+                  {project.name}
+                </td>
+                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
+                  {project.clientName}
+                </td>
+                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
+                  {project.description}
+                </td>
+                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
+                  {project.startDate}
+                </td>
+                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
+                  {project.endDate}
+                </td>
+                <div onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
                   <tr>
                     <th>Name</th>
                     <th>Rate</th>
