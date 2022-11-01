@@ -52,23 +52,16 @@ const Projects = () => {
         <tbody>
           {projects.map((project) => {
             return (
-              <tr key={project._id}>
-                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
-                  {project.name}
-                </td>
-                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
-                  {project.clientName}
-                </td>
-                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
-                  {project.description}
-                </td>
-                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
-                  {project.startDate}
-                </td>
-                <td onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
-                  {project.endDate}
-                </td>
-                <div onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}>
+              <tr
+                key={project._id}
+                onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}
+              >
+                <td>{project.name}</td>
+                <td>{project.clientName}</td>
+                <td>{project.description}</td>
+                <td>{project.startDate}</td>
+                <td>{project.endDate}</td>
+                <div>
                   <tr>
                     <th>Name</th>
                     <th>Rate</th>
@@ -87,7 +80,8 @@ const Projects = () => {
                 <td>
                   <img
                     src="../assets/images/remove.svg"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setShowModal(true);
                       setProject(project._id);
                     }}

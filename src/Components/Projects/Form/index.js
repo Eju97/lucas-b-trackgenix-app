@@ -17,14 +17,18 @@ const Form = () => {
     employee: ''
   });
   const [errorMessage, setErrorMessage] = useState();
-  const [form, setForm] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/employees`)
-      .then((response) => response.json())
-      .then((response) => {
-        setEmployeeList(response.data);
-      });
+    try {
+      fetch(`${process.env.REACT_APP_API_URL}/employees`)
+        .then((response) => response.json())
+        .then((response) => {
+          setEmployeeList(response.data);
+        });
+    } catch (error) {
+      console.alert(error);
+    }
   }, []);
 
   const formatDate = (date) => {
@@ -41,16 +45,12 @@ const Form = () => {
           method: 'GET'
         });
         const project = await response.json();
-        const employeeList = [];
-        project.data.employees.map((item) => {
-          delete item.employee.name;
-          delete item.employee.email;
-          delete item.employee.lastName;
-          delete item.employee.password;
-          delete item.employee.phone;
-          let employeeId = item.employee._id;
-          item.employee = employeeId;
-          employeeList.push(item);
+        const employeeList = project.data.employees.map((item) => {
+          return {
+            employee: item.employee._id,
+            rate: item.rate,
+            role: item.role
+          }; // Not sure if the properties are correct but you can do something like this 😂
         });
         setProjectAdd({
           name: project.data.name,
@@ -60,18 +60,12 @@ const Form = () => {
           endDate: project.data.endDate,
           employees: employeeList
         });
-        setForm(false);
+        setIsEditing(true);
       } catch (error) {
-        console.log(error);
+        console.alert(error);
       }
-    } else {
-      return null;
     }
   }, []);
-
-  const onSubmit = (event) => {
-    event.preventDefault();
-  };
 
   const deleteEmployees = (id) => {
     setProjectAdd({
@@ -80,8 +74,8 @@ const Form = () => {
     });
   };
 
-  const formProjects = async (projectAdd) => {
-    if (form) {
+  const onSubmit = async () => {
+    if (!isEditing) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
           method: 'POST',
@@ -117,17 +111,15 @@ const Form = () => {
           setErrorMessage(data.message);
         }
       } catch (error) {
-        console.log(error.message);
+        console.alert(error.message);
       }
     }
   };
 
   return (
     <div className={styles.container}>
-      <div>
-        <h3>{errorMessage}</h3>
-      </div>
-      <form onSubmit={onSubmit}>
+      <div>{errorMessage && <h3>{errorMessage}</h3>}</div>
+      <form>
         <h2>Form</h2>
         <div className={styles.projectForm}>
           <div>
@@ -269,6 +261,7 @@ const Form = () => {
           </div>
           <div>
             <button
+              type="button"
               onClick={() => {
                 setProjectAdd({
                   ...projectAdd,
@@ -305,9 +298,9 @@ const Form = () => {
         </div>
         <div className={styles.save}>
           <button
-            type="submit"
+            type="button"
             onClick={() => {
-              formProjects(projectAdd);
+              onSubmit();
             }}
           >
             Save
