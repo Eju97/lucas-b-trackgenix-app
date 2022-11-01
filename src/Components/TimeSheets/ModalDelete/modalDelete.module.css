@@ -1,0 +1,57 @@
+.container{
+    position: absolute;;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modalContainer{
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+
+}
+.modalTitle{
+    font-size: 20px;
+    font-weight: bold;
+    justify-self: flex-start;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: space-evenly;
+}
+.cancelBtn{
+    margin-bottom: 20px;
+    width: 100px;
+    height: 50px;
+    background-color: rgb(240, 240, 240);
+    border-color: whitesmoke;
+    color: #000000;
+    border-radius: 10px;
+}
+.cancelBtn:hover{
+    background-color: rgb(119, 112, 112);
+    cursor: pointer;
+}
+
+.deleteBtn{
+    margin-bottom: 20px;
+    width: 100px;
+    height: 50px;
+    background-color: rgb(203, 34, 34);
+    border-color: whitesmoke;
+    color: #ffffff;
+    border-radius: 10px;
+}
+.deleteBtn:hover{
+    background-color: rgb(240, 93, 93);
+    cursor: pointer;;
+}
