@@ -1,0 +1,29 @@
+.modal {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: rgba(0,0,0,.40);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.isOpen {
+    display: flex;
+}
+
+.containerModal {
+    position: relative;
+    padding: 1rem;
+    background-color: white;
+    min-width: 320px;
+    min-height: 100px;
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+}

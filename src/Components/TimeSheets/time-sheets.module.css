@@ -1,6 +1,35 @@
 .container {
   flex: 1;
   display: flex;
+  flex-direction: column;;
   justify-content: center;
   align-items: center;
+}
+
+.theadContainer{
+  align-items: center;;
+}
+
+.tbodyContainer{
+  align-items: center;
+}
+
+.tbodyContainer.tr{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.deleteBtn{
+  background-color: red;
+  border-color: transparent;
+  color: white;
+  border-radius: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.deleteBtn:hover{
+  background-color: rgb(253, 93, 93);
+    border-color: transparent;
+  pointer-events: visible;
+  cursor: pointer;
 }
