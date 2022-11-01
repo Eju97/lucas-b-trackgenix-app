@@ -10,14 +10,14 @@ const Form = () => {
     endDate: '',
     employees: []
   });
-
   const [employeeList, setEmployeeList] = useState([]);
-
   const [employeeProject, setEmployeeProject] = useState({
     rate: null,
     role: '',
     employee: ''
   });
+  const [errorMessage, setErrorMessage] = useState();
+  const [form, setForm] = useState(true);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/employees`)
@@ -27,8 +27,53 @@ const Form = () => {
       });
   }, []);
 
+  const formatDate = (date) => {
+    const dateIso = date.substr(0, 10);
+    return dateIso;
+  };
+
+  const formatEmployees = (employees) => {
+    const employeeList = [];
+    employees.map((item) => {
+      delete item.employee.name;
+      delete item.employee.email;
+      delete item.employee.lastName;
+      delete item.employee.password;
+      delete item.employee.phone;
+      let employeeId = item.employee._id;
+      item.employee = employeeId;
+      employeeList.push(item);
+    });
+    return employeeList;
+  };
+
+  useEffect(async () => {
+    const url = window.location.href;
+    if (url.includes('id')) {
+      try {
+        const id = url.substring(url.lastIndexOf('=') + 1);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+          method: 'GET'
+        });
+        const project = await response.json();
+        setProjectAdd({
+          name: project.data.name,
+          clientName: project.data.clientName,
+          description: project.data.description,
+          startDate: project.data.startDate,
+          endDate: project.data.endDate,
+          employees: formatEmployees(project.data.employees)
+        });
+        setForm(false);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return null;
+    }
+  }, []);
+
   const onSubmit = (event) => {
-    console.log(projectAdd);
     event.preventDefault();
   };
 
@@ -39,22 +84,55 @@ const Form = () => {
     });
   };
 
-  const createProjects = async (projectAdd) => {
-    try {
-      await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(projectAdd)
-      });
-    } catch (error) {
-      console.log(error.message);
+  const formProjects = async (projectAdd) => {
+    if (form) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(projectAdd)
+        });
+        const data = await response.json();
+        if (!data.error) {
+          window.location.href = '/projects';
+        } else {
+          setErrorMessage(data.message);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    } else {
+      try {
+        const url = window.location.href;
+        const id = url.substring(url.lastIndexOf('=') + 1);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(projectAdd)
+        });
+        const data = await response.json();
+        if (!data.error) {
+          window.location.href = '/projects';
+        } else {
+          setErrorMessage(data.message);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
 
   return (
     <div className={styles.container}>
+      <div>
+        <h3>{errorMessage}</h3>
+      </div>
       <form onSubmit={onSubmit}>
         <h2>Form</h2>
         <div className={styles.projectForm}>
@@ -64,7 +142,7 @@ const Form = () => {
               className={styles.input}
               id="name"
               name="name"
-              required
+              value={projectAdd.name}
               onChange={(e) => {
                 setProjectAdd({
                   ...projectAdd,
@@ -77,7 +155,7 @@ const Form = () => {
               className={styles.input}
               id="clientName"
               name="clientName"
-              required
+              value={projectAdd.clientName}
               onChange={(e) => {
                 setProjectAdd({
                   ...projectAdd,
@@ -92,7 +170,7 @@ const Form = () => {
               className={styles.input}
               id="description"
               name="description"
-              required
+              value={projectAdd.description}
               onChange={(e) => {
                 setProjectAdd({
                   ...projectAdd,
@@ -108,10 +186,9 @@ const Form = () => {
               id="startDate"
               name="startDate"
               type="date"
-              required
+              value={formatDate(projectAdd.startDate)}
               onChange={(e) => {
                 let dateFormatted = new Date(e.target.value).toISOString();
-                console.log(dateFormatted);
                 setProjectAdd({
                   ...projectAdd,
                   startDate: dateFormatted
@@ -124,7 +201,7 @@ const Form = () => {
               id="endDate"
               name="endDate"
               type="date"
-              required
+              value={formatDate(projectAdd.endDate)}
               onChange={(e) => {
                 let dateFormatted = new Date(e.target.value).toISOString();
                 setProjectAdd({
@@ -142,6 +219,7 @@ const Form = () => {
             <select
               name="role"
               id="role"
+              required
               onChange={(e) => {
                 setEmployeeProject({
                   ...employeeProject,
@@ -170,7 +248,7 @@ const Form = () => {
                 });
               }}
             >
-              <option value="DEV 1">DEV</option>
+              <option value="DEV">DEV</option>
               <option value="TL">TL</option>
               <option value="PM">PM</option>
               <option value="QA">QA</option>
@@ -204,28 +282,50 @@ const Form = () => {
         </div>
         <div>
           {projectAdd.employees.map((employee) => {
-            const currentEmployee = employeeList.find((item) => item._id === employee.employee);
-            return (
-              <tr key={employee.employee}>
-                <td>{currentEmployee.name}</td>
-                <td>{employee.role}</td>
-                <td>{employee.rate}</td>
-                <button
-                  onClick={() => {
-                    deleteEmployees(employee.employee);
-                  }}
-                >
-                  X
-                </button>
-              </tr>
-            );
+            if (form) {
+              const currentEmployee = employeeList.find((item) => item._id === employee.employee);
+              if (currentEmployee) {
+                return (
+                  <tr key={employee.employee}>
+                    <td>{currentEmployee.name}</td>
+                    <td>{employee.role}</td>
+                    <td>{employee.rate}</td>
+                    <button
+                      onClick={() => {
+                        deleteEmployees(employee.employee);
+                      }}
+                    >
+                      X
+                    </button>
+                  </tr>
+                );
+              }
+            } else {
+              const currentEmployee = employeeList.find((item) => item._id === employee.employee);
+              if (currentEmployee) {
+                return (
+                  <tr key={employee.employee}>
+                    <td>{currentEmployee.name}</td>
+                    <td>{employee.role}</td>
+                    <td>{employee.rate}</td>
+                    <button
+                      onClick={() => {
+                        deleteEmployees(employee.employee);
+                      }}
+                    >
+                      X
+                    </button>
+                  </tr>
+                );
+              }
+            }
           })}
         </div>
         <div>
           <button
             type="submit"
             onClick={() => {
-              createProjects(projectAdd);
+              formProjects(projectAdd);
             }}
           >
             Save
