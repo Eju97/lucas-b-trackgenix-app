@@ -1,10 +1,6 @@
 import styles from './modalDelete.module.css';
 
-const DeleteConfirmationModal = ({ adminDelete, closeModal, showModal }) => {
-  const onCloseModal = () => {
-    adminDelete();
-    closeModal();
-  };
+const DeleteConfirmationModal = ({ onDeleteAdmin, onCloseModal, showModal }) => {
   if (!showModal) {
     return null;
   }
@@ -13,10 +9,10 @@ const DeleteConfirmationModal = ({ adminDelete, closeModal, showModal }) => {
       <div className={styles.modalContent}>
         <h2 className={styles.modalTitle}>Do you really want to delete this Admin?</h2>
         <div className={styles.buttonContainer}>
-          <button onClick={closeModal} className={styles.close}>
+          <button onClick={onCloseModal} className={styles.close}>
             Cancel
           </button>
-          <button onClick={onCloseModal} className={styles.close}>
+          <button onClick={onDeleteAdmin} className={styles.close}>
             Delete
           </button>
         </div>

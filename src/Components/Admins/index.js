@@ -21,13 +21,15 @@ const Admins = () => {
     const data = await response.json();
     if (!data.error) {
       setListAdmin([...listAdmins.filter((admin) => admin._id !== _id)]);
+      setShowModal(false);
     }
   };
-  const closeModal = () => {
+  const onCloseModal = () => {
     setShowModal(false);
   };
-  const adminDelete = () => {
+  const onDeleteAdmin = () => {
     deleteAdmin(adminId);
+    setShowModal(false);
   };
   return (
     <section className={styles.container}>
@@ -47,23 +49,25 @@ const Admins = () => {
                 <td>{admin.name}</td>
                 <td>{admin.lastName}</td>
                 <td>{admin.email}</td>
-                <button
-                  onClick={() => {
-                    setAdminId(admin._id);
-                    setShowModal(true);
-                  }}
-                >
-                  x
-                </button>
+                <td>
+                  <button
+                    onClick={() => {
+                      setAdminId(admin._id);
+                      setShowModal(true);
+                    }}
+                  >
+                    x
+                  </button>
+                </td>
               </tr>
             </tbody>
           );
         })}
       </table>
       <DeleteConfirmationModal
-        adminDelete={adminDelete}
+        onDeleteAdmin={onDeleteAdmin}
         showModal={showModal}
-        closeModal={closeModal}
+        onCloseModal={onCloseModal}
       />
     </section>
   );
