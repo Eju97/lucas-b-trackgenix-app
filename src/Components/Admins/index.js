@@ -3,14 +3,14 @@ import styles from './admins.module.css';
 import DeleteConfirmationModal from './ModalDelete';
 
 const Admins = () => {
-  const [admins, listAdmin] = useState([]);
+  const [listAdmins, setListAdmin] = useState([]);
   const [adminId, setAdminId] = useState();
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
       .then((response) => response.json())
       .then((response) => {
-        listAdmin(response.data);
+        setListAdmin(response.data);
         console.log(response.data);
       });
   }, []);
@@ -20,7 +20,7 @@ const Admins = () => {
     });
     const data = await response.json();
     if (!data.error) {
-      listAdmin([...admins.filter((admin) => admin._id !== _id)]);
+      setListAdmin([...listAdmins.filter((admin) => admin._id !== _id)]);
     }
   };
   const closeModal = () => {
@@ -40,7 +40,7 @@ const Admins = () => {
             <th>Email</th>
           </tr>
         </thead>
-        {admins.map((admin) => {
+        {listAdmins.map((admin) => {
           return (
             <tbody key={admin._id}>
               <tr>
