@@ -36,4 +36,38 @@
     border: 1px solid black;
     border-radius: 5px;
     background-color: #2e30b9;
+    cursor: pointer;
+}
+
+.save {
+    display: flex;
+    justify-content: center;
+}
+
+.save button {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding: 1%;
+    width: 15%;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #EA3354;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.employees {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.employeeList button {
+    border: none;
+    font-weight: 700;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
 }

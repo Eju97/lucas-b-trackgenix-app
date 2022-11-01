@@ -274,28 +274,30 @@ const Form = () => {
             </button>
           </div>
         </div>
-        <div>
+        <div className={styles.employees}>
           {projectAdd.employees.map((employee) => {
             const currentEmployee = employeeList.find((item) => item._id === employee.employee);
             if (currentEmployee) {
               return (
-                <tr key={employee.employee}>
+                <tr key={employee.employee} className={styles.employeeList}>
                   <td>{currentEmployee.name}</td>
                   <td>{employee.role}</td>
                   <td>{employee.rate}</td>
-                  <button
-                    onClick={() => {
-                      deleteEmployees(employee.employee);
-                    }}
-                  >
-                    X
-                  </button>
+                  <td>
+                    <button
+                      onClick={() => {
+                        deleteEmployees(employee.employee);
+                      }}
+                    >
+                      X
+                    </button>
+                  </td>
                 </tr>
               );
             }
           })}
         </div>
-        <div>
+        <div className={styles.save}>
           <button
             type="submit"
             onClick={() => {
