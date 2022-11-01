@@ -9,7 +9,7 @@ import Employees from '../Employees/index';
 import Projects from '../Projects';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
-import { React, useState } from 'react';
+import React from 'react';
 
 function Layout() {
   let currentScreen = <Home />;
