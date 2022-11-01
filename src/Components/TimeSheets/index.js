@@ -14,6 +14,9 @@ const TimeSheets = () => {
       });
   }, []);
 
+  const dateFormatted = (date) => {
+    return new Date(date).toISOString().split('T')[0];
+  };
   const deleteTimesheet = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
       method: 'DELETE'
@@ -44,7 +47,6 @@ const TimeSheets = () => {
                 <th>Description</th>
                 <th>Date</th>
                 <th>Hours</th>
-                <th>Tasks</th>
                 <th>Project</th>
                 <th>Employee</th>
                 <th>Task</th>
@@ -55,30 +57,61 @@ const TimeSheets = () => {
               return (
                 <tbody key={timesheet._id} className={styles.tbodyContainer}>
                   <tr>
-                    <td>{timesheet.description}</td>
-                    <td>{timesheet.date}</td>
-                    <td>{timesheet.hours}</td>
-                    <td>{timesheet.tasks}</td>
-                    <td>
+                    <td
+                      onClick={() =>
+                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
+                      }
+                    >
+                      {timesheet.description}
+                    </td>
+                    <td
+                      onClick={() =>
+                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
+                      }
+                    >
+                      {dateFormatted(timesheet.date)}
+                    </td>
+                    <td
+                      onClick={() =>
+                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
+                      }
+                    >
+                      {timesheet.hours}
+                    </td>
+                    <td
+                      onClick={() =>
+                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
+                      }
+                    >
                       {timesheet.project === null ? 'There is no project' : timesheet.project.name}
                     </td>
-                    <td>
+                    <td
+                      onClick={() =>
+                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
+                      }
+                    >
                       {timesheet.employee === null
                         ? 'There is no employee'
                         : timesheet.employee.name}
                     </td>
-                    <td>
+                    <td
+                      onClick={() =>
+                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
+                      }
+                    >
                       {timesheet.task === null ? 'There is no task' : timesheet.task.description}
                     </td>
-                    <button
-                      className={styles.deleteBtn}
-                      onClick={() => {
-                        setTimesheetId(timesheet._id);
-                        setShowModal(true);
-                      }}
-                    >
-                      X
-                    </button>
+                    <td>
+                      <button
+                        className={styles.deleteBtn}
+                        onClick={() => {
+                          setTimesheetId(timesheet._id);
+                          setShowModal(true);
+                        }}
+                      >
+                        X
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               );
