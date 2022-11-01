@@ -88,6 +88,7 @@ const Projects = () => {
           })}
         </tbody>
       </table>
+      <a href="/projects/form">Add Project</a>
     </section>
   );
 };
