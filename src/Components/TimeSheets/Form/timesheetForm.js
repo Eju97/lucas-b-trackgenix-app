@@ -196,7 +196,8 @@ const Form = () => {
             </select>
           </div>
         </div>
-        <button type="submit">Send</button>
+        <button type="submit">Add</button>
+        <a href="'/time-sheets'">Go Back</a>
       </form>
     </div>
   );
