@@ -12,7 +12,6 @@ function Tasks() {
     fetch(`${process.env.REACT_APP_API_URL}/tasks`)
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         setTask(response.data);
       });
   }, []);

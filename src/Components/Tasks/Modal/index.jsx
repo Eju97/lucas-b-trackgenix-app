@@ -4,7 +4,6 @@ function Modal(props) {
   if (!props.showModal) {
     return null;
   }
-  console.log(props.listTask);
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
