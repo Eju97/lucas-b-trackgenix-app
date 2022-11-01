@@ -4,15 +4,15 @@ import ListEmployees from './ListEmployees/listEmployees';
 import DeleteConfirmationModal from './Modal/modal';
 
 const Employees = () => {
-  const [listEmployes, saveEmployees] = useState([]);
+  const [listEmployes, setListEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selecterEmployee, setSelecterEmployee] = useState();
+  const [selectedEmployee, setSelectedEmployee] = useState();
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/employees`)
       .then((response) => response.json())
       .then((response) => {
-        saveEmployees(response.data);
+        setListEmployees(response.data);
       });
   }, []);
 
@@ -21,7 +21,7 @@ const Employees = () => {
       method: 'DELETE'
     });
     if (response.ok) {
-      saveEmployees([...listEmployes.filter((employee) => employee._id !== _id)]);
+      setListEmployees([...listEmployes.filter((employee) => employee._id !== _id)]);
     }
   };
 
@@ -30,7 +30,7 @@ const Employees = () => {
   };
 
   const onConfirm = () => {
-    deleteItem(selecterEmployee);
+    deleteItem(selectedEmployee);
     setShowModal(false);
   };
 
@@ -41,10 +41,10 @@ const Employees = () => {
       <div>
         <ListEmployees
           listEmployes={listEmployes}
-          saveEmployees={saveEmployees}
+          setListEmployees={setListEmployees}
           deleteItem={deleteItem}
           setShowModal={setShowModal}
-          setSelecterEmployee={setSelecterEmployee}
+          setSelectedEmployee={setSelectedEmployee}
         />
       </div>
     </section>

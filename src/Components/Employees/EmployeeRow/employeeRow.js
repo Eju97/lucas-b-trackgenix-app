@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EmployeeRow = ({ employee, setShowModal, setSelecterEmployee }) => {
+const EmployeeRow = ({ employee, setShowModal, setSelectedEmployee }) => {
   return (
     <tr className="rows">
       <td> {employee._id} </td>
@@ -9,7 +9,7 @@ const EmployeeRow = ({ employee, setShowModal, setSelecterEmployee }) => {
       <td>
         <button
           onClick={() => {
-            setSelecterEmployee(employee._id);
+            setSelectedEmployee(employee._id);
             setShowModal(true);
           }}
         >

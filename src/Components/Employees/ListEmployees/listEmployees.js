@@ -1,7 +1,7 @@
 import React from 'react';
 import EmployeeRow from '../EmployeeRow/employeeRow';
 
-const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelecterEmployee }) => {
+const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelectedEmployee }) => {
   return (
     <div className="table-container">
       <table>
@@ -19,7 +19,7 @@ const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelecterEmpl
               employee={item}
               deleteItem={deleteItem}
               setShowModal={setShowModal}
-              setSelecterEmployee={setSelecterEmployee}
+              setSelectedEmployee={setSelectedEmployee}
             />
           ))}
         </tbody>
