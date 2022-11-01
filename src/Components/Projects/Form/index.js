@@ -221,6 +221,9 @@ const Form = () => {
                 });
               }}
             >
+              <option value="" disabled hidden selected>
+                Select Employee
+              </option>
               {employeeList.map((employee) => {
                 return (
                   <option key={employee._id} value={employee._id}>
@@ -242,6 +245,9 @@ const Form = () => {
                 });
               }}
             >
+              <option value="" disabled hidden selected>
+                Select Rol
+              </option>
               <option value="DEV">DEV</option>
               <option value="TL">TL</option>
               <option value="PM">PM</option>
