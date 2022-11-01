@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './form.module.css';
 
 const Form = () => {
+  const [projects, setProjects] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [timesheetAdded, setTimesheetAdded] = useState({
     description: '',
     date: '',
@@ -10,7 +13,41 @@ const Form = () => {
     project: '',
     employee: ''
   });
-  console.log(timesheetAdded);
+  //  const tasksUrl = `process.env.REAC_APP_API_URL/tasks`;
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/projects`)
+      .then((res) => res.json())
+      .then((response) => {
+        setProjects(response.data);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/employees`)
+      .then((res) => res.json())
+      .then((response) => {
+        setEmployees(response.data);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/tasks`)
+      .then((res) => res.json())
+      .then((response) => {
+        setTasks(response.data);
+      });
+  }, []);
+  //console.log(projects);
+  //console.log(projects[0].employees[0].employee.name);
+  //useEffect(() => {
+  //  fetch(tasksUrl)
+  //    .then((res) => res.json())
+  //    .then((response) => {
+  //      setTasks(response.data);
+  //    });
+  //}, []);
+
   const onChange = (event) => {
     setTimesheetAdded({ ...timesheetAdded, [event.target.name]: event.target.value });
   };
@@ -35,6 +72,26 @@ const Form = () => {
     }
   };
 
+  //  const projectMap = projects.map((project) => {
+  //    project.employees.map((item) => {
+  //      if (item === project.employees) {
+  //        item.forEach((prop) => {
+  //          return prop;
+  //        });
+  //      }
+  //    });
+  //  });
+  //  console.log(projectMap);
+
+  //   const employeesMap = projectMap.map((employees) => {
+  // return employees;
+  //   });
+  //   console.log(employeesMap);
+
+  //   const otroMap = employeesMap.map((item) => {
+  // return item;
+  //   });
+  //   console.log(otroMap);
   return (
     <div>
       <form onSubmit={onSubmit} className={styles.container}>
@@ -72,33 +129,48 @@ const Form = () => {
           </div>
           <div>
             <label htmlFor="project">Project</label>
-            <input
-              name="project"
-              type="text"
-              required
-              value={timesheetAdded.project}
-              onChange={onChange}
-            ></input>
+            <select name="project" required value={timesheetAdded.project} onChange={onChange}>
+              <option value="" selected disabled hidden>
+                Select a project
+              </option>
+              {projects.map((project) => {
+                return (
+                  <option key={project._id} value={project._id}>
+                    {project.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <div>
             <label htmlFor="employee">Employee</label>
-            <input
-              name="employee"
-              type="select"
-              required
-              value={timesheetAdded.employee}
-              onChange={onChange}
-            />
+            <select name="employee" required value={timesheetAdded.employee} onChange={onChange}>
+              <option value="" selected disabled hidden>
+                Select an employee
+              </option>
+              {employees.map((employee) => {
+                return (
+                  <option key={employee._id} value={employee._id}>
+                    {employee.name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <div>
             <label htmlFor="task">Task</label>
-            <input
-              name="task"
-              type="text"
-              required
-              value={timesheetAdded.value}
-              onChange={onChange}
-            />
+            <select name="task" required value={timesheetAdded.task} onChange={onChange}>
+              <option value="" selected disabled hidden>
+                Select a task
+              </option>
+              {tasks.map((task) => {
+                return (
+                  <option placeholder="hello" key={task._id} value={task._id}>
+                    {task.description}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
         <button type="submit">Send</button>
