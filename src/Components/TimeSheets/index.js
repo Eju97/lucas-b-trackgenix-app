@@ -56,49 +56,21 @@ const TimeSheets = () => {
             {timesheets.map((timesheet) => {
               return (
                 <tbody key={timesheet._id} className={styles.tbodyContainer}>
-                  <tr>
-                    <td
-                      onClick={() =>
-                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
-                      }
-                    >
-                      {timesheet.description}
-                    </td>
-                    <td
-                      onClick={() =>
-                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
-                      }
-                    >
-                      {dateFormatted(timesheet.date)}
-                    </td>
-                    <td
-                      onClick={() =>
-                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
-                      }
-                    >
-                      {timesheet.hours}
-                    </td>
-                    <td
-                      onClick={() =>
-                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
-                      }
-                    >
+                  <tr
+                    onClick={() => (window.location.href = `/time-sheets/form?id=${timesheet._id}`)}
+                  >
+                    <td>{timesheet.description}</td>
+                    <td>{dateFormatted(timesheet.date)}</td>
+                    <td>{timesheet.hours}</td>
+                    <td>
                       {timesheet.project === null ? 'There is no project' : timesheet.project.name}
                     </td>
-                    <td
-                      onClick={() =>
-                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
-                      }
-                    >
+                    <td>
                       {timesheet.employee === null
                         ? 'There is no employee'
                         : timesheet.employee.name}
                     </td>
-                    <td
-                      onClick={() =>
-                        (window.location.href = `/time-sheets/form?id=${timesheet._id}`)
-                      }
-                    >
+                    <td>
                       {timesheet.task === null ? 'There is no task' : timesheet.task.description}
                     </td>
                     <td>
