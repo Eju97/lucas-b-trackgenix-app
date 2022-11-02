@@ -38,9 +38,6 @@ function Header() {
             <a href="/super-admins">super admins</a>
           </li>
           <li>
-            <a href="/super-admins/form">super admins form</a>
-          </li>
-          <li>
             <a href="/employees">employees</a>
           </li>
           <li>

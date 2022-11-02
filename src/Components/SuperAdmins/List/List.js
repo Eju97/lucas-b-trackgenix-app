@@ -20,6 +20,13 @@ const List = (props) => {
           ))}
         </tbody>
       </table>
+      <button
+        onClick={() => {
+          window.location.assign(`/super-admins/form`);
+        }}
+      >
+        Create
+      </button>
     </div>
   );
 };

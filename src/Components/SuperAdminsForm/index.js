@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styles from './super-admins-form.module.css';
 
 function SuperAdminsForm() {
-  const url = window.location.href;
-  const id = url.substring(url.lastIndexOf('=') + 1);
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const formMode = id ? 'edit' : 'create';
   const [inputData, setInputData] = useState({
     name: '',
     last_name: '',
@@ -12,7 +13,9 @@ function SuperAdminsForm() {
   });
 
   useEffect(() => {
+    console.log(id);
     if (id) {
+      console.log('hola');
       fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`)
         .then((response) => response.json())
         .then((data) => {
@@ -26,12 +29,12 @@ function SuperAdminsForm() {
     }
   }, []);
 
-  const FormMode = () => {
-    if (id) {
-      onEditSuperAdmin();
-    } else {
-      onCreateSuperAdmin();
+  const onSubmit = () => {
+    console.log(formMode);
+    if (formMode === 'edit') {
+      return onEditSuperAdmin();
     }
+    return onCreateSuperAdmin();
   };
 
   const onCreateSuperAdmin = () => {
@@ -72,59 +75,51 @@ function SuperAdminsForm() {
 
   return (
     <section className={styles.container}>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Password</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <input
-                onChange={(e) => {
-                  setInputData({ ...inputData, name: e.target.value });
-                }}
-                type="text"
-                value={inputData.name}
-              />
-            </td>
-            <td>
-              <input
-                onChange={(e) => {
-                  setInputData({ ...inputData, last_name: e.target.value });
-                }}
-                type="text"
-                value={inputData.last_name}
-              />
-            </td>
-            <td>
-              <input
-                onChange={(e) => {
-                  setInputData({ ...inputData, email: e.target.value });
-                }}
-                type="text"
-                value={inputData.email}
-              />
-            </td>
-            <td>
-              <input
-                onChange={(e) => {
-                  setInputData({ ...inputData, password: e.target.value });
-                }}
-                type="password"
-                value={inputData.password}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <form>
+        <div className={styles.inputs}>
+          <label>Name</label>
+          <input
+            onChange={(e) => {
+              setInputData({ ...inputData, name: e.target.value });
+            }}
+            type="text"
+            value={inputData.name}
+          />
+        </div>
+        <div className={styles.inputs}>
+          <label>Last Name</label>
+          <input
+            onChange={(e) => {
+              setInputData({ ...inputData, last_name: e.target.value });
+            }}
+            type="text"
+            value={inputData.last_name}
+          />
+        </div>
+        <div className={styles.inputs}>
+          <label>Email</label>
+          <input
+            onChange={(e) => {
+              setInputData({ ...inputData, email: e.target.value });
+            }}
+            type="text"
+            value={inputData.email}
+          />
+        </div>
+        <div className={styles.inputs}>
+          <label>Password</label>
+          <input
+            onChange={(e) => {
+              setInputData({ ...inputData, password: e.target.value });
+            }}
+            type="text"
+            value={inputData.password}
+          />
+        </div>
+      </form>
       <div>
-        <button onClick={FormMode} type="submit">
-          Create
+        <button onClick={onSubmit} type="button">
+          Apply
         </button>
       </div>
     </section>
