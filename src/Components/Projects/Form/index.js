@@ -50,7 +50,7 @@ const Form = () => {
             employee: item.employee._id,
             rate: item.rate,
             role: item.role
-          }; // Not sure if the properties are correct but you can do something like this 😂
+          };
         });
         setProjectState({
           name: project.data.name,
