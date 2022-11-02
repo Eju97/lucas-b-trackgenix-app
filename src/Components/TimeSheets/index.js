@@ -62,17 +62,11 @@ const TimeSheets = () => {
                     <td>{timesheet.description}</td>
                     <td>{dateFormatted(timesheet.date)}</td>
                     <td>{timesheet.hours}</td>
+                    <td>{!timesheet.project ? 'There is no project' : timesheet.project.name}</td>
                     <td>
-                      {timesheet.project === null ? 'There is no project' : timesheet.project.name}
+                      {!timesheet.employee ? 'There is no employee' : timesheet.employee.name}
                     </td>
-                    <td>
-                      {timesheet.employee === null
-                        ? 'There is no employee'
-                        : timesheet.employee.name}
-                    </td>
-                    <td>
-                      {timesheet.task === null ? 'There is no task' : timesheet.task.description}
-                    </td>
+                    <td>{!timesheet.task ? 'There is no task' : timesheet.task.description}</td>
                     <td>
                       <button
                         className={styles.deleteBtn}
