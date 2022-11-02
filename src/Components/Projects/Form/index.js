@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './form.module.css';
 
 const Form = () => {
-  const [projectAdd, setProjectAdd] = useState({
+  const [projectState, setProjectState] = useState({
     name: '',
     clientName: '',
     description: '',
@@ -52,7 +52,7 @@ const Form = () => {
             role: item.role
           }; // Not sure if the properties are correct but you can do something like this 😂
         });
-        setProjectAdd({
+        setProjectState({
           name: project.data.name,
           clientName: project.data.clientName,
           description: project.data.description,
@@ -68,9 +68,9 @@ const Form = () => {
   }, []);
 
   const deleteEmployees = (id) => {
-    setProjectAdd({
-      ...projectAdd,
-      employees: projectAdd.employees.filter((employee) => employee.employee !== id)
+    setProjectState({
+      ...projectState,
+      employees: projectState.employees.filter((employee) => employee.employee !== id)
     });
   };
 
@@ -82,7 +82,7 @@ const Form = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(projectAdd)
+          body: JSON.stringify(projectState)
         });
         const data = await response.json();
         if (!data.error) {
@@ -102,7 +102,7 @@ const Form = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(projectAdd)
+          body: JSON.stringify(projectState)
         });
         const data = await response.json();
         if (!data.error) {
@@ -128,10 +128,10 @@ const Form = () => {
               className={styles.input}
               id="name"
               name="name"
-              value={projectAdd.name}
+              value={projectState.name}
               onChange={(e) => {
-                setProjectAdd({
-                  ...projectAdd,
+                setProjectState({
+                  ...projectState,
                   name: e.target.value
                 });
               }}
@@ -141,10 +141,10 @@ const Form = () => {
               className={styles.input}
               id="clientName"
               name="clientName"
-              value={projectAdd.clientName}
+              value={projectState.clientName}
               onChange={(e) => {
-                setProjectAdd({
-                  ...projectAdd,
+                setProjectState({
+                  ...projectState,
                   clientName: e.target.value
                 });
               }}
@@ -156,10 +156,10 @@ const Form = () => {
               className={styles.input}
               id="description"
               name="description"
-              value={projectAdd.description}
+              value={projectState.description}
               onChange={(e) => {
-                setProjectAdd({
-                  ...projectAdd,
+                setProjectState({
+                  ...projectState,
                   description: e.target.value
                 });
               }}
@@ -172,11 +172,11 @@ const Form = () => {
               id="startDate"
               name="startDate"
               type="date"
-              value={formatDate(projectAdd.startDate)}
+              value={formatDate(projectState.startDate)}
               onChange={(e) => {
                 let dateFormatted = new Date(e.target.value).toISOString();
-                setProjectAdd({
-                  ...projectAdd,
+                setProjectState({
+                  ...projectState,
                   startDate: dateFormatted
                 });
               }}
@@ -187,11 +187,11 @@ const Form = () => {
               id="endDate"
               name="endDate"
               type="date"
-              value={formatDate(projectAdd.endDate)}
+              value={formatDate(projectState.endDate)}
               onChange={(e) => {
                 let dateFormatted = new Date(e.target.value).toISOString();
-                setProjectAdd({
-                  ...projectAdd,
+                setProjectState({
+                  ...projectState,
                   endDate: dateFormatted
                 });
               }}
@@ -263,9 +263,9 @@ const Form = () => {
             <button
               type="button"
               onClick={() => {
-                setProjectAdd({
-                  ...projectAdd,
-                  employees: [...projectAdd.employees, employeeProject]
+                setProjectState({
+                  ...projectState,
+                  employees: [...projectState.employees, employeeProject]
                 });
               }}
             >
@@ -274,7 +274,7 @@ const Form = () => {
           </div>
         </div>
         <div className={styles.employees}>
-          {projectAdd.employees.map((employee) => {
+          {projectState.employees.map((employee) => {
             const currentEmployee = employeeList.find((item) => item._id === employee.employee);
             if (currentEmployee) {
               return (
