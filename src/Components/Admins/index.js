@@ -11,7 +11,6 @@ const Admins = () => {
       .then((response) => response.json())
       .then((response) => {
         setListAdmin(response.data);
-        console.log(response.data);
       });
   }, []);
   const deleteAdmin = async (_id) => {
@@ -58,6 +57,9 @@ const Admins = () => {
                   >
                     x
                   </button>
+                  <a href={`admins/form?id=${admin._id}`}>
+                    <button>Add</button>
+                  </a>
                 </td>
               </tr>
             </tbody>
