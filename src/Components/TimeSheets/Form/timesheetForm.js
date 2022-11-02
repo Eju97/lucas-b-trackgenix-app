@@ -59,9 +59,9 @@ const Form = () => {
         description: data.data.description,
         date: data.data.date,
         hours: data.data.hours,
-        project: data.data.project._id,
-        employee: data.data.employee._id,
-        task: data.data.task._id
+        project: !data.data.project ? '' : data.data.project._id,
+        employee: !data.data.employee ? '' : data.data.employee._id,
+        task: !data.data.task ? '' : data.data.task._id
       });
     }
   }, []);
