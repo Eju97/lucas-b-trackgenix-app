@@ -17,9 +17,11 @@ const ListItem = ({ listItem, setShowModal, setSelectedId }) => {
       <td onClick={onClickRedirect}>{listItem.email}</td>
       <td onClick={onClickRedirect}>{listItem.password}</td>
       <td>
-        <button className={styles.buttonDelete} onClick={onDeleteIconClick}>
-          X
-        </button>
+        <div className={styles.buttonX}>
+          <button className={styles.buttonDelete} onClick={onDeleteIconClick}>
+            X
+          </button>
+        </div>
       </td>
     </tr>
   );

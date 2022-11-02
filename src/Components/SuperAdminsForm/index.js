@@ -116,12 +116,12 @@ function SuperAdminsForm() {
             value={inputData.password}
           />
         </div>
+        <div className={styles.buttonContainer}>
+          <button onClick={onSubmit} type="button">
+            Apply
+          </button>
+        </div>
       </form>
-      <div>
-        <button onClick={onSubmit} type="button">
-          Apply
-        </button>
-      </div>
     </section>
   );
 }
