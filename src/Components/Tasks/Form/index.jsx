@@ -89,7 +89,7 @@ const TaskForm = () => {
         <div>
           <input
             type="button"
-            value="submit"
+            value="Submit"
             onClick={() => {
               onSubmit();
             }}
