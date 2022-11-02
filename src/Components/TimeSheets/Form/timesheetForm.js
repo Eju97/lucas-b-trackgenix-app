@@ -5,7 +5,7 @@ const Form = () => {
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [employees, setEmployees] = useState([]);
-  const [formPut, setFormPut] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   const [errorState, setErrorState] = useState();
   const [timesheetAdded, setTimesheetAdded] = useState({
     description: '',
@@ -22,41 +22,47 @@ const Form = () => {
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/projects`)
-      .then((res) => res.json())
-      .then((response) => {
-        setProjects(response.data);
-      });
+    try {
+      fetch(`${process.env.REACT_APP_API_URL}/projects`)
+        .then((res) => res.json())
+        .then((response) => {
+          setProjects(response.data);
+        });
+    } catch (error) {
+      alert(error);
+    }
   }, []);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/tasks`)
-      .then((res) => res.json())
-      .then((response) => {
-        setTasks(response.data);
-      });
+    try {
+      fetch(`${process.env.REACT_APP_API_URL}/tasks`)
+        .then((res) => res.json())
+        .then((response) => {
+          setTasks(response.data);
+        });
+    } catch (error) {
+      alert(error);
+    }
   }, []);
 
   useEffect(async () => {
-    const urlForm = new URLSearchParams(window.location.search);
-    const id = urlForm.get('id');
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const id = urlSearchParams.get('id');
     if (id) {
-      setFormPut(false);
-      const urlFetch = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
+      setIsEditing(true);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
         method: 'GET'
       });
-      const response = await urlFetch.json();
+      const data = await response.json();
 
       setTimesheetAdded({
-        description: response.data.description,
-        date: response.data.date,
-        hours: response.data.hours,
-        project: response.data.project._id,
-        employee: response.data.employee._id,
-        task: response.data.task._id
+        description: data.data.description,
+        date: data.data.date,
+        hours: data.data.hours,
+        project: data.data.project._id,
+        employee: data.data.employee._id,
+        task: data.data.task._id
       });
-    } else {
-      return null;
     }
   }, []);
 
@@ -70,7 +76,7 @@ const Form = () => {
   };
 
   const onSubmit = async (event) => {
-    if (formPut) {
+    if (!isEditing) {
       event.preventDefault();
       const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets`, {
         method: 'POST',
@@ -91,8 +97,8 @@ const Form = () => {
         setErrorState(data.message);
       }
     } else {
-      const urlForm = new URLSearchParams(window.location.search);
-      const id = urlForm.get('id');
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const id = urlSearchParams.get('id');
       event.preventDefault();
       const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
         method: 'PUT',
@@ -117,8 +123,8 @@ const Form = () => {
   return (
     <div>
       <form onSubmit={onSubmit} className={styles.container}>
-        {formPut ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
-        <h3>{errorState}</h3>
+        {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
+        {errorState && <h3>{errorState}</h3>}
         <div>
           <div>
             <label htmlFor="description">Description</label>
