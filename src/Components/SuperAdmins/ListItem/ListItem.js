@@ -1,11 +1,20 @@
 import styles from './ListItem.module.css';
+import React from 'react';
 
-const ListItem = ({ listItem }) => {
+const ListItem = ({ listItem, setShowModal, setSelectedId, showModal, visible, setVisible }) => {
+  console.log(showModal);
+  console.log(visible);
+  const onDeleteIconClick = () => {
+    setShowModal(true);
+    setSelectedId(listItem._id);
+    setVisible(true);
+  };
   return (
     <tr
-      className={styles.row}
       onClick={() => {
-        window.location.assign(`/super-admins/form?id=${listItem._id}`);
+        if (visible && !showModal) {
+          window.location.assign(`/super-admins/form?id=${listItem._id}`);
+        }
       }}
     >
       <td>{listItem.name}</td>
@@ -13,7 +22,9 @@ const ListItem = ({ listItem }) => {
       <td>{listItem.email}</td>
       <td>{listItem.password}</td>
       <td>
-        <button>X</button>
+        <button className={styles.buttonDelete} onClick={onDeleteIconClick}>
+          X
+        </button>
       </td>
     </tr>
   );
