@@ -44,22 +44,20 @@ const Admins = () => {
         {listAdmins.map((admin) => {
           return (
             <tbody key={admin._id}>
-              <tr>
+              <tr onClick={() => window.location.assign(`/admins/form?id=${admin._id}`)}>
                 <td>{admin.name}</td>
                 <td>{admin.lastName}</td>
                 <td>{admin.email}</td>
                 <td>
                   <button
-                    onClick={() => {
+                    onClick={(event) => {
+                      event.stopPropagation();
                       setAdminId(admin._id);
                       setShowModal(true);
                     }}
                   >
                     x
                   </button>
-                  <a href={`admins/form?id=${admin._id}`}>
-                    <button>Add</button>
-                  </a>
                 </td>
               </tr>
             </tbody>

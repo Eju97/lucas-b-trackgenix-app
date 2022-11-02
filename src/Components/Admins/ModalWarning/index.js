@@ -21,7 +21,7 @@ const ModalWarning = ({ title, contentMessage, showModal, setShowModal }) => {
               <h2>{contentMessage}</h2>
               <button
                 onClick={() => {
-                  location.replace('http://localhost:3000/super-admins');
+                  location.replace('http://localhost:4000/admins');
                 }}
               >
                 OK

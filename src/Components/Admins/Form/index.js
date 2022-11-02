@@ -12,18 +12,7 @@ const Form = () => {
     email: '',
     password: ''
   });
-  const [title, setTitle] = useState();
-  const [contentMessage, setContentMessage] = useState();
   const [showModal, setShowModal] = useState(false);
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setAdminCreated({
-      name: '',
-      lastName: '',
-      email: '',
-      password: ''
-    });
-  };
 
   useEffect(async () => {
     if (adminId) {
@@ -48,12 +37,7 @@ const Form = () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        name: adminCreate.name,
-        lastName: adminCreate.lastName,
-        email: adminCreate.email,
-        password: adminCreate.password
-      })
+      body: JSON.stringify(adminCreate)
     });
     const data = await response.json();
     if (!data.error) {
@@ -63,31 +47,19 @@ const Form = () => {
     }
   };
 
-  const editAdmin = async (adminId) => {
+  const editAdmin = async () => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          name: adminCreate.name,
-          lastName: adminCreate.lastName,
-          email: adminCreate.email,
-          password: adminCreate.password
-        })
+        body: JSON.stringify(adminCreate)
       });
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
       console.log(error);
-    }
-    if (!adminCreate.name || !adminCreate.lastName || !adminCreate.email || !adminCreate.password) {
-      setTitle('Edit Admin');
-      setContentMessage('Admin Error');
-      setShowModal(true);
-    } else {
-      setTitle('Edit Admin');
-      setContentMessage('Admin successfully edited');
-      setShowModal(true);
     }
   };
 
@@ -96,12 +68,13 @@ const Form = () => {
       <div className={styles.container}>
         <h2>Create Admin</h2>
         <h3>{error}</h3>
-        <form onSubmit={onSubmit}>
+        <form>
           <div>
             <label>Name</label>
             <input
               type="text"
               placeholder="add First Name"
+              value={adminCreate.name}
               onChange={(e) => {
                 setAdminCreated({
                   ...adminCreate,
@@ -115,6 +88,7 @@ const Form = () => {
             <input
               type="text"
               placeholder="add Last Name"
+              value={adminCreate.lastName}
               onChange={(e) => {
                 setAdminCreated({
                   ...adminCreate,
@@ -128,6 +102,7 @@ const Form = () => {
             <input
               type="email"
               placeholder="add Email"
+              value={adminCreate.email}
               onChange={(e) => {
                 setAdminCreated({
                   ...adminCreate,
@@ -141,6 +116,7 @@ const Form = () => {
             <input
               type="password"
               placeholder="add Password"
+              value={adminCreate.password}
               onChange={(e) => {
                 setAdminCreated({
                   ...adminCreate,
@@ -150,18 +126,13 @@ const Form = () => {
             />
           </div>
           <input
-            type="submit"
+            type="button"
             value="Create"
-            onClick={adminId ? () => editAdmin(adminId) : () => createAdmin()}
+            onClick={adminId ? () => editAdmin() : () => createAdmin()}
           />
         </form>
       </div>
-      <ModalWarning
-        title={title}
-        contentMessage={contentMessage}
-        showModal={showModal}
-        setShowModal={setShowModal}
-      />
+      <ModalWarning showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };
