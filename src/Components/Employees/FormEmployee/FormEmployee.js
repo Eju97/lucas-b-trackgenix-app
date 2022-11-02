@@ -63,7 +63,7 @@ function Form() {
         });
         const data = await response.json();
         if (!data.error) {
-          alert('created succefully');
+          alert('Edited succefully');
           window.location.href = '/employees';
         } else {
           setErrorState(data.message);
@@ -88,7 +88,7 @@ function Form() {
         });
         const data = await response.json();
         if (!data.error) {
-          alert('Guardado Post');
+          alert('Employee created succefully');
           window.location.href = '/employees';
         } else {
           setErrorState(data.message);

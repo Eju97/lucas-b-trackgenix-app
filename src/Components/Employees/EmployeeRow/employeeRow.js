@@ -4,13 +4,16 @@ const EmployeeRow = ({ employee, setShowModal, setSelectedEmployee }) => {
   return (
     <tr className="rows">
       <td onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}>
-        {employee._id}
-      </td>
-      <td onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}>
         {employee.name}
       </td>
       <td onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}>
+        {employee.lastName}
+      </td>
+      <td onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}>
         {employee.email}
+      </td>
+      <td onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}>
+        {employee.phone}
       </td>
       <td>
         <button
@@ -21,7 +24,6 @@ const EmployeeRow = ({ employee, setShowModal, setSelectedEmployee }) => {
         >
           X
         </button>
-        <a href={`employees/form?id=${employee._id}`}>Edit</a>
       </td>
     </tr>
   );
