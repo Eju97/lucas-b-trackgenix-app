@@ -35,6 +35,7 @@ function Tasks() {
     <div className={styles.container}>
       <TaskList list={tasks} setShowModal={setShowModal} setSelectedId={setSelectedId} />
       <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
+      <a href="/tasks/form">Add Task</a>
     </div>
   );
 }
