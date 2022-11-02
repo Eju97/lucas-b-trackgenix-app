@@ -6,7 +6,6 @@ const SuperAdmins = () => {
   const [SuperAdminsList, setSuperAdminsList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/`)
@@ -38,17 +37,10 @@ const SuperAdmins = () => {
         SuperAdminsList={SuperAdminsList}
         setSuperAdminsList={setSuperAdminsList}
         showModal={showModal}
-        setVisible={setVisible}
-        visible={visible}
         setShowModal={setShowModal}
         setSelectedId={setSelectedId}
       />
-      <Modal
-        closeModal={closeModal}
-        showModal={showModal}
-        handleDelete={onDeleteTask}
-        setVisible={setVisible}
-      />
+      <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
     </div>
   );
 };

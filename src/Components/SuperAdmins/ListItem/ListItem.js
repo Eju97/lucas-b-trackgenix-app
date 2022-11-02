@@ -1,26 +1,21 @@
 import styles from './ListItem.module.css';
 import React from 'react';
 
-const ListItem = ({ listItem, setShowModal, setSelectedId, showModal, visible, setVisible }) => {
-  console.log(showModal);
-  console.log(visible);
+const ListItem = ({ listItem, setShowModal, setSelectedId }) => {
+  const onClickRedirect = () => {
+    window.location.assign(`/super-admins/form?id=${listItem._id}`);
+  };
+
   const onDeleteIconClick = () => {
     setShowModal(true);
     setSelectedId(listItem._id);
-    setVisible(true);
   };
   return (
-    <tr
-      onClick={() => {
-        if (visible && !showModal) {
-          window.location.assign(`/super-admins/form?id=${listItem._id}`);
-        }
-      }}
-    >
-      <td>{listItem.name}</td>
-      <td>{listItem.last_name}</td>
-      <td>{listItem.email}</td>
-      <td>{listItem.password}</td>
+    <tr>
+      <td onClick={onClickRedirect}>{listItem.name}</td>
+      <td onClick={onClickRedirect}>{listItem.last_name}</td>
+      <td onClick={onClickRedirect}>{listItem.email}</td>
+      <td onClick={onClickRedirect}>{listItem.password}</td>
       <td>
         <button className={styles.buttonDelete} onClick={onDeleteIconClick}>
           X

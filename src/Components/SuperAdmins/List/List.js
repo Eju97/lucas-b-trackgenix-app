@@ -20,8 +20,6 @@ const List = (props) => {
               key={i}
               listItem={item}
               showModal={props.showModal}
-              setVisible={props.setVisible}
-              visible={props.visible}
               setShowModal={props.setShowModal}
               setSelectedId={props.setSelectedId}
             />
