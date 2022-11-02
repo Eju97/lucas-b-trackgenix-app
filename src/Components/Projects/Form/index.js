@@ -27,7 +27,7 @@ const Form = () => {
           setEmployeeList(response.data);
         });
     } catch (error) {
-      console.alert(error);
+      alert(error);
     }
   }, []);
 
@@ -62,7 +62,7 @@ const Form = () => {
         });
         setIsEditing(true);
       } catch (error) {
-        console.alert(error);
+        alert(error);
       }
     }
   }, []);
@@ -91,7 +91,7 @@ const Form = () => {
           setErrorMessage(data.message);
         }
       } catch (error) {
-        console.log(error.message);
+        alert(error.message);
       }
     } else {
       try {
@@ -111,7 +111,7 @@ const Form = () => {
           setErrorMessage(data.message);
         }
       } catch (error) {
-        console.alert(error.message);
+        alert(error.message);
       }
     }
   };
