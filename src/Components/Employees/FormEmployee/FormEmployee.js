@@ -13,7 +13,7 @@ function Form() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id') || null;
-    if (id !== null) {
+    if (id) {
       fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`)
         .then((response) => response.json())
         .then((response) => {
@@ -100,7 +100,7 @@ function Form() {
 
   return (
     <div className={styles.container}>
-      <h3>{errorState}</h3>
+      {errorState && <h3>{errorState}</h3>}
       <form onSubmit={onSubmit}>
         <h2>Form</h2>
         <label>Name</label>
