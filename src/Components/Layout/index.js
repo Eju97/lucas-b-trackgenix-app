@@ -2,13 +2,16 @@ import Header from '../Header/index';
 import Footer from '../Footer/index';
 import Admins from '../Admins/index';
 import SuperAdmins from '../SuperAdmins/index';
+import SuperAdminsForm from '../SuperAdminsForm/index';
 import Home from '../Home/index';
 import styles from './layout.module.css';
 import Employees from '../Employees/index';
 import Projects from '../Projects';
+import ProjectsForm from '../Projects/Form/index';
 import TimeSheets from '../TimeSheets';
 import Tasks from '../Tasks/index';
 import TaskForm from '../Tasks/Form';
+import React from 'react';
 
 function Layout() {
   let currentScreen = <Home />;
@@ -19,11 +22,17 @@ function Layout() {
     case '/super-admins':
       currentScreen = <SuperAdmins />;
       break;
+    case '/super-admins/form':
+      currentScreen = <SuperAdminsForm />;
+      break;
     case '/employees':
       currentScreen = <Employees />;
       break;
     case '/projects':
       currentScreen = <Projects />;
+      break;
+    case '/projects/form':
+      currentScreen = <ProjectsForm />;
       break;
     case '/time-sheets':
       currentScreen = <TimeSheets />;
