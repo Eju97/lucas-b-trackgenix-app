@@ -35,3 +35,17 @@ tbody tr:hover {
 img {
   cursor: pointer;
 }
+
+.container a {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  padding: 1%;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.container a:hover {
+  background-color: #ea335567;
+}

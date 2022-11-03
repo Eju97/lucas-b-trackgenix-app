@@ -52,7 +52,10 @@ const Projects = () => {
         <tbody>
           {projects.map((project) => {
             return (
-              <tr key={project._id}>
+              <tr
+                key={project._id}
+                onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}
+              >
                 <td>{project.name}</td>
                 <td>{project.clientName}</td>
                 <td>{project.description}</td>
@@ -77,7 +80,8 @@ const Projects = () => {
                 <td>
                   <img
                     src="../assets/images/remove.svg"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setShowModal(true);
                       setProject(project._id);
                     }}
@@ -88,6 +92,7 @@ const Projects = () => {
           })}
         </tbody>
       </table>
+      <a href="/projects/form">Add Project</a>
     </section>
   );
 };
