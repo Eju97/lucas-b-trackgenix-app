@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './FormEmployee.module.css';
 
 function Form() {
-  const [employeeId, setEmployeeId] = useState(null);
+  const [employeeId, setEmployeeId] = useState();
   const [employeeName, setEmployeeName] = useState('');
   const [employeeLastName, setEmployeeLastName] = useState('');
   const [employeeEmail, setEmployeeEmail] = useState('');
@@ -43,58 +43,52 @@ function Form() {
     setEmployeePassword(event.target.value);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    if (employeeId !== null) {
-      const updateEmployee = async (employeeId) => {
-        let newEmployee = {
-          name: employeeName,
-          lastName: employeeLastName,
-          phone: employeePhone,
-          email: employeeEmail,
-          password: employeePassword
-        };
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newEmployee)
-        });
-        const data = await response.json();
-        if (!data.error) {
-          alert('Edited succefully');
-          window.location.href = '/employees';
-        } else {
-          setErrorState(data.message);
-        }
+    if (employeeId) {
+      let newEmployee = {
+        name: employeeName,
+        lastName: employeeLastName,
+        phone: employeePhone,
+        email: employeeEmail,
+        password: employeePassword
       };
-      updateEmployee(employeeId);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newEmployee)
+      });
+      const data = await response.json();
+      if (!data.error) {
+        alert('Edited succefully');
+        window.location.href = '/employees';
+      } else {
+        setErrorState(data.message);
+      }
     } else {
-      const postEmployee = async () => {
-        let newEmployee = {
-          name: employeeName,
-          lastName: employeeLastName,
-          phone: employeePhone,
-          email: employeeEmail,
-          password: employeePassword
-        };
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newEmployee)
-        });
-        const data = await response.json();
-        if (!data.error) {
-          alert('Employee created succefully');
-          window.location.href = '/employees';
-        } else {
-          setErrorState(data.message);
-        }
+      let newEmployee = {
+        name: employeeName,
+        lastName: employeeLastName,
+        phone: employeePhone,
+        email: employeeEmail,
+        password: employeePassword
       };
-      postEmployee();
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newEmployee)
+      });
+      const data = await response.json();
+      if (!data.error) {
+        alert('Employee created succefully');
+        window.location.href = '/employees';
+      } else {
+        setErrorState(data.message);
+      }
     }
   };
 
