@@ -14,6 +14,9 @@ const TimeSheets = () => {
       });
   }, []);
 
+  const dateFormatted = (date) => {
+    return new Date(date).toISOString().split('T')[0];
+  };
   const deleteTimesheet = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
       method: 'DELETE'
@@ -44,7 +47,6 @@ const TimeSheets = () => {
                 <th>Description</th>
                 <th>Date</th>
                 <th>Hours</th>
-                <th>Tasks</th>
                 <th>Project</th>
                 <th>Employee</th>
                 <th>Task</th>
@@ -54,28 +56,51 @@ const TimeSheets = () => {
             {timesheets.map((timesheet) => {
               return (
                 <tbody key={timesheet._id} className={styles.tbodyContainer}>
-                  <tr>
+                  <tr
+                    onClick={() => (window.location.href = `/time-sheets/form?id=${timesheet._id}`)}
+                  >
                     <td>{timesheet.description}</td>
-                    <td>{timesheet.date}</td>
+                    <td>{dateFormatted(timesheet.date)}</td>
                     <td>{timesheet.hours}</td>
-                    <td>{timesheet.tasks}</td>
-                    <td>{timesheet.project.name}</td>
-                    <td>{timesheet.employee.name}</td>
-                    <td>{timesheet.task.description}</td>
-                    <button
-                      className={styles.deleteBtn}
-                      onClick={() => {
-                        setTimesheetId(timesheet._id);
-                        setShowModal(true);
-                      }}
-                    >
-                      X
-                    </button>
+                    <td>
+                      {!timesheet.project ? (
+                        <p className={styles.none}>There is no project</p>
+                      ) : (
+                        timesheet.project.name
+                      )}
+                    </td>
+                    <td>
+                      {!timesheet.employee ? (
+                        <p className={styles.none}>There is no employee</p>
+                      ) : (
+                        timesheet.employee.name
+                      )}
+                    </td>
+                    <td>
+                      {!timesheet.task ? (
+                        <p className={styles.none}>There is no task</p>
+                      ) : (
+                        timesheet.task.description
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        className={styles.deleteBtn}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setTimesheetId(timesheet._id);
+                          setShowModal(true);
+                        }}
+                      >
+                        X
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               );
             })}
           </table>
+          <a href="/time-sheets/form">Add a new Timesheet</a>
           <DeleteConfirmationModal
             showModal={showModal}
             closeModal={closeModal}
@@ -83,7 +108,7 @@ const TimeSheets = () => {
           />
         </>
       ) : (
-        <h3>There are no Timesheets</h3>
+        <h3>Loading Timesheets...</h3>
       )}
     </section>
   );
