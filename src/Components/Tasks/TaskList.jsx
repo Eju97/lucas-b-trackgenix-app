@@ -1,5 +1,6 @@
 import React from 'react';
 import TaskRow from './TaskRow';
+import styles from './tasks.module.css';
 
 const TaskList = ({ list, setShowModal, setSelectedId }) => {
   if (!list || !list.length) {
@@ -7,10 +8,10 @@ const TaskList = ({ list, setShowModal, setSelectedId }) => {
   }
   return (
     <div>
-      <table>
-        <thead>
+      <table className={styles.table}>
+        <thead className={styles.head}>
           <tr>
-            <th>Task</th>
+            <th>Tasks</th>
           </tr>
         </thead>
         <tbody>

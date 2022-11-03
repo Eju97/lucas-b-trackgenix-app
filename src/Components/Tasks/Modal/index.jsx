@@ -7,9 +7,18 @@ function Modal(props) {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <h3>Delete Task</h3>
-        <button onClick={props.closeModal}>Close</button>
-        <button onClick={props.handleDelete}>Delete</button>
+        <div className={styles.title}>
+          <h3>Delete Task</h3>
+        </div>
+        <p>Are you sure you want to delete task?</p>
+        <div className={styles.buttonContainer}>
+          <button onClick={props.closeModal} className={styles.buttonClose}>
+            Close
+          </button>
+          <button onClick={props.handleDelete} className={styles.buttonDelete}>
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
