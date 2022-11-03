@@ -46,9 +46,9 @@ const Form = () => {
         });
         const project = await response.json();
         const employeeList = project.data.employees.map((item) => {
-          if (item.employee !== null) {
+          if (item.employee) {
             return {
-              employee: item.employee === null ? null : item.employee._id,
+              employee: item.employee._id,
               rate: item.rate,
               role: item.role
             };

@@ -72,9 +72,7 @@ const Projects = () => {
                   return (
                     <tr key={employee._id}>
                       <td>
-                        {employee.employee === null
-                          ? 'There is no employee'
-                          : employee.employee.name}
+                        {!employee.employee ? 'There is no employee' : employee.employee.name}
                       </td>
                       <td>{employee.rate}</td>
                       <td>{employee.role}</td>
