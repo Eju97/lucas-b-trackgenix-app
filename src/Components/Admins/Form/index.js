@@ -5,13 +5,13 @@ import Modal from '../Modal/modal';
 const Form = () => {
   const paramsURL = new URLSearchParams(window.location.search);
   const adminId = paramsURL.get('id');
-  const [adminCreate, setAdminCreated] = useState({
+  const [formValues, setFormValues] = useState({
     name: '',
     lastName: '',
     email: '',
     password: ''
   });
-  const [modalDisplay, setModalDisplay] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
 
@@ -20,7 +20,7 @@ const Form = () => {
       try {
         const res = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
         const data = await res.json();
-        setAdminCreated({
+        setFormValues({
           name: data.data.name,
           lastName: data.data.lastName,
           email: data.data.email,
@@ -39,7 +39,7 @@ const Form = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(adminCreate)
+        body: JSON.stringify(formValues)
       });
       const data = await response.json();
       setContentMessage(data.message);
@@ -48,7 +48,7 @@ const Form = () => {
       } else {
         setModalTitle('Error');
       }
-      setModalDisplay(true);
+      setShowModal(true);
     } catch (error) {
       alert(error);
     }
@@ -61,7 +61,7 @@ const Form = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(adminCreate)
+        body: JSON.stringify(formValues)
       });
       const data = await response.json();
       setContentMessage(data.message);
@@ -70,7 +70,7 @@ const Form = () => {
       } else {
         setModalTitle('Error');
       }
-      setModalDisplay(true);
+      setShowModal(true);
     } catch (error) {
       alert(error);
     }
@@ -86,10 +86,10 @@ const Form = () => {
             <input
               type="text"
               placeholder="add First Name"
-              value={adminCreate.name}
+              value={formValues.name}
               onChange={(e) => {
-                setAdminCreated({
-                  ...adminCreate,
+                setFormValues({
+                  ...formValues,
                   name: e.target.value
                 });
               }}
@@ -100,10 +100,10 @@ const Form = () => {
             <input
               type="text"
               placeholder="add Last Name"
-              value={adminCreate.lastName}
+              value={formValues.lastName}
               onChange={(e) => {
-                setAdminCreated({
-                  ...adminCreate,
+                setFormValues({
+                  ...formValues,
                   lastName: e.target.value
                 });
               }}
@@ -114,10 +114,10 @@ const Form = () => {
             <input
               type="email"
               placeholder="add Email"
-              value={adminCreate.email}
+              value={formValues.email}
               onChange={(e) => {
-                setAdminCreated({
-                  ...adminCreate,
+                setFormValues({
+                  ...formValues,
                   email: e.target.value
                 });
               }}
@@ -128,10 +128,10 @@ const Form = () => {
             <input
               type="password"
               placeholder="add Password"
-              value={adminCreate.password}
+              value={formValues.password}
               onChange={(e) => {
-                setAdminCreated({
-                  ...adminCreate,
+                setFormValues({
+                  ...formValues,
                   password: e.target.value
                 });
               }}
@@ -144,13 +144,9 @@ const Form = () => {
           />
         </form>
       </div>
-      {modalDisplay ? (
-        <Modal
-          title={modalTitle}
-          contentMessage={contentMessage}
-          setModalDisplay={setModalDisplay}
-        />
-      ) : null}
+      {showModal && (
+        <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
+      )}
     </>
   );
 };
