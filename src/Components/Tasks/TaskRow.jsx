@@ -14,7 +14,7 @@ const TaskRow = ({ task, setShowModal, setSelectedId }) => {
     >
       <td>{task.description}</td>
       <td>
-        <button onClick={onDeleteIconClick}>X</button>
+        <img src="../assets/images/remove.svg" onClick={onDeleteIconClick}></img>
       </td>
     </tr>
   );
