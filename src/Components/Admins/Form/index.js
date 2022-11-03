@@ -1,9 +1,8 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
-import ModalWarning from '../ModalWarning';
+import Modal from '../Modal/modal';
 
 const Form = () => {
-  const [error, setError] = useState();
   const paramsURL = new URLSearchParams(window.location.search);
   const adminId = paramsURL.get('id');
   const [adminCreate, setAdminCreated] = useState({
@@ -12,7 +11,9 @@ const Form = () => {
     email: '',
     password: ''
   });
-  const [showModal, setShowModal] = useState(false);
+  const [modalDisplay, setModalDisplay] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
 
   useEffect(async () => {
     if (adminId) {
@@ -32,18 +33,24 @@ const Form = () => {
   }, []);
 
   const createAdmin = async () => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(adminCreate)
-    });
-    const data = await response.json();
-    if (!data.error) {
-      window.location.assign('/admins');
-    } else {
-      setError(data.message);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(adminCreate)
+      });
+      const data = await response.json();
+      setContentMessage(data.message);
+      if (response.ok) {
+        setModalTitle('Success');
+      } else {
+        setModalTitle('Error');
+      }
+      setModalDisplay(true);
+    } catch (error) {
+      alert(error);
     }
   };
 
@@ -57,17 +64,22 @@ const Form = () => {
         body: JSON.stringify(adminCreate)
       });
       const data = await response.json();
-      console.log(data);
+      setContentMessage(data.message);
+      if (response.ok) {
+        setModalTitle('Success');
+      } else {
+        setModalTitle('Error');
+      }
+      setModalDisplay(true);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
   return (
     <>
       <div className={styles.container}>
-        <h2>Create Admin</h2>
-        <h3>{error}</h3>
+        <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
         <form>
           <div>
             <label>Name</label>
@@ -127,12 +139,18 @@ const Form = () => {
           </div>
           <input
             type="button"
-            value="Create"
+            value="Submit"
             onClick={adminId ? () => editAdmin() : () => createAdmin()}
           />
         </form>
       </div>
-      <ModalWarning showModal={showModal} setShowModal={setShowModal} />
+      {modalDisplay ? (
+        <Modal
+          title={modalTitle}
+          contentMessage={contentMessage}
+          setModalDisplay={setModalDisplay}
+        />
+      ) : null}
     </>
   );
 };
