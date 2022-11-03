@@ -46,19 +46,22 @@ const Form = () => {
         });
         const project = await response.json();
         const employeeList = project.data.employees.map((item) => {
-          return {
-            employee: item.employee._id,
-            rate: item.rate,
-            role: item.role
-          };
+          if (item.employee !== null) {
+            return {
+              employee: item.employee === null ? null : item.employee._id,
+              rate: item.rate,
+              role: item.role
+            };
+          } else return 'noEmployee';
         });
+        const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
         setProjectState({
           name: project.data.name,
           clientName: project.data.clientName,
           description: project.data.description,
           startDate: project.data.startDate,
           endDate: project.data.endDate,
-          employees: employeeList
+          employees: newEmployeeList
         });
         setIsEditing(true);
       } catch (error) {

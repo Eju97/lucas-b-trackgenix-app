@@ -71,7 +71,11 @@ const Projects = () => {
                 {project.employees.map((employee) => {
                   return (
                     <tr key={employee._id}>
-                      <td>{employee.employee.name}</td>
+                      <td>
+                        {employee.employee === null
+                          ? 'There is no employee'
+                          : employee.employee.name}
+                      </td>
                       <td>{employee.rate}</td>
                       <td>{employee.role}</td>
                     </tr>
