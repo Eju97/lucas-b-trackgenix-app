@@ -15,7 +15,7 @@ const List = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.SuperAdminsList.map((item, i) => (
+          {props.superAdminList.map((item, i) => (
             <ListItem
               key={i}
               listItem={item}

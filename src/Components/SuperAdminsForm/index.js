@@ -15,7 +15,6 @@ function SuperAdminsForm() {
   useEffect(() => {
     console.log(id);
     if (id) {
-      console.log('hola');
       fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`)
         .then((response) => response.json())
         .then((data) => {
@@ -30,7 +29,6 @@ function SuperAdminsForm() {
   }, []);
 
   const onSubmit = () => {
-    console.log(formMode);
     if (formMode === 'edit') {
       return onEditSuperAdmin();
     }

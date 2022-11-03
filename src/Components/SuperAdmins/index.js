@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Modal from './Modal/Modal';
 
 const SuperAdmins = () => {
-  const [SuperAdminsList, setSuperAdminsList] = useState([]);
+  const [superAdminList, setSuperAdminList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
 
@@ -11,7 +11,7 @@ const SuperAdmins = () => {
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/`)
       .then((res) => res.json())
       .then((data) => {
-        setSuperAdminsList(data.data);
+        setSuperAdminList(data.data);
       });
   }, []);
 
@@ -28,14 +28,14 @@ const SuperAdmins = () => {
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
       method: 'DELETE'
     });
-    setSuperAdminsList([...SuperAdminsList.filter((newListItem) => newListItem._id !== id)]);
+    setSuperAdminList([...superAdminList.filter((newListItem) => newListItem._id !== id)]);
   };
 
   return (
     <div>
       <List
-        SuperAdminsList={SuperAdminsList}
-        setSuperAdminsList={setSuperAdminsList}
+        superAdminList={superAdminList}
+        setSuperAdminList={setSuperAdminList}
         showModal={showModal}
         setShowModal={setShowModal}
         setSelectedId={setSelectedId}
