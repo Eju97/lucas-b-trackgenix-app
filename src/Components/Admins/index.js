@@ -4,7 +4,7 @@ import Modal from './Modal/modal';
 
 const Admins = () => {
   const [listAdmins, setListAdmin] = useState([]);
-  const [modalDisplay, setModalDisplay] = useState('');
+  const [modalDisplay, setShowModal] = useState('');
   const [contentMessage, setContentMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
   useEffect(() => {
@@ -29,7 +29,7 @@ const Admins = () => {
         } else {
           setModalTitle('Error');
         }
-        setModalDisplay(true);
+        setShowModal(true);
       } catch (error) {
         alert(error);
       }
@@ -76,11 +76,7 @@ const Admins = () => {
         </table>
       </section>
       {modalDisplay ? (
-        <Modal
-          title={modalTitle}
-          contentMessage={contentMessage}
-          setModalDisplay={setModalDisplay}
-        />
+        <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
       ) : null}
     </>
   );
