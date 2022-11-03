@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styles from './form.module.css';
 
 const TaskForm = () => {
   const [task, setTask] = useState({
@@ -69,12 +70,12 @@ const TaskForm = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <div>
         <h2>{isEditing ? 'Edit Task' : 'Create New Task'}</h2>
       </div>
       <form>
-        <div>
+        <div className={styles.form}>
           <label>Description</label>
           <input
             value={task.description}
@@ -86,10 +87,11 @@ const TaskForm = () => {
             }}
           />
         </div>
-        <div>
+        <div className={styles.input}>
           <input
             type="button"
             value="Submit"
+            className={styles.submitBtn}
             onClick={() => {
               onSubmit();
             }}
