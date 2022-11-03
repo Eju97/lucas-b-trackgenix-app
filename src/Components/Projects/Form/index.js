@@ -52,7 +52,8 @@ const Form = () => {
               rate: item.rate,
               role: item.role
             };
-          } else return 'noEmployee';
+          }
+          return 'noEmployee';
         });
         const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
         setProjectState({
