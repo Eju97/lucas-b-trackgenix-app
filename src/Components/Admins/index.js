@@ -71,9 +71,6 @@ const Admins = () => {
           })}
           <tfoot>
             <Link to="/admins/form">Create</Link>
-            {/* <button type="button" onClick={() => window.location.assign(`/admins/form?`)}>
-              Create //
-            </button> */}
           </tfoot>
         </table>
       </section>
