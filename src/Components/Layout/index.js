@@ -34,8 +34,8 @@ function Layout() {
           <Route path="/projects/form" component={ProjectsForm} />
           <Route exact path="/time-sheets" component={TimeSheets} />
           <Route path="/time-sheets/form" component={TimeSheetsForm} />
-          <Route exact path="/task" component={Tasks} />
-          <Route path="/task/form" component={TaskForm} />
+          <Route exact path="/tasks" component={Tasks} />
+          <Route path="/tasks/form" component={TaskForm} />
           <Redirect to="/" />
         </Switch>
       </Router>
