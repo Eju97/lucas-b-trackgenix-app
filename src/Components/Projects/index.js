@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from './ModalProject/Modal.js';
+import { Link } from 'react-router-dom';
 
 const Projects = () => {
   const [projects, saveProjects] = useState([]);
@@ -92,7 +93,7 @@ const Projects = () => {
           })}
         </tbody>
       </table>
-      <a href="/projects/form">Add Project</a>
+      <Link to="/projects/form">Add Project</Link>
     </section>
   );
 };
