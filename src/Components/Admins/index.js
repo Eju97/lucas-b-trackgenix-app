@@ -1,75 +1,84 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
-import DeleteConfirmationModal from './ModalDelete';
+import Modal from './Modal/modal';
 
 const Admins = () => {
   const [listAdmins, setListAdmin] = useState([]);
-  const [adminId, setAdminId] = useState();
-  const [showModal, setShowModal] = useState(false);
+  const [modalDisplay, setShowModal] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
       .then((response) => response.json())
       .then((response) => {
         setListAdmin(response.data);
-        console.log(response.data);
       });
   }, []);
   const deleteAdmin = async (_id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${_id}`, {
-      method: 'DELETE'
-    });
-    const data = await response.json();
-    if (!data.error) {
-      setListAdmin([...listAdmins.filter((admin) => admin._id !== _id)]);
-      setShowModal(false);
+    if (confirm('Are you sure that you want to delete this Admin?')) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${_id}`, {
+          method: 'DELETE'
+        });
+        setListAdmin([...listAdmins.filter((listAdmin) => listAdmin._id !== _id)]);
+        const data = await response.json();
+        setContentMessage(data.message);
+        if (response.ok) {
+          setListAdmin(listAdmins.filter((admin) => admin._id !== _id));
+          setModalTitle('Success');
+        } else {
+          setModalTitle('Error');
+        }
+        setShowModal(true);
+      } catch (error) {
+        alert(error);
+      }
     }
   };
-  const onCloseModal = () => {
-    setShowModal(false);
-  };
-  const onDeleteAdmin = () => {
-    deleteAdmin(adminId);
-    setShowModal(false);
-  };
   return (
-    <section className={styles.container}>
-      <h2>Admins</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        {listAdmins.map((admin) => {
-          return (
-            <tbody key={admin._id}>
-              <tr>
-                <td>{admin.name}</td>
-                <td>{admin.lastName}</td>
-                <td>{admin.email}</td>
-                <td>
-                  <button
-                    onClick={() => {
-                      setAdminId(admin._id);
-                      setShowModal(true);
-                    }}
-                  >
-                    x
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          );
-        })}
-      </table>
-      <DeleteConfirmationModal
-        onDeleteAdmin={onDeleteAdmin}
-        showModal={showModal}
-        onCloseModal={onCloseModal}
-      />
-    </section>
+    <>
+      <section className={styles.container}>
+        <h2>Admins</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          {listAdmins.map((admin) => {
+            return (
+              <tbody key={admin._id}>
+                <tr onClick={() => window.location.assign(`/admins/form?id=${admin._id}`)}>
+                  <td>{admin.name}</td>
+                  <td>{admin.lastName}</td>
+                  <td>{admin.email}</td>
+                  <td>
+                    <button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        deleteAdmin(admin._id);
+                      }}
+                    >
+                      x
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            );
+          })}
+          <tfoot>
+            <button type="button" onClick={() => window.location.assign(`/admins/form?`)}>
+              Create
+            </button>
+          </tfoot>
+        </table>
+      </section>
+      {modalDisplay ? (
+        <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
+      ) : null}
+    </>
   );
 };
 
