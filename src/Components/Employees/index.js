@@ -38,6 +38,7 @@ const Employees = () => {
     <section className={styles.container}>
       <DeleteConfirmationModal show={showModal} closeModal={closeModal} onConfirm={onConfirm} />
       <h2>Employees</h2>
+      <a href="/employees/form">Add Employee</a>
       <div>
         <ListEmployees
           listEmployes={listEmployes}
