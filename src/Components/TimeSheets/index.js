@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
 import DeleteConfirmationModal from './ModalDelete/modalDelete';
+import { Link } from 'react-router-dom';
 
 const TimeSheets = () => {
   const [timesheets, saveTimesheet] = useState([]);
@@ -100,7 +101,7 @@ const TimeSheets = () => {
               );
             })}
           </table>
-          <a href="/time-sheets/form">Add a new Timesheet</a>
+          <Link to="/time-sheets/form">Add a new Timesheet</Link>
           <DeleteConfirmationModal
             showModal={showModal}
             closeModal={closeModal}
