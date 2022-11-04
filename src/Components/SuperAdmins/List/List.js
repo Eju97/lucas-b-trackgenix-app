@@ -1,6 +1,7 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './List.module.css';
+import { Link } from 'react-router-dom';
 
 const List = (props) => {
   return (
@@ -27,14 +28,9 @@ const List = (props) => {
         </tbody>
       </table>
       <div className={styles.container}>
-        <button
-          className={styles.buttonCreate}
-          onClick={() => {
-            window.location.assign(`/super-admins/form`);
-          }}
-        >
-          Create
-        </button>
+        <Link to="/super-admins/form">
+          <button className={styles.buttonCreate}>Create</button>
+        </Link>
       </div>
     </div>
   );
