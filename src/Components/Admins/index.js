@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Modal from './Modal/modal';
+import { Link } from 'react-router-dom';
 
 const Admins = () => {
   const [listAdmins, setListAdmin] = useState([]);
@@ -69,9 +70,10 @@ const Admins = () => {
             );
           })}
           <tfoot>
-            <button type="button" onClick={() => window.location.assign(`/admins/form?`)}>
-              Create
-            </button>
+            <Link to="/admins/form">Create</Link>
+            {/* <button type="button" onClick={() => window.location.assign(`/admins/form?`)}>
+              Create //
+            </button> */}
           </tfoot>
         </table>
       </section>
