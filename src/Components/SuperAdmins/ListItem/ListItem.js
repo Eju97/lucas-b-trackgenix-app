@@ -1,9 +1,11 @@
 import styles from './ListItem.module.css';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const ListItem = ({ listItem, setShowModal, setSelectedId }) => {
+  const history = useHistory();
   const onClickRedirect = () => {
-    window.location.assign(`/super-admins/form?id=${listItem._id}`);
+    history.push(`/super-admins/form/${listItem._id}`);
   };
 
   const onDeleteIconClick = (event) => {

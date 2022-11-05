@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
 
 function SuperAdminsForm() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const history = useHistory();
+  const params = useParams();
+  const id = params.id;
   const formMode = id ? 'edit' : 'create';
   const [inputData, setInputData] = useState({
     name: '',
@@ -46,7 +48,7 @@ function SuperAdminsForm() {
       .then((response) => response.json())
       .then((response) => {
         alert(response.message);
-        window.location.assign('/super-admins');
+        history.push('/super-admins');
       })
       .catch((error) => {
         alert(error);
@@ -64,7 +66,7 @@ function SuperAdminsForm() {
       .then((response) => response.json())
       .then((response) => {
         alert(response.message);
-        window.location.assign('/super-admins');
+        history.push('/super-admins');
       })
       .catch((error) => {
         alert(error);
@@ -118,6 +120,9 @@ function SuperAdminsForm() {
           <button onClick={onSubmit} type="button">
             Apply
           </button>
+          <Link to="/super-admins">
+            <button>Go Back</button>
+          </Link>
         </div>
       </form>
     </section>
