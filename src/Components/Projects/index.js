@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from './ModalProject/Modal.js';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const Projects = () => {
+  const history = useHistory();
   const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [project, setProject] = useState();
@@ -53,10 +54,7 @@ const Projects = () => {
         <tbody>
           {projects.map((project) => {
             return (
-              <tr
-                key={project._id}
-                onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}
-              >
+              <tr key={project._id} onClick={() => history.push(`/projects/form/${project._id}`)}>
                 <td>{project.name}</td>
                 <td>{project.clientName}</td>
                 <td>{project.description}</td>
