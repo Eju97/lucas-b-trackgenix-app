@@ -25,17 +25,23 @@ function Layout() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/admins" component={Admins} />
-          <Route path="/admins/form" component={AdminsForm} />
+          <Route exact path="/admins/form" component={AdminsForm} />
+          <Route path="/admins/form/:id" component={AdminsForm} />
           <Route exact path="/super-admins" component={SuperAdmins} />
-          <Route path="/super-admins/form" component={SuperAdminsForm} />
+          <Route exact path="/super-admins/form" component={SuperAdminsForm} />
+          <Route path="/super-admins/form/:id" component={SuperAdminsForm} />
           <Route exact path="/employees" component={Employees} />
-          <Route path="/employees/form" component={FormEmployee} />
+          <Route exact path="/employees/form" component={FormEmployee} />
+          <Route path="/employees/form/:id" component={FormEmployee} />
           <Route exact path="/projects" component={Projects} />
-          <Route path="/projects/form" component={ProjectsForm} />
+          <Route exact path="/projects/form" component={ProjectsForm} />
+          <Route path="/projects/form/:id" component={ProjectsForm} />
           <Route exact path="/time-sheets" component={TimeSheets} />
-          <Route path="/time-sheets/form" component={TimeSheetsForm} />
+          <Route exact path="/time-sheets/form" component={TimeSheetsForm} />
+          <Route path="/time-sheets/form/:id" component={TimeSheetsForm} />
           <Route exact path="/tasks" component={Tasks} />
-          <Route path="/tasks/form" component={TaskForm} />
+          <Route exact path="/tasks/form" component={TaskForm} />
+          <Route path="/tasks/form/:id" component={TaskForm} />
           <Redirect to="/" />
         </Switch>
       </Router>
