@@ -1,10 +1,11 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal/modal';
+import { Link, useParams } from 'react-router-dom';
 
 const Form = () => {
-  const paramsURL = new URLSearchParams(window.location.search);
-  const adminId = paramsURL.get('id');
+  const params = useParams();
+  const adminId = params.id;
   const [formValues, setFormValues] = useState({
     name: '',
     lastName: '',
@@ -144,6 +145,7 @@ const Form = () => {
           />
         </form>
       </div>
+      <Link to="/admins">Go back</Link>
       {showModal && (
         <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
       )}
