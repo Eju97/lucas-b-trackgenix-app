@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import { Link, useParams, useHistory } from 'react-router-dom';
 
 const TaskForm = () => {
+  const history = useHistory();
+  const params = useParams();
   const [task, setTask] = useState({
     description: ''
   });
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    const id = params.id;
     if (id) {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'GET'
@@ -30,8 +32,7 @@ const TaskForm = () => {
 
   const editTask = async () => {
     try {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
+      const id = params.id;
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: {
@@ -41,7 +42,7 @@ const TaskForm = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        window.location.assign('/tasks');
+        history.push('/tasks');
       } else {
         console.log(data.message);
       }
@@ -60,7 +61,7 @@ const TaskForm = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        window.location.assign('/tasks');
+        history.push('/tasks');
       } else {
         console.log(data.message);
       }
@@ -96,6 +97,9 @@ const TaskForm = () => {
               onSubmit();
             }}
           />
+          <Link to="/tasks">
+            <button>Go Back</button>
+          </Link>
         </div>
       </form>
     </div>
