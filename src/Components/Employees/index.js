@@ -39,7 +39,9 @@ const Employees = () => {
     <section className={styles.container}>
       <DeleteConfirmationModal show={showModal} closeModal={closeModal} onConfirm={onConfirm} />
       <h2>Employees</h2>
-      <Link to="/employees/form">Add Employee</Link>
+      <Link to="/employees/form">
+        <button>Add Employee</button>
+      </Link>
       <div>
         <ListEmployees
           listEmployes={listEmployes}
