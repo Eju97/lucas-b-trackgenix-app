@@ -148,26 +148,24 @@ const Form = () => {
           />
         </form>
       </div>
-      {showModal && (
-        <Modal isOpen={showModal} handleClose={closeModal}>
-          <div>
-            <h3>{modalTitle}</h3>
-          </div>
-          <div>{contentMessage && <p>{contentMessage}</p>}</div>
-          <div>
-            <button
-              onClick={() => {
-                setShowModal(false);
-                if (modalTitle !== 'Error') {
-                  window.location.assign(`/admins`);
-                }
-              }}
-            >
-              Close
-            </button>
-          </div>
-        </Modal>
-      )}
+      <Modal isOpen={showModal} handleClose={closeModal}>
+        <div>
+          <h3>{modalTitle}</h3>
+        </div>
+        <div>{contentMessage && <p>{contentMessage}</p>}</div>
+        <div>
+          <button
+            onClick={() => {
+              setShowModal(false);
+              if (modalTitle !== 'Error') {
+                window.location.assign(`/admins`);
+              }
+            }}
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
     </>
   );
 };
