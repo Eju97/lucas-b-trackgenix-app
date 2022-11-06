@@ -1,8 +1,10 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './List.module.css';
+import { useHistory } from 'react-router-dom';
 
 const List = (props) => {
+  const history = useHistory();
   return (
     <div className={styles.container}>
       <table>
@@ -28,10 +30,9 @@ const List = (props) => {
       </table>
       <div className={styles.container}>
         <button
+          type="button"
           className={styles.buttonCreate}
-          onClick={() => {
-            window.location.assign(`/super-admins/form`);
-          }}
+          onClick={() => history.push('/super-admins/form')}
         >
           Create
         </button>

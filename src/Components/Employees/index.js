@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import ListEmployees from './ListEmployees/listEmployees';
 import DeleteConfirmationModal from './Modal/modal';
+import { useHistory } from 'react-router-dom';
 
 const Employees = () => {
+  const history = useHistory();
   const [listEmployes, setListEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
@@ -38,7 +40,9 @@ const Employees = () => {
     <section className={styles.container}>
       <DeleteConfirmationModal show={showModal} closeModal={closeModal} onConfirm={onConfirm} />
       <h2>Employees</h2>
-      <a href="/employees/form">Add Employee</a>
+      <button type="button" onClick={() => history.push('/employees/form')}>
+        Add Employee
+      </button>
       <div>
         <ListEmployees
           listEmployes={listEmployes}

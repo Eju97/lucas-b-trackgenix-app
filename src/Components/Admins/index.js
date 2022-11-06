@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Modal from './Modal/modal';
+import { useHistory } from 'react-router-dom';
 
 const Admins = () => {
+  const history = useHistory();
   const [listAdmins, setListAdmin] = useState([]);
   const [modalDisplay, setShowModal] = useState('');
   const [contentMessage, setContentMessage] = useState('');
@@ -50,7 +52,7 @@ const Admins = () => {
           {listAdmins.map((admin) => {
             return (
               <tbody key={admin._id}>
-                <tr onClick={() => window.location.assign(`/admins/form?id=${admin._id}`)}>
+                <tr onClick={() => history.push(`/admins/form/${admin._id}`)}>
                   <td>{admin.name}</td>
                   <td>{admin.lastName}</td>
                   <td>{admin.email}</td>
@@ -69,7 +71,7 @@ const Admins = () => {
             );
           })}
           <tfoot>
-            <button type="button" onClick={() => window.location.assign(`/admins/form?`)}>
+            <button type="button" onClick={() => history.push('/admins/form')}>
               Create
             </button>
           </tfoot>

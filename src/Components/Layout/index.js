@@ -15,54 +15,36 @@ import TimeSheetsForm from '../TimeSheets/Form/timesheetForm';
 import Tasks from '../Tasks/index';
 import TaskForm from '../Tasks/Form';
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 function Layout() {
-  let currentScreen = <Home />;
-  switch (window.location.pathname) {
-    case '/admins':
-      currentScreen = <Admins />;
-      break;
-    case '/admins/form':
-      currentScreen = <AdminsForm />;
-      break;
-    case '/super-admins':
-      currentScreen = <SuperAdmins />;
-      break;
-    case '/super-admins/form':
-      currentScreen = <SuperAdminsForm />;
-      break;
-    case '/employees':
-      currentScreen = <Employees />;
-      break;
-    case '/employees/form':
-      currentScreen = <FormEmployee />;
-      break;
-    case '/projects':
-      currentScreen = <Projects />;
-      break;
-    case '/projects/form':
-      currentScreen = <ProjectsForm />;
-      break;
-    case '/time-sheets':
-      currentScreen = <TimeSheets />;
-      break;
-    case '/tasks/form':
-      currentScreen = <TaskForm />;
-      break;
-    case '/time-sheets/form':
-      currentScreen = <TimeSheetsForm />;
-      break;
-    case '/tasks':
-      currentScreen = <Tasks />;
-      break;
-    default:
-      break;
-  }
-
   return (
     <div className={styles.container}>
       <Header />
-      {currentScreen}
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/admins" component={Admins} />
+          <Route exact path="/admins/form" component={AdminsForm} />
+          <Route path="/admins/form/:id" component={AdminsForm} />
+          <Route exact path="/super-admins" component={SuperAdmins} />
+          <Route exact path="/super-admins/form" component={SuperAdminsForm} />
+          <Route path="/super-admins/form/:id" component={SuperAdminsForm} />
+          <Route exact path="/employees" component={Employees} />
+          <Route exact path="/employees/form" component={FormEmployee} />
+          <Route path="/employees/form/:id" component={FormEmployee} />
+          <Route exact path="/projects" component={Projects} />
+          <Route exact path="/projects/form" component={ProjectsForm} />
+          <Route path="/projects/form/:id" component={ProjectsForm} />
+          <Route exact path="/time-sheets" component={TimeSheets} />
+          <Route exact path="/time-sheets/form" component={TimeSheetsForm} />
+          <Route path="/time-sheets/form/:id" component={TimeSheetsForm} />
+          <Route exact path="/tasks" component={Tasks} />
+          <Route exact path="/tasks/form" component={TaskForm} />
+          <Route path="/tasks/form/:id" component={TaskForm} />
+          <Redirect to="/" />
+        </Switch>
+      </Router>
       <Footer />
     </div>
   );

@@ -1,7 +1,9 @@
 import React from 'react';
 import modalstyles from './modal.module.css';
+import { useHistory } from 'react-router-dom';
 
 const Modal = ({ contentMessage, title, setShowModal }) => {
+  const history = useHistory();
   return (
     <>
       <div id="id-modal" className={modalstyles.modal}>
@@ -19,7 +21,7 @@ const Modal = ({ contentMessage, title, setShowModal }) => {
             onClick={() => {
               setShowModal(false);
               if (title !== 'Error') {
-                window.location.assign(`/admins`);
+                history.push(`/admins`);
               }
             }}
           >
