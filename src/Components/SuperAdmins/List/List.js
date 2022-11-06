@@ -1,9 +1,10 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './List.module.css';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const List = (props) => {
+  const history = useHistory();
   return (
     <div className={styles.container}>
       <table>
@@ -28,9 +29,13 @@ const List = (props) => {
         </tbody>
       </table>
       <div className={styles.container}>
-        <Link to="/super-admins/form">
-          <button className={styles.buttonCreate}>Create</button>
-        </Link>
+        <button
+          type="button"
+          className={styles.buttonCreate}
+          onClick={() => history.push('/super-admins/form')}
+        >
+          Create
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
 
 function SuperAdminsForm() {
@@ -120,9 +120,9 @@ function SuperAdminsForm() {
           <button onClick={onSubmit} type="button">
             Apply
           </button>
-          <Link to="/super-admins">
-            <button>Go Back</button>
-          </Link>
+          <button type="button" onClick={() => history.goBack()}>
+            Go Back
+          </button>
         </div>
       </form>
     </section>
