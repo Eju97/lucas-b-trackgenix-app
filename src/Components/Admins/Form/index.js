@@ -1,6 +1,6 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
-import Modal from '../Modal/modal';
+import Modal from '../../Shared/Modal';
 
 const Form = () => {
   const paramsURL = new URLSearchParams(window.location.search);
@@ -76,6 +76,10 @@ const Form = () => {
     }
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -145,7 +149,24 @@ const Form = () => {
         </form>
       </div>
       {showModal && (
-        <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
+        <Modal isOpen={showModal} handleClose={closeModal}>
+          <div>
+            <h3>{modalTitle}</h3>
+          </div>
+          <div>{contentMessage && <p>{contentMessage}</p>}</div>
+          <div>
+            <button
+              onClick={() => {
+                setShowModal(false);
+                if (modalTitle !== 'Error') {
+                  window.location.assign(`/admins`);
+                }
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </Modal>
       )}
     </>
   );

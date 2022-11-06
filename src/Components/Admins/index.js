@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
-import Modal from './Modal/modal';
+import Modal from '../Shared/Modal';
 
 const Admins = () => {
   const [listAdmins, setListAdmin] = useState([]);
@@ -35,6 +35,11 @@ const Admins = () => {
       }
     }
   };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       <section className={styles.container}>
@@ -75,9 +80,15 @@ const Admins = () => {
           </tfoot>
         </table>
       </section>
-      {modalDisplay ? (
-        <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
-      ) : null}
+      <Modal isOpen={modalDisplay} handleClose={closeModal}>
+        <div>
+          <h3>{modalTitle}</h3>
+        </div>
+        <div>{contentMessage && <p>{contentMessage}</p>}</div>
+        <div>
+          <button onClick={closeModal}>Close</button>
+        </div>
+      </Modal>
     </>
   );
 };
