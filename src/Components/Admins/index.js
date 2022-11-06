@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Modal from './Modal/modal';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Admins = () => {
   const history = useHistory();
@@ -71,9 +71,9 @@ const Admins = () => {
             );
           })}
           <tfoot>
-            <Link to="/admins/form">
-              <button>Create</button>
-            </Link>
+            <button type="button" onClick={() => history.push('/admins/form')}>
+              Create
+            </button>
           </tfoot>
         </table>
       </section>
