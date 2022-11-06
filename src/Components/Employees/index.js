@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import ListEmployees from './ListEmployees/listEmployees';
-import DeleteConfirmationModal from './Modal/modal';
+import Modal from '../Shared/Modal';
 
 const Employees = () => {
   const [listEmployes, setListEmployees] = useState([]);
@@ -36,8 +36,16 @@ const Employees = () => {
 
   return (
     <section className={styles.container}>
-      <DeleteConfirmationModal show={showModal} closeModal={closeModal} onConfirm={onConfirm} />
-      <h2>Employees</h2>
+      <Modal isOpen={showModal} handleClose={closeModal}>
+        <div>
+          <h3>Modal</h3>
+        </div>
+        <div>
+          <button onClick={closeModal}>Close</button>
+          <button onClick={onConfirm}>Confirm</button>
+        </div>
+      </Modal>
+      ;<h2>Employees</h2>
       <a href="/employees/form">Add Employee</a>
       <div>
         <ListEmployees
