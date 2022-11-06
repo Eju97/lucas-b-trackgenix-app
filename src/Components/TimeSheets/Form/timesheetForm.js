@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Form = () => {
   const params = useParams();
@@ -203,7 +203,9 @@ const Form = () => {
           </div>
         </div>
         <button type="submit">Add</button>
-        <Link to="/time-sheets">Go Back</Link>
+        <button type="button" onClick={() => history.goBack()}>
+          Go Back
+        </button>
       </form>
     </div>
   );
