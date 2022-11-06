@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from './ModalProject/Modal.js';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Projects = () => {
   const history = useHistory();
@@ -91,7 +91,9 @@ const Projects = () => {
           })}
         </tbody>
       </table>
-      <Link to="/projects/form">Add Project</Link>
+      <button type="button" onClick={() => history.push('/projects/form')}>
+        Add Project
+      </button>
     </section>
   );
 };

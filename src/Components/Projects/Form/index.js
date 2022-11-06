@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 const Form = () => {
   const history = useHistory();
@@ -306,7 +306,9 @@ const Form = () => {
           >
             Save
           </button>
-          <Link to="/projects">Back</Link>
+          <button type="button" onClick={() => history.goBack()}>
+            Back
+          </button>
         </div>
       </form>
     </div>
