@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import DeleteConfirmationModal from './ModalDelete/modalDelete';
+import Modal from '../Shared/Modal';
 
 const TimeSheets = () => {
   const [timesheets, saveTimesheet] = useState([]);
@@ -101,11 +101,16 @@ const TimeSheets = () => {
             })}
           </table>
           <a href="/time-sheets/form">Add a new Timesheet</a>
-          <DeleteConfirmationModal
-            showModal={showModal}
-            closeModal={closeModal}
-            handleDelete={handleDelete}
-          />
+          <Modal isOpen={showModal} handleClose={closeModal}>
+            <div>
+              <h2>Do you really want to delete this Timesheet?</h2>
+            </div>
+            <div>
+              <button onClick={closeModal}>Cancel</button>
+              <button onClick={handleDelete}>Delete</button>
+            </div>
+          </Modal>
+          ;
         </>
       ) : (
         <h3>Loading Timesheets...</h3>
