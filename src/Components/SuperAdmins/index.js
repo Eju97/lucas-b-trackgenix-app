@@ -1,6 +1,6 @@
 import List from './List/List';
 import React, { useEffect, useState } from 'react';
-import Modal from './Modal/Modal';
+import Modal from '../Shared/Modal';
 
 const SuperAdmins = () => {
   const [superAdminList, setSuperAdminList] = useState([]);
@@ -40,7 +40,16 @@ const SuperAdmins = () => {
         setShowModal={setShowModal}
         setSelectedId={setSelectedId}
       />
-      <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
+      <Modal handleClose={closeModal} isOpen={showModal}>
+        <div>
+          <h3>You sure want to delete it?</h3>
+        </div>
+        <div>
+          <button onClick={closeModal}>Close</button>
+          <button onClick={onDeleteTask}>Delete</button>
+        </div>
+      </Modal>
+      ;
     </div>
   );
 };
