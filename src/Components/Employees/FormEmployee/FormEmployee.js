@@ -144,6 +144,9 @@ function Form() {
           onChange={onChangeEmployeePassword}
         />
         <button type="submit">Save</button>
+        <button type="button" onClick={() => history.goBack()}>
+          Go Back
+        </button>
       </form>
     </div>
   );
