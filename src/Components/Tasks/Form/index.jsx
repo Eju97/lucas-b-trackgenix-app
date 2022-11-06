@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const TaskForm = () => {
   const history = useHistory();
@@ -97,9 +97,9 @@ const TaskForm = () => {
               onSubmit();
             }}
           />
-          <Link to="/tasks">
-            <button>Go Back</button>
-          </Link>
+          <button type="button" onClick={() => history.goBack()}>
+            Go Back
+          </button>
         </div>
       </form>
     </div>

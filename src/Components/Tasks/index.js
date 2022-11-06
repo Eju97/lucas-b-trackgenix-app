@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import TaskList from './TaskList';
 import styles from './tasks.module.css';
 import Modal from './Modal';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function Tasks() {
+  const history = useHistory();
   const [tasks, setTask] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -36,9 +37,11 @@ function Tasks() {
     <div className={styles.container}>
       <TaskList list={tasks} setShowModal={setShowModal} setSelectedId={setSelectedId} />
       <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
-      <Link to="/tasks/form">
-        <img src="../assets/images/add.svg" className={styles.addImg}></img>
-      </Link>
+      <img
+        onClick={() => history.push('/tasks/form')}
+        src="../assets/images/add.svg"
+        className={styles.addImg}
+      ></img>
     </div>
   );
 }
