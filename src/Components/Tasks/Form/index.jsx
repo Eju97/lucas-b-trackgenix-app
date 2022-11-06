@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import TextInput from '../../Shared/TextInput/TextInput';
 
 const TaskForm = () => {
   const [task, setTask] = useState({
@@ -76,8 +77,8 @@ const TaskForm = () => {
       </div>
       <form>
         <div className={styles.form}>
-          <label>Description</label>
-          <input
+          <TextInput
+            label="Description"
             value={task.description}
             type="text"
             onChange={(a) => {

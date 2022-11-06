@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './super-admins-form.module.css';
+import TextInput from '../Shared/TextInput/TextInput';
 
 function SuperAdminsForm() {
   const params = new URLSearchParams(window.location.search);
@@ -75,8 +76,8 @@ function SuperAdminsForm() {
     <section className={styles.container}>
       <form>
         <div className={styles.inputs}>
-          <label>Name</label>
-          <input
+          <TextInput
+            label="Name"
             onChange={(e) => {
               setInputData({ ...inputData, name: e.target.value });
             }}
@@ -85,8 +86,8 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.inputs}>
-          <label>Last Name</label>
-          <input
+          <TextInput
+            label="Last Name"
             onChange={(e) => {
               setInputData({ ...inputData, last_name: e.target.value });
             }}
@@ -95,18 +96,18 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.inputs}>
-          <label>Email</label>
-          <input
+          <TextInput
+            label="Email"
             onChange={(e) => {
               setInputData({ ...inputData, email: e.target.value });
             }}
-            type="text"
+            type="email"
             value={inputData.email}
           />
         </div>
         <div className={styles.inputs}>
-          <label>Password</label>
-          <input
+          <TextInput
+            label="Password"
             onChange={(e) => {
               setInputData({ ...inputData, password: e.target.value });
             }}

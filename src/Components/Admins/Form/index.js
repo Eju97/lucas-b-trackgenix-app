@@ -1,6 +1,7 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal/modal';
+import TextInput from '../../Shared/TextInput/TextInput';
 
 const Form = () => {
   const paramsURL = new URLSearchParams(window.location.search);
@@ -81,62 +82,54 @@ const Form = () => {
       <div className={styles.container}>
         <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
         <form>
-          <div>
-            <label>Name</label>
-            <input
-              type="text"
-              placeholder="add First Name"
-              value={formValues.name}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  name: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Last Name</label>
-            <input
-              type="text"
-              placeholder="add Last Name"
-              value={formValues.lastName}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  lastName: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="add Email"
-              value={formValues.email}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  email: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="add Password"
-              value={formValues.password}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  password: e.target.value
-                });
-              }}
-            />
-          </div>
+          <TextInput
+            label="Name"
+            type="text"
+            placeholder="add First Name"
+            value={formValues.name}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                name: e.target.value
+              });
+            }}
+          />
+          <TextInput
+            label="Last Name"
+            type="text"
+            placeholder="add Last Name"
+            value={formValues.lastName}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                lastName: e.target.value
+              });
+            }}
+          />
+          <TextInput
+            label="Email"
+            type="email"
+            placeholder="add Email"
+            value={formValues.email}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                email: e.target.value
+              });
+            }}
+          />
+          <TextInput
+            label="Password"
+            type="password"
+            placeholder="add Password"
+            value={formValues.password}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                password: e.target.value
+              });
+            }}
+          />
           <input
             type="button"
             value="Submit"

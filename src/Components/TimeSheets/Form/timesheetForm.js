@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import TextInput from '../../Shared/TextInput/TextInput';
 
 const Form = () => {
   const [projects, setProjects] = useState([]);
@@ -126,36 +127,30 @@ const Form = () => {
         {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
         {errorState && <h3>{errorState}</h3>}
         <div>
-          <div>
-            <label htmlFor="description">Description</label>
-            <input
-              name="description"
-              type="text"
-              required
-              value={timesheetAdded.description}
-              onChange={onChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="date">Date</label>
-            <input
-              name="date"
-              type="date"
-              required
-              value={formDate(timesheetAdded.date)}
-              onChange={onChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="hours">Hours</label>
-            <input
-              name="hours"
-              type="number"
-              required
-              value={timesheetAdded.hours}
-              onChange={onChange}
-            />
-          </div>
+          <TextInput
+            label="Description"
+            name="description"
+            type="text"
+            required
+            value={timesheetAdded.description}
+            onChange={onChange}
+          />
+          <TextInput
+            label="Date"
+            name="date"
+            type="date"
+            required
+            value={formDate(timesheetAdded.date)}
+            onChange={onChange}
+          />
+          <TextInput
+            label="Hours"
+            name="hours"
+            type="number"
+            required
+            value={timesheetAdded.hours}
+            onChange={onChange}
+          />
           <div>
             <label htmlFor="project">Project</label>
             <select name="project" required value={timesheetAdded.project} onChange={onChange}>

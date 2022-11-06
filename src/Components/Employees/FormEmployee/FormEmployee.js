@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormEmployee.module.css';
+import TextInput from '../../Shared/TextInput/TextInput';
 
 function Form() {
   const [employeeId, setEmployeeId] = useState();
@@ -97,45 +98,40 @@ function Form() {
       {errorState && <h3>{errorState}</h3>}
       <form onSubmit={onSubmit}>
         <h2>Form</h2>
-        <label>Name</label>
-        <input
-          className={styles.input}
+        <TextInput
+          label="Name"
           id="employeeName"
           name="employeeName"
           required
           value={employeeName}
           onChange={onChangeEmployeeName}
         />
-        <label>LastName</label>
-        <input
-          className={styles.input}
+        <TextInput
+          label="LastName"
           id="employeeLastName"
           name="employeeLastName"
           required
           value={employeeLastName}
           onChange={onChangeEmployeeLastName}
         />
-        <label>Email</label>
-        <input
-          className={styles.input}
+        <TextInput
+          label="Email"
           id="employeeEmail"
           name="employeeEmail"
           required
           value={employeeEmail}
           onChange={onChangeEmployeeEmail}
         />
-        <label>Phone</label>
-        <input
-          className={styles.input}
+        <TextInput
+          label="Phone"
           id="employeePhone"
           name="employeePhone"
           required
           value={employeePhone}
           onChange={onChangeEmployeePhone}
         />
-        <label>Password</label>
-        <input
-          className={styles.input}
+        <TextInput
+          label="Password"
           id="employeePassword"
           name="employeePassword"
           required

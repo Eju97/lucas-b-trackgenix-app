@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import TextInput from '../../Shared/TextInput/TextInput';
 
 const Form = () => {
   const [projectState, setProjectState] = useState({
@@ -123,9 +124,8 @@ const Form = () => {
         <h2>Form</h2>
         <div className={styles.projectForm}>
           <div>
-            <label>Name</label>
-            <input
-              className={styles.input}
+            <TextInput
+              label="Name"
               id="name"
               name="name"
               value={projectState.name}
@@ -136,9 +136,8 @@ const Form = () => {
                 });
               }}
             />
-            <label>Client Name</label>
-            <input
-              className={styles.input}
+            <TextInput
+              label="Client Name"
               id="clientName"
               name="clientName"
               value={projectState.clientName}
@@ -151,9 +150,8 @@ const Form = () => {
             />
           </div>
           <div>
-            <label>Description</label>
-            <input
-              className={styles.input}
+            <TextInput
+              label="Description"
               id="description"
               name="description"
               value={projectState.description}
@@ -166,9 +164,8 @@ const Form = () => {
             />
           </div>
           <div>
-            <label>Start Date</label>
-            <input
-              className={styles.input}
+            <TextInput
+              label="Start Date"
               id="startDate"
               name="startDate"
               type="date"
@@ -181,9 +178,8 @@ const Form = () => {
                 });
               }}
             />
-            <label>End Date</label>
-            <input
-              className={styles.input}
+            <TextInput
+              label="End Date"
               id="endDate"
               name="endDate"
               type="date"
@@ -247,8 +243,8 @@ const Form = () => {
             </select>
           </div>
           <div>
-            <label>Rate</label>
-            <input
+            <TextInput
+              label="Rate"
               name="rate"
               id="rate"
               onChange={(e) => {
@@ -257,7 +253,7 @@ const Form = () => {
                   rate: e.target.value
                 });
               }}
-            ></input>
+            />
           </div>
           <div>
             <button
