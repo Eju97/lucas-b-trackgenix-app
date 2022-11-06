@@ -38,11 +38,11 @@ const Employees = () => {
     <section className={styles.container}>
       <Modal isOpen={showModal} handleClose={closeModal}>
         <div>
-          <h3>Modal</h3>
+          <h3>Do you really want to delete this Timesheet?</h3>
         </div>
         <div>
-          <button onClick={closeModal}>Close</button>
-          <button onClick={onConfirm}>Confirm</button>
+          <button onClick={closeModal}>Cancel</button>
+          <button onClick={onConfirm}>Accept</button>
         </div>
       </Modal>
       ;<h2>Employees</h2>

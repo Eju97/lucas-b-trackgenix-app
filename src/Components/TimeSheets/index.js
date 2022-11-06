@@ -103,11 +103,11 @@ const TimeSheets = () => {
           <a href="/time-sheets/form">Add a new Timesheet</a>
           <Modal isOpen={showModal} handleClose={closeModal}>
             <div>
-              <h2>Do you really want to delete this Timesheet?</h2>
+              <h3>Do you really want to delete this Timesheet?</h3>
             </div>
             <div>
               <button onClick={closeModal}>Cancel</button>
-              <button onClick={handleDelete}>Delete</button>
+              <button onClick={handleDelete}>Accept</button>
             </div>
           </Modal>
           ;

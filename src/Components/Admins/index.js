@@ -4,9 +4,9 @@ import Modal from '../Shared/Modal';
 
 const Admins = () => {
   const [listAdmins, setListAdmin] = useState([]);
-  const [modalDisplay, setShowModal] = useState('');
-  const [contentMessage, setContentMessage] = useState('');
-  const [modalTitle, setModalTitle] = useState('');
+  const [modalDisplay, setShowModal] = useState(false);
+  const [adminId, setAdminId] = useState();
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
       .then((response) => response.json())
@@ -14,29 +14,26 @@ const Admins = () => {
         setListAdmin(response.data);
       });
   }, []);
+
   const deleteAdmin = async (_id) => {
-    if (confirm('Are you sure that you want to delete this Admin?')) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${_id}`, {
-          method: 'DELETE'
-        });
-        setListAdmin([...listAdmins.filter((listAdmin) => listAdmin._id !== _id)]);
-        const data = await response.json();
-        setContentMessage(data.message);
-        if (response.ok) {
-          setListAdmin(listAdmins.filter((admin) => admin._id !== _id));
-          setModalTitle('Success');
-        } else {
-          setModalTitle('Error');
-        }
-        setShowModal(true);
-      } catch (error) {
-        alert(error);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${_id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        setListAdmin(listAdmins.filter((admin) => admin._id !== _id));
       }
+    } catch (error) {
+      alert(error);
     }
   };
 
   const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const onConfirmModal = () => {
+    deleteAdmin(adminId);
     setShowModal(false);
   };
 
@@ -63,7 +60,8 @@ const Admins = () => {
                     <button
                       onClick={(event) => {
                         event.stopPropagation();
-                        deleteAdmin(admin._id);
+                        setAdminId(admin._id);
+                        setShowModal(true);
                       }}
                     >
                       x
@@ -82,11 +80,11 @@ const Admins = () => {
       </section>
       <Modal isOpen={modalDisplay} handleClose={closeModal}>
         <div>
-          <h3>{modalTitle}</h3>
+          <h3>Do you really want to delete this Admin?</h3>
         </div>
-        <div>{contentMessage && <p>{contentMessage}</p>}</div>
         <div>
-          <button onClick={closeModal}>Close</button>
+          <button onClick={closeModal}>Cancel</button>
+          <button onClick={onConfirmModal}>Accept</button>
         </div>
       </Modal>
     </>

@@ -42,11 +42,11 @@ const SuperAdmins = () => {
       />
       <Modal handleClose={closeModal} isOpen={showModal}>
         <div>
-          <h3>You sure want to delete it?</h3>
+          <h3>Do you really want to delete this Super Admin?</h3>
         </div>
         <div>
-          <button onClick={closeModal}>Close</button>
-          <button onClick={onDeleteTask}>Delete</button>
+          <button onClick={closeModal}>Cancel</button>
+          <button onClick={onDeleteTask}>Accept</button>
         </div>
       </Modal>
       ;

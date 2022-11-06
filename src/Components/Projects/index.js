@@ -37,11 +37,11 @@ const Projects = () => {
     <section className={styles.container}>
       <Modal isOpen={showModal} handleClose={closeModal}>
         <div>
-          <h3>Are you sure you want to delete the project?</h3>
+          <h3>Do you really want to delete this Project?</h3>
         </div>
         <div>
-          <button onClick={onConfirmModal}>Accept</button>
-          <button onClick={closeModal}>Cancel</button>
+          <button onClick={onConfirmModal}>Cancel</button>
+          <button onClick={closeModal}>Accept</button>
         </div>
       </Modal>
       ;<h2>Projects</h2>

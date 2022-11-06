@@ -36,14 +36,11 @@ function Tasks() {
       <TaskList list={tasks} setShowModal={setShowModal} setSelectedId={setSelectedId} />
       <Modal handleClose={closeModal} isOpen={showModal}>
         <div>
-          <h3>Delete Task</h3>
+          <h3>Do you really want to delete this Task?</h3>
         </div>
         <div>
-          <p>Are you sure you want to delete task?</p>
-        </div>
-        <div>
-          <button onClick={closeModal}>Close</button>
-          <button onClick={onDeleteTask}>Delete</button>
+          <button onClick={closeModal}>Cancel</button>
+          <button onClick={onDeleteTask}>Accept</button>
         </div>
       </Modal>
       ;
