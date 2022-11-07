@@ -1,6 +1,7 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './List.module.css';
+import Buttons from '../../Shared/Button';
 
 const List = (props) => {
   return (
@@ -27,14 +28,13 @@ const List = (props) => {
         </tbody>
       </table>
       <div className={styles.container}>
-        <button
-          className={styles.buttonCreate}
-          onClick={() => {
+        <Buttons
+          action={() => {
             window.location.assign(`/super-admins/form`);
           }}
-        >
-          Create
-        </button>
+          variant="confirm"
+          name="Create"
+        />
       </div>
     </div>
   );

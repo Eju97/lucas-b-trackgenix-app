@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import ListEmployees from './ListEmployees/listEmployees';
 import DeleteConfirmationModal from './Modal/modal';
+import Buttons from '../Shared/Button';
 
 const Employees = () => {
   const [listEmployes, setListEmployees] = useState([]);
@@ -38,7 +39,6 @@ const Employees = () => {
     <section className={styles.container}>
       <DeleteConfirmationModal show={showModal} closeModal={closeModal} onConfirm={onConfirm} />
       <h2>Employees</h2>
-      <a href="/employees/form">Add Employee</a>
       <div>
         <ListEmployees
           listEmployes={listEmployes}
@@ -46,6 +46,15 @@ const Employees = () => {
           deleteItem={deleteItem}
           setShowModal={setShowModal}
           setSelectedEmployee={setSelectedEmployee}
+        />
+      </div>
+      <div>
+        <Buttons
+          action={() => {
+            window.location.assign(`/employees/form`);
+          }}
+          variant="confirm"
+          name="Create"
         />
       </div>
     </section>

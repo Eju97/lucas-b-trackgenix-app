@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
 import DeleteConfirmationModal from './ModalDelete/modalDelete';
+import Buttons from '../Shared/Button';
 
 const TimeSheets = () => {
   const [timesheets, saveTimesheet] = useState([]);
@@ -100,7 +101,15 @@ const TimeSheets = () => {
               );
             })}
           </table>
-          <a href="/time-sheets/form">Add a new Timesheet</a>
+          <div>
+            <Buttons
+              action={() => {
+                window.location.assign(`/time-sheets/form`);
+              }}
+              variant="confirm"
+              name="Create"
+            />
+          </div>
           <DeleteConfirmationModal
             showModal={showModal}
             closeModal={closeModal}

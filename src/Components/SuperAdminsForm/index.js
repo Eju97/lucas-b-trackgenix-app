@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './super-admins-form.module.css';
+import Buttons from '../Shared/Button';
 
 function SuperAdminsForm() {
   const params = new URLSearchParams(window.location.search);
@@ -115,9 +116,7 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <button onClick={onSubmit} type="button">
-            Apply
-          </button>
+          <Buttons action={onSubmit} variant="confirm" name="Apply" />
         </div>
       </form>
     </section>

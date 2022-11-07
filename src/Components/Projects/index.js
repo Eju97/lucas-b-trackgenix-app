@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from './ModalProject/Modal.js';
+import Buttons from '../Shared/Button';
 
 const Projects = () => {
   const [projects, saveProjects] = useState([]);
@@ -92,7 +93,15 @@ const Projects = () => {
           })}
         </tbody>
       </table>
-      <a href="/projects/form">Add Project</a>
+      <div>
+        <Buttons
+          action={() => {
+            window.location.assign(`/projects/form`);
+          }}
+          variant="confirm"
+          name="Create"
+        />
+      </div>
     </section>
   );
 };

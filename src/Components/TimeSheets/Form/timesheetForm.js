@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Buttons from '../../Shared/Button';
 
 const Form = () => {
   const [projects, setProjects] = useState([]);
@@ -202,8 +203,16 @@ const Form = () => {
             </select>
           </div>
         </div>
-        <button type="submit">Add</button>
-        <a href="'/time-sheets'">Go Back</a>
+        <div>
+          <Buttons action={onSubmit} variant="confirm" name="Submit" />
+          <Buttons
+            action={() => {
+              window.location.assign(`/time-sheets`);
+            }}
+            variant="cancel"
+            name="Cancel"
+          />
+        </div>
       </form>
     </div>
   );
