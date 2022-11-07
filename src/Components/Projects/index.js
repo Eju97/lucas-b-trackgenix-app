@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from './ModalProject/Modal.js';
-import Buttons from '../Shared/Button';
+import Button from '../Shared/Button';
 
 const Projects = () => {
   const [projects, saveProjects] = useState([]);
@@ -94,7 +94,7 @@ const Projects = () => {
         </tbody>
       </table>
       <div>
-        <Buttons
+        <Button
           action={() => {
             window.location.assign(`/projects/form`);
           }}

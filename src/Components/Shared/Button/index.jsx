@@ -1,11 +1,11 @@
 import styles from './button.module.css';
 
-const Buttons = ({ type, action, variant, name }) => {
+const Button = ({ type, onClick, variant, name }) => {
   return (
-    <button type={type ? type : 'button'} className={`${styles[variant]}`} onClick={action}>
+    <button type={type ? type : 'button'} className={`${styles[variant]}`} onClick={onClick}>
       {name}
     </button>
   );
 };
 
-export default Buttons;
+export default Button;

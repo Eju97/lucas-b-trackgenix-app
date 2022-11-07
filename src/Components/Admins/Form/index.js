@@ -1,7 +1,7 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal/modal';
-import Buttons from '../../Shared/Button';
+import Button from '../../Shared/Button';
 
 const Form = () => {
   const paramsURL = new URLSearchParams(window.location.search);
@@ -138,7 +138,7 @@ const Form = () => {
               }}
             />
           </div>
-          <Buttons
+          <Button
             action={adminId ? () => editAdmin() : () => createAdmin()}
             variant="confirm"
             name="Submit"

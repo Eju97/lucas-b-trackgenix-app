@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import Buttons from '../../Shared/Button';
+import Button from '../../Shared/Button';
 
 const Form = () => {
   const [projectState, setProjectState] = useState({
@@ -261,7 +261,7 @@ const Form = () => {
             ></input>
           </div>
           <div>
-            <Buttons
+            <Button
               action={() => {
                 setProjectState({
                   ...projectState,
@@ -297,7 +297,7 @@ const Form = () => {
           })}
         </div>
         <div className={styles.save}>
-          <Buttons action={onSubmit} variant="confirm" name="Submit" />
+          <Button action={onSubmit} variant="confirm" name="Submit" />
         </div>
       </form>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
 import styles from './List.module.css';
-import Buttons from '../../Shared/Button';
+import Button from '../../Shared/Button';
 
 const List = (props) => {
   return (
@@ -28,7 +28,7 @@ const List = (props) => {
         </tbody>
       </table>
       <div className={styles.container}>
-        <Buttons
+        <Button
           action={() => {
             window.location.assign(`/super-admins/form`);
           }}

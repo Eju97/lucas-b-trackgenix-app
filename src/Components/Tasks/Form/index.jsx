@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import Buttons from '../../Shared/Button';
+import Button from '../../Shared/Button';
 
 const TaskForm = () => {
   const [task, setTask] = useState({
@@ -89,15 +89,7 @@ const TaskForm = () => {
           />
         </div>
         <div className={styles.input}>
-          {/* <input
-            type="button"
-            value="Submit"
-            className={styles.submitBtn}
-            onClick={() => {
-              onSubmit();
-            }}
-          /> */}
-          <Buttons action={onSubmit} variant="confirm" name="Submit" />
+          <Button action={onSubmit} variant="confirm" name="Submit" />
         </div>
       </form>
     </div>

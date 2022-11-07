@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import ListEmployees from './ListEmployees/listEmployees';
 import DeleteConfirmationModal from './Modal/modal';
-import Buttons from '../Shared/Button';
+import Button from '../Shared/Button';
 
 const Employees = () => {
   const [listEmployes, setListEmployees] = useState([]);
@@ -49,7 +49,7 @@ const Employees = () => {
         />
       </div>
       <div>
-        <Buttons
+        <Button
           action={() => {
             window.location.assign(`/employees/form`);
           }}

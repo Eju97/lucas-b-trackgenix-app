@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Modal from './Modal/modal';
-import Buttons from '../Shared/Button';
+import Button from '../Shared/Button';
 
 const Admins = () => {
   const [listAdmins, setListAdmin] = useState([]);
@@ -70,7 +70,7 @@ const Admins = () => {
             );
           })}
           <tfoot>
-            <Buttons
+            <Button
               action={() => window.location.assign(`/admins/form?`)}
               variant="confirm"
               name="Create"

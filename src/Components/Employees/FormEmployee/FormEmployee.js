@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormEmployee.module.css';
-import Buttons from '../../Shared/Button';
+import Button from '../../Shared/Button';
 
 function Form() {
   const [employeeId, setEmployeeId] = useState();
@@ -144,7 +144,7 @@ function Form() {
           onChange={onChangeEmployeePassword}
         />
         <div>
-          <Buttons action={onSubmit} variant="confirm" name="Submit" />
+          <Button action={onSubmit} variant="confirm" name="Submit" />
         </div>
       </form>
     </div>
