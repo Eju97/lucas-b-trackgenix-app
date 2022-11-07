@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import TextInput from '../../Shared/TextInput/TextInput';
+import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
 
 const Form = () => {
   const [projectState, setProjectState] = useState({
@@ -124,7 +124,7 @@ const Form = () => {
         <h2>Form</h2>
         <div className={styles.projectForm}>
           <div>
-            <TextInput
+            <TextAndDateInput
               label="Name"
               id="name"
               name="name"
@@ -136,7 +136,7 @@ const Form = () => {
                 });
               }}
             />
-            <TextInput
+            <TextAndDateInput
               label="Client Name"
               id="clientName"
               name="clientName"
@@ -150,7 +150,7 @@ const Form = () => {
             />
           </div>
           <div>
-            <TextInput
+            <TextAndDateInput
               label="Description"
               id="description"
               name="description"
@@ -164,7 +164,7 @@ const Form = () => {
             />
           </div>
           <div>
-            <TextInput
+            <TextAndDateInput
               label="Start Date"
               id="startDate"
               name="startDate"
@@ -178,7 +178,7 @@ const Form = () => {
                 });
               }}
             />
-            <TextInput
+            <TextAndDateInput
               label="End Date"
               id="endDate"
               name="endDate"
@@ -243,7 +243,7 @@ const Form = () => {
             </select>
           </div>
           <div>
-            <TextInput
+            <TextAndDateInput
               label="Rate"
               name="rate"
               id="rate"

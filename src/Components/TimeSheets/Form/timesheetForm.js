@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import TextInput from '../../Shared/TextInput/TextInput';
+import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
 
 const Form = () => {
   const [projects, setProjects] = useState([]);
@@ -127,7 +127,7 @@ const Form = () => {
         {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
         {errorState && <h3>{errorState}</h3>}
         <div>
-          <TextInput
+          <TextAndDateInput
             label="Description"
             name="description"
             type="text"
@@ -135,7 +135,7 @@ const Form = () => {
             value={timesheetAdded.description}
             onChange={onChange}
           />
-          <TextInput
+          <TextAndDateInput
             label="Date"
             name="date"
             type="date"
@@ -143,7 +143,7 @@ const Form = () => {
             value={formDate(timesheetAdded.date)}
             onChange={onChange}
           />
-          <TextInput
+          <TextAndDateInput
             label="Hours"
             name="hours"
             type="number"

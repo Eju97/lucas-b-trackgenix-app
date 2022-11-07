@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormEmployee.module.css';
-import TextInput from '../../Shared/TextInput/TextInput';
+import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
 
 function Form() {
   const [employeeId, setEmployeeId] = useState();
@@ -98,7 +98,7 @@ function Form() {
       {errorState && <h3>{errorState}</h3>}
       <form onSubmit={onSubmit}>
         <h2>Form</h2>
-        <TextInput
+        <TextAndDateInput
           label="Name"
           id="employeeName"
           name="employeeName"
@@ -106,7 +106,7 @@ function Form() {
           value={employeeName}
           onChange={onChangeEmployeeName}
         />
-        <TextInput
+        <TextAndDateInput
           label="LastName"
           id="employeeLastName"
           name="employeeLastName"
@@ -114,7 +114,7 @@ function Form() {
           value={employeeLastName}
           onChange={onChangeEmployeeLastName}
         />
-        <TextInput
+        <TextAndDateInput
           label="Email"
           id="employeeEmail"
           name="employeeEmail"
@@ -122,7 +122,7 @@ function Form() {
           value={employeeEmail}
           onChange={onChangeEmployeeEmail}
         />
-        <TextInput
+        <TextAndDateInput
           label="Phone"
           id="employeePhone"
           name="employeePhone"
@@ -130,7 +130,7 @@ function Form() {
           value={employeePhone}
           onChange={onChangeEmployeePhone}
         />
-        <TextInput
+        <TextAndDateInput
           label="Password"
           id="employeePassword"
           name="employeePassword"

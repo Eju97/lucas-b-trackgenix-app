@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from './textInput.module.css';
+import styles from './textAndDateInput.module.css';
 
-const TextInput = ({ label, id, name, value, placeholder, onChange, required, type }) => {
+const TextAndDateInput = ({ label, id, name, value, placeholder, onChange, required, type }) => {
   return (
-    <div>
+    <div className={styles.container}>
       <label>{label}</label>
       <input
-        className={styles.TextInput}
+        className={styles.textAndDateInput}
         type={type}
         id={id}
         name={name}
@@ -19,4 +19,4 @@ const TextInput = ({ label, id, name, value, placeholder, onChange, required, ty
   );
 };
 
-export default TextInput;
+export default TextAndDateInput;

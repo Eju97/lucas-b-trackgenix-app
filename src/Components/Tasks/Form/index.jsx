@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import TextInput from '../../Shared/TextInput/TextInput';
+import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
 
 const TaskForm = () => {
   const [task, setTask] = useState({
@@ -77,7 +77,7 @@ const TaskForm = () => {
       </div>
       <form>
         <div className={styles.form}>
-          <TextInput
+          <TextAndDateInput
             label="Description"
             value={task.description}
             type="text"

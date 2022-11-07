@@ -1,7 +1,7 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal/modal';
-import TextInput from '../../Shared/TextInput/TextInput';
+import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
 
 const Form = () => {
   const paramsURL = new URLSearchParams(window.location.search);
@@ -82,7 +82,7 @@ const Form = () => {
       <div className={styles.container}>
         <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
         <form>
-          <TextInput
+          <TextAndDateInput
             label="Name"
             type="text"
             placeholder="add First Name"
@@ -94,7 +94,7 @@ const Form = () => {
               });
             }}
           />
-          <TextInput
+          <TextAndDateInput
             label="Last Name"
             type="text"
             placeholder="add Last Name"
@@ -106,7 +106,7 @@ const Form = () => {
               });
             }}
           />
-          <TextInput
+          <TextAndDateInput
             label="Email"
             type="email"
             placeholder="add Email"
@@ -118,7 +118,7 @@ const Form = () => {
               });
             }}
           />
-          <TextInput
+          <TextAndDateInput
             label="Password"
             type="password"
             placeholder="add Password"
