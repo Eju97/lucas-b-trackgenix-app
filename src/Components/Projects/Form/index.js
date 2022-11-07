@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import Button from '../../Shared/Button';
+import { useHistory, useParams } from 'react-router-dom';
 
 const Form = () => {
+  const history = useHistory();
+  const params = useParams();
   const [projectState, setProjectState] = useState({
     name: '',
     clientName: '',
@@ -38,8 +41,7 @@ const Form = () => {
   };
 
   useEffect(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    const id = params.id;
     if (id) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
@@ -87,7 +89,7 @@ const Form = () => {
         });
         const data = await response.json();
         if (!data.error) {
-          window.location.href = '/projects';
+          history.push('/projects');
         } else {
           setErrorMessage(data.message);
         }
@@ -96,8 +98,7 @@ const Form = () => {
       }
     } else {
       try {
-        const url = window.location.href;
-        const id = url.substring(url.lastIndexOf('=') + 1);
+        const id = params.id;
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
           method: 'PUT',
           headers: {
@@ -107,7 +108,7 @@ const Form = () => {
         });
         const data = await response.json();
         if (!data.error) {
-          window.location.href = '/projects';
+          history.push('/projects');
         } else {
           setErrorMessage(data.message);
         }
@@ -297,7 +298,8 @@ const Form = () => {
           })}
         </div>
         <div className={styles.save}>
-          <Button action={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </div>

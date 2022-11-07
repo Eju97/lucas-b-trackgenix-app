@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import Buttons from '../../Shared/Button';
+import Button from '../../Shared/Button';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Form = () => {
+  const params = useParams();
+  const history = useHistory();
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -16,7 +19,6 @@ const Form = () => {
     project: '',
     employee: ''
   });
-
   const formDate = (date) => {
     const dateIso = date.substr(0, 10);
     return dateIso;
@@ -47,8 +49,7 @@ const Form = () => {
   }, []);
 
   useEffect(async () => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const id = urlSearchParams.get('id');
+    const id = params.id;
     if (id) {
       setIsEditing(true);
       const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
@@ -93,13 +94,12 @@ const Form = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        window.location.assign('/time-sheets');
+        history.push('/time-sheets');
       } else {
         setErrorState(data.message);
       }
     } else {
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const id = urlSearchParams.get('id');
+      const id = params.id;
       event.preventDefault();
       const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
         method: 'PUT',
@@ -115,7 +115,7 @@ const Form = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        window.location.assign('/time-sheets');
+        history.push('/time-sheets');
       } else {
         setErrorState(data.message);
       }
@@ -204,14 +204,8 @@ const Form = () => {
           </div>
         </div>
         <div>
-          <Buttons action={onSubmit} variant="confirm" name="Submit" />
-          <Buttons
-            action={() => {
-              window.location.assign(`/time-sheets`);
-            }}
-            variant="cancel"
-            name="Cancel"
-          />
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </div>

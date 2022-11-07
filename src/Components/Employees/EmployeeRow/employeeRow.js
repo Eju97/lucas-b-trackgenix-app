@@ -1,11 +1,10 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const EmployeeRow = ({ employee, setShowModal, setSelectedEmployee }) => {
+  const history = useHistory();
   return (
-    <tr
-      className="rows"
-      onClick={() => (window.location.href = `employees/form?id=${employee._id}`)}
-    >
+    <tr className="rows" onClick={() => history.push(`employees/form/${employee._id}`)}>
       <td>{employee.name}</td>
       <td>{employee.lastName}</td>
       <td>{employee.email}</td>

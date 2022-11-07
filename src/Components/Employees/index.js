@@ -3,8 +3,10 @@ import styles from './employees.module.css';
 import ListEmployees from './ListEmployees/listEmployees';
 import DeleteConfirmationModal from './Modal/modal';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const Employees = () => {
+  const history = useHistory();
   const [listEmployes, setListEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
@@ -49,13 +51,7 @@ const Employees = () => {
         />
       </div>
       <div>
-        <Button
-          action={() => {
-            window.location.assign(`/employees/form`);
-          }}
-          variant="confirm"
-          name="Create"
-        />
+        <Button onClick={() => history.push('/employees/form')} variant="confirm" name="Create" />
       </div>
     </section>
   );

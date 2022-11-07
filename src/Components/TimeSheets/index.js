@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
 import DeleteConfirmationModal from './ModalDelete/modalDelete';
-import Buttons from '../Shared/Button';
+import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const TimeSheets = () => {
+  const history = useHistory();
   const [timesheets, saveTimesheet] = useState([]);
   const [timesheetId, setTimesheetId] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -57,9 +59,7 @@ const TimeSheets = () => {
             {timesheets.map((timesheet) => {
               return (
                 <tbody key={timesheet._id} className={styles.tbodyContainer}>
-                  <tr
-                    onClick={() => (window.location.href = `/time-sheets/form?id=${timesheet._id}`)}
-                  >
+                  <tr onClick={() => history.push(`/time-sheets/form/${timesheet._id}`)}>
                     <td>{timesheet.description}</td>
                     <td>{dateFormatted(timesheet.date)}</td>
                     <td>{timesheet.hours}</td>
@@ -102,10 +102,8 @@ const TimeSheets = () => {
             })}
           </table>
           <div>
-            <Buttons
-              action={() => {
-                window.location.assign(`/time-sheets/form`);
-              }}
+            <Button
+              onClick={() => history.push('/time-sheets/form')}
               variant="confirm"
               name="Create"
             />
