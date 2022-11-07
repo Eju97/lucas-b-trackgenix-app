@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from './index.module.css';
 import Logo from '../Assets/logoDelete.png';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const Table = ({ data, headers }) => {
-  // const history = useHistory();
-  // console.log(data);
+const Table = ({ data, headers, deleteAdmin }) => {
+  const history = useHistory();
   return (
     <table className={styles.table}>
       <thead>
@@ -17,13 +16,14 @@ const Table = ({ data, headers }) => {
               </th>
             );
           })}
+          <th />
         </tr>
       </thead>
       <tbody className={styles.tbody}>
         {data.map((row) => {
           return (
             <>
-              <tr key={row.id} /* onClick={() => history.push(`/admins/form/${data._id}`)} */>
+              <tr key={row._id} onClick={() => history.push(`/admins/form/${row._id}`)}>
                 {headers.map((header, index) => {
                   return (
                     <>
@@ -34,7 +34,14 @@ const Table = ({ data, headers }) => {
                   );
                 })}
                 <td className={styles.tCell}>
-                  <img src={Logo} />
+                  <img
+                    src={Logo}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteAdmin(row._id);
+                      // showModal(true);
+                    }}
+                  />
                 </td>
               </tr>
             </>
