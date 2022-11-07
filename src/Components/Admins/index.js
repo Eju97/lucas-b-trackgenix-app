@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
-// import Modal from './Modal/modal';
 import Table from '../Shared/Table';
+// import { useHistory } from 'react-router-dom';
 
 const Admins = () => {
+  // const history = useHistory();
   const [listAdmins, setListAdmin] = useState([]);
   // const [modalDisplay, setShowModal] = useState('');
   // const [contentMessage, setContentMessage] = useState('');

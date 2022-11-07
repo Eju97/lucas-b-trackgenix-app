@@ -1,10 +1,12 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal/modal';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Form = () => {
-  const paramsURL = new URLSearchParams(window.location.search);
-  const adminId = paramsURL.get('id');
+  const history = useHistory();
+  const params = useParams();
+  const adminId = params.id;
   const [formValues, setFormValues] = useState({
     name: '',
     lastName: '',
@@ -143,6 +145,9 @@ const Form = () => {
             onClick={adminId ? () => editAdmin() : () => createAdmin()}
           />
         </form>
+        <button type="button" onClick={() => history.goBack()}>
+          Go back
+        </button>
       </div>
       {showModal && (
         <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
