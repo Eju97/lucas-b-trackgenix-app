@@ -1,7 +1,11 @@
 import React from 'react';
 import styles from './index.module.css';
+import Logo from '../Assets/logoDelete.png';
+import { useHistory } from 'react-router-dom';
 
 const Table = ({ data, headers }) => {
+  const history = useHistory();
+  console.log(data);
   return (
     <table className={styles.table}>
       <thead>
@@ -19,7 +23,7 @@ const Table = ({ data, headers }) => {
         {data.map((row) => {
           return (
             <>
-              <tr key={row.id}>
+              <tr key={row.id} onClick={() => history.push(`/admins/form/${data._id}`)}>
                 {headers.map((header, index) => {
                   return (
                     <>
@@ -30,7 +34,7 @@ const Table = ({ data, headers }) => {
                   );
                 })}
                 <td className={styles.tCell}>
-                  <img src="../Assets/logo-png.png" />
+                  <img src={Logo} />
                 </td>
               </tr>
             </>
