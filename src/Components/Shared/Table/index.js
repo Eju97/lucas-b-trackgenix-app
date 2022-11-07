@@ -18,17 +18,29 @@ const Table = ({ data, headers }) => {
       <tbody className={styles.tbody}>
         {data.map((row) => {
           return (
-            <tr key={row.id}>
-              {headers.map((header, index) => {
-                return (
-                  <td key={index} className={styles.tCell}>
-                    {row[header]}
-                  </td>
-                );
-              })}
-            </tr>
+            <>
+              <tr key={row.id}>
+                {headers.map((header, index) => {
+                  return (
+                    <>
+                      <td key={index} className={styles.tCell}>
+                        {row[header]}
+                      </td>
+                    </>
+                  );
+                })}
+                <td className={styles.tCell}>
+                  <img src="../Assets/logo-png.png" />
+                </td>
+              </tr>
+            </>
           );
         })}
+      </tbody>
+      <tbody>
+        <button type="button" onClick={() => window.location.assign(`/admins/form?`)}>
+          Create
+        </button>
       </tbody>
     </table>
   );
