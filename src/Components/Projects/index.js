@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
-import Modal from './ModalProject/Modal.js';
+import Modal from '../Shared/Modal';
 import Table from '../Shared/Table/';
+import Button from '../Shared/Button';
 
 const Projects = () => {
   const urlForm = '/projects/form/';
@@ -37,7 +38,15 @@ const Projects = () => {
 
   return (
     <section className={styles.container}>
-      <Modal show={showModal} closeModal={closeModal} onConfirmModal={onConfirmModal} />
+      <Modal isOpen={showModal} handleClose={closeModal}>
+        <div>
+          <h3>Do you really want to delete this Project?</h3>
+        </div>
+        <div>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onConfirmModal} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
       <h2>Projects</h2>
       <Table
         data={projects}

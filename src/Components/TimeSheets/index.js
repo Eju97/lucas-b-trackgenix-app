@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import DeleteConfirmationModal from './ModalDelete/modalDelete';
-// import { useHistory } from 'react-router-dom';
 import Table from '../Shared/Table';
+import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
 
 const TimeSheets = () => {
-  // const history = useHistory();
   const urlForm = '/time-sheets/form/';
   const [timesheets, setTimesheet] = useState([]);
   const [timesheetId, setTimesheetId] = useState();
@@ -32,7 +31,11 @@ const TimeSheets = () => {
         ) : (
           timesheet.task.description
         ),
-        employee: `${timesheet.employee.name} ${timesheet.employee.lastName}`,
+        employee: !timesheet.employee ? (
+          <p className={styles.none}>There is no employee</p>
+        ) : (
+          `${timesheet.employee.name} ${timesheet.employee.lastName}`
+        ),
         project: !timesheet.project ? (
           <p className={styles.none}>There is no project</p>
         ) : (
@@ -63,8 +66,16 @@ const TimeSheets = () => {
 
   return (
     <section className={styles.container}>
+      <Modal isOpen={showModal} handleClose={closeModal}>
+        <div>
+          <h3>Do you really want to delete this Timesheet?</h3>
+        </div>
+        <div>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={handleDelete} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
       <h2>TimeSheets</h2>
-      {/* {timesheets.length > 0 ? ( */}
       <Table
         data={timeSheetData()}
         headers={['description', 'date', 'hours', 'project', 'employee', 'task', 'delete']}
@@ -73,74 +84,6 @@ const TimeSheets = () => {
         setData={setTimesheet}
         urlForm={urlForm}
       />
-      {/* <table>
-            <thead className={styles.theadContainer}>
-              <tr>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Hours</th>
-                <th>Project</th>
-                <th>Employee</th>
-                <th>Task</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            {timesheets.map((timesheet) => {
-              return (
-                <tbody key={timesheet._id} className={styles.tbodyContainer}>
-                  <tr onClick={() => history.push(`/time-sheets/form/${timesheet._id}`)}>
-                    <td>{timesheet.description}</td>
-                    <td>{dateFormatted(timesheet.date)}</td>
-                    <td>{timesheet.hours}</td>
-                    <td>
-                      {!timesheet.project ? (
-                        <p className={styles.none}>There is no project</p>
-                      ) : (
-                        timesheet.project.name
-                      )}
-                    </td>
-                    <td>
-                      {!timesheet.employee ? (
-                        <p className={styles.none}>There is no employee</p>
-                      ) : (
-                        timesheet.employee.name
-                      )}
-                    </td>
-                    <td>
-                      {!timesheet.task ? (
-                        <p className={styles.none}>There is no task</p>
-                      ) : (
-                        timesheet.task.description
-                      )}
-                    </td>
-                    <td>
-                      <button
-                        className={styles.deleteBtn}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setTimesheetId(timesheet._id);
-                          setShowModal(true);
-                        }}
-                      >
-                        X
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
-          </table>
-          <button type="button" onClick={() => history.push('/time-sheets/form')}>
-            Add a new Timesheet
-          </button> */}
-      <DeleteConfirmationModal
-        showModal={showModal}
-        closeModal={closeModal}
-        handleDelete={handleDelete}
-      />
-      {/* ) : ( */}
-      {/* <h3>Loading Timesheets...</h3> */}
-      {/* )} */}
     </section>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
+import Input from '../Shared/Input/Input';
+import Button from '../Shared/Button';
 
 function SuperAdminsForm() {
   const history = useHistory();
@@ -77,8 +79,8 @@ function SuperAdminsForm() {
     <section className={styles.container}>
       <form>
         <div className={styles.inputs}>
-          <label>Name</label>
-          <input
+          <Input
+            label="Name"
             onChange={(e) => {
               setInputData({ ...inputData, name: e.target.value });
             }}
@@ -87,8 +89,8 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.inputs}>
-          <label>Last Name</label>
-          <input
+          <Input
+            label="Last Name"
             onChange={(e) => {
               setInputData({ ...inputData, last_name: e.target.value });
             }}
@@ -97,18 +99,18 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.inputs}>
-          <label>Email</label>
-          <input
+          <Input
+            label="Email"
             onChange={(e) => {
               setInputData({ ...inputData, email: e.target.value });
             }}
-            type="text"
+            type="email"
             value={inputData.email}
           />
         </div>
         <div className={styles.inputs}>
-          <label>Password</label>
-          <input
+          <Input
+            label="Password"
             onChange={(e) => {
               setInputData({ ...inputData, password: e.target.value });
             }}
@@ -117,12 +119,8 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <button onClick={onSubmit} type="button">
-            Apply
-          </button>
-          <button type="button" onClick={() => history.goBack()}>
-            Go Back
-          </button>
+          <Button onClick={onSubmit} variant="confirm" name="Create" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </section>

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Input from '../../Shared/Input/Input';
+import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 
 const Form = () => {
@@ -48,19 +50,23 @@ const Form = () => {
         });
         const project = await response.json();
         const employeeList = project.data.employees.map((item) => {
-          return {
-            employee: item.employee._id,
-            rate: item.rate,
-            role: item.role
-          };
+          if (item.employee) {
+            return {
+              employee: item.employee._id,
+              rate: item.rate,
+              role: item.role
+            };
+          }
+          return 'noEmployee';
         });
+        const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
         setProjectState({
           name: project.data.name,
           clientName: project.data.clientName,
           description: project.data.description,
           startDate: project.data.startDate,
           endDate: project.data.endDate,
-          employees: employeeList
+          employees: newEmployeeList
         });
         setIsEditing(true);
       } catch (error) {
@@ -124,9 +130,8 @@ const Form = () => {
         <h2>Form</h2>
         <div className={styles.projectForm}>
           <div>
-            <label>Name</label>
-            <input
-              className={styles.input}
+            <Input
+              label="Name"
               id="name"
               name="name"
               value={projectState.name}
@@ -137,9 +142,8 @@ const Form = () => {
                 });
               }}
             />
-            <label>Client Name</label>
-            <input
-              className={styles.input}
+            <Input
+              label="Client Name"
               id="clientName"
               name="clientName"
               value={projectState.clientName}
@@ -152,9 +156,8 @@ const Form = () => {
             />
           </div>
           <div>
-            <label>Description</label>
-            <input
-              className={styles.input}
+            <Input
+              label="Description"
               id="description"
               name="description"
               value={projectState.description}
@@ -167,9 +170,8 @@ const Form = () => {
             />
           </div>
           <div>
-            <label>Start Date</label>
-            <input
-              className={styles.input}
+            <Input
+              label="Start Date"
               id="startDate"
               name="startDate"
               type="date"
@@ -182,9 +184,8 @@ const Form = () => {
                 });
               }}
             />
-            <label>End Date</label>
-            <input
-              className={styles.input}
+            <Input
+              label="End Date"
               id="endDate"
               name="endDate"
               type="date"
@@ -248,8 +249,8 @@ const Form = () => {
             </select>
           </div>
           <div>
-            <label>Rate</label>
-            <input
+            <Input
+              label="Rate"
               name="rate"
               id="rate"
               onChange={(e) => {
@@ -258,20 +259,19 @@ const Form = () => {
                   rate: e.target.value
                 });
               }}
-            ></input>
+            />
           </div>
           <div>
-            <button
-              type="button"
-              onClick={() => {
+            <Button
+              action={() => {
                 setProjectState({
                   ...projectState,
                   employees: [...projectState.employees, employeeProject]
                 });
               }}
-            >
-              Assign Employee
-            </button>
+              variant="confirm"
+              name="Assing Employee"
+            />
           </div>
         </div>
         <div className={styles.employees}>
@@ -298,17 +298,8 @@ const Form = () => {
           })}
         </div>
         <div className={styles.save}>
-          <button
-            type="button"
-            onClick={() => {
-              onSubmit();
-            }}
-          >
-            Save
-          </button>
-          <button type="button" onClick={() => history.goBack()}>
-            Back
-          </button>
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </div>

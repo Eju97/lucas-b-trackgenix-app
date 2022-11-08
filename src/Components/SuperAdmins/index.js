@@ -1,8 +1,8 @@
-//import List from './List/List';
-import styles from './super-admins.module.css';
 import React, { useEffect, useState } from 'react';
-import Modal from './Modal/Modal';
+import styles from './super-admins.module.css';
+import Modal from '../Shared/Modal';
 import Table from '../Shared/Table';
+import Button from '../Shared/Button';
 
 const SuperAdmins = () => {
   const urlForm = '/super-admins/form/';
@@ -43,7 +43,16 @@ const SuperAdmins = () => {
         showModal={setShowModal}
         deleteId={setSelectedId}
       />
-      <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
+      <Modal handleClose={closeModal} isOpen={showModal}>
+        <div>
+          <h3>Do you really want to delete this Super Admin?</h3>
+        </div>
+        <div>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onDeleteTask} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
+      ;
     </div>
   );
 };

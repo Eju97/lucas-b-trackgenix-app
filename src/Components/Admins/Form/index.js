@@ -1,7 +1,9 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
-import Modal from '../Modal/modal';
+import Modal from '../../Shared/Modal';
+import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
+import Input from '../../Shared/Input/Input';
 
 const Form = () => {
   const history = useHistory();
@@ -78,80 +80,89 @@ const Form = () => {
     }
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       <div className={styles.container}>
         <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
         <form>
-          <div>
-            <label>Name</label>
-            <input
-              type="text"
-              placeholder="add First Name"
-              value={formValues.name}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  name: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Last Name</label>
-            <input
-              type="text"
-              placeholder="add Last Name"
-              value={formValues.lastName}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  lastName: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="add Email"
-              value={formValues.email}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  email: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="add Password"
-              value={formValues.password}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  password: e.target.value
-                });
-              }}
-            />
-          </div>
-          <input
-            type="button"
-            value="Submit"
-            onClick={adminId ? () => editAdmin() : () => createAdmin()}
+          <Input
+            label="Name"
+            type="text"
+            placeholder="add First Name"
+            value={formValues.name}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                name: e.target.value
+              });
+            }}
           />
+          <Input
+            label="Last Name"
+            type="text"
+            placeholder="add Last Name"
+            value={formValues.lastName}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                lastName: e.target.value
+              });
+            }}
+          />
+          <Input
+            label="Email"
+            type="email"
+            placeholder="add Email"
+            value={formValues.email}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                email: e.target.value
+              });
+            }}
+          />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="add Password"
+            value={formValues.password}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                password: e.target.value
+              });
+            }}
+          />
+          <Button
+            onClick={adminId ? () => editAdmin() : () => createAdmin()}
+            variant="confirm"
+            name="Submit"
+          />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </form>
-        <button type="button" onClick={() => history.goBack()}>
-          Go back
-        </button>
       </div>
-      {showModal && (
-        <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
-      )}
+      <Modal isOpen={showModal} handleClose={closeModal}>
+        <div>
+          <h3>{modalTitle}</h3>
+        </div>
+        <div>{contentMessage && <p>{contentMessage}</p>}</div>
+        <div>
+          <Button
+            onClick={() => {
+              setShowModal(false);
+              if (modalTitle !== 'Error') {
+                window.location.assign(`/admins`);
+              }
+            }}
+            variant="cancel"
+            name="Close"
+          />
+        </div>
+      </Modal>
     </>
   );
 };

@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-// import TaskList from './TaskList';
 import styles from './tasks.module.css';
-import Modal from './Modal';
-// import { useHistory } from 'react-router-dom';
+import Modal from '../Shared/Modal';
 import Table from '../Shared/Table';
+import Button from '../Shared/Button';
 
 function Tasks() {
-  // const history = useHistory();
   const urlForm = '/tasks/form/';
   const [tasks, setTask] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -45,13 +43,15 @@ function Tasks() {
         showModal={setShowModal}
         deleteId={setSelectedId}
       />
-      {/* <TaskList list={tasks} setShowModal={setShowModal} setSelectedId={setSelectedId} /> */}
-      <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
-      {/* <img
-        onClick={() => history.push('/tasks/form')}
-        src="../assets/images/add.svg"
-        className={styles.addImg}
-      ></img> */}
+      <Modal handleClose={closeModal} isOpen={showModal}>
+        <div>
+          <h3>Do you really want to delete this Task?</h3>
+        </div>
+        <div>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onDeleteTask} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
     </div>
   );
 }

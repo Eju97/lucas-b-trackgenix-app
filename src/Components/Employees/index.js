@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-//import ListEmployees from './ListEmployees/listEmployees';
-import DeleteConfirmationModal from './Modal/modal';
 import Table from '../Shared/Table';
-//import { useHistory } from 'react-router-dom';
+import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
 
 const Employees = () => {
   const urlForm = '/employees/form/';
-  //const history = useHistory();
   const [listEmployes, setListEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
@@ -40,11 +38,16 @@ const Employees = () => {
 
   return (
     <section className={styles.container}>
-      <DeleteConfirmationModal show={showModal} closeModal={closeModal} onConfirm={onConfirm} />
+      <Modal isOpen={showModal} handleClose={closeModal}>
+        <div>
+          <h3>Do you really want to delete this Timesheet?</h3>
+        </div>
+        <div>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onConfirm} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
       <h2>Employees</h2>
-      {/* <button type="button" onClick={() => history.push('/employees/form')}>
-        Add Employee
-      </button> */}
       <div>
         <Table
           data={listEmployes}
@@ -54,6 +57,9 @@ const Employees = () => {
           deleteId={deleteItem}
           urlForm={urlForm}
         />
+      </div>
+      <div>
+        <Button onClick={() => history.push('/employees/form')} variant="confirm" name="Create" />
       </div>
     </section>
   );
