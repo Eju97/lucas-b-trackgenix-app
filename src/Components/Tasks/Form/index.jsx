@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -78,8 +79,8 @@ const TaskForm = () => {
       </div>
       <form>
         <div className={styles.form}>
-          <label>Description</label>
-          <input
+          <Input
+            label="Description"
             value={task.description}
             type="text"
             onChange={(a) => {

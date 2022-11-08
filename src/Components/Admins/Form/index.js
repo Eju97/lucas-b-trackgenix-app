@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Modal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
+import Input from '../../Shared/Input/Input';
 
 const Form = () => {
   const history = useHistory();
@@ -88,62 +89,54 @@ const Form = () => {
       <div className={styles.container}>
         <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
         <form>
-          <div>
-            <label>Name</label>
-            <input
-              type="text"
-              placeholder="add First Name"
-              value={formValues.name}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  name: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Last Name</label>
-            <input
-              type="text"
-              placeholder="add Last Name"
-              value={formValues.lastName}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  lastName: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="add Email"
-              value={formValues.email}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  email: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="add Password"
-              value={formValues.password}
-              onChange={(e) => {
-                setFormValues({
-                  ...formValues,
-                  password: e.target.value
-                });
-              }}
-            />
-          </div>
+          <Input
+            label="Name"
+            type="text"
+            placeholder="add First Name"
+            value={formValues.name}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                name: e.target.value
+              });
+            }}
+          />
+          <Input
+            label="Last Name"
+            type="text"
+            placeholder="add Last Name"
+            value={formValues.lastName}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                lastName: e.target.value
+              });
+            }}
+          />
+          <Input
+            label="Email"
+            type="email"
+            placeholder="add Email"
+            value={formValues.email}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                email: e.target.value
+              });
+            }}
+          />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="add Password"
+            value={formValues.password}
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                password: e.target.value
+              });
+            }}
+          />
           <Button
             onClick={adminId ? () => editAdmin() : () => createAdmin()}
             variant="confirm"

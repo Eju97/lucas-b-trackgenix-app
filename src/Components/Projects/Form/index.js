@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -129,9 +130,8 @@ const Form = () => {
         <h2>Form</h2>
         <div className={styles.projectForm}>
           <div>
-            <label>Name</label>
-            <input
-              className={styles.input}
+            <Input
+              label="Name"
               id="name"
               name="name"
               value={projectState.name}
@@ -142,9 +142,8 @@ const Form = () => {
                 });
               }}
             />
-            <label>Client Name</label>
-            <input
-              className={styles.input}
+            <Input
+              label="Client Name"
               id="clientName"
               name="clientName"
               value={projectState.clientName}
@@ -157,9 +156,8 @@ const Form = () => {
             />
           </div>
           <div>
-            <label>Description</label>
-            <input
-              className={styles.input}
+            <Input
+              label="Description"
               id="description"
               name="description"
               value={projectState.description}
@@ -172,9 +170,8 @@ const Form = () => {
             />
           </div>
           <div>
-            <label>Start Date</label>
-            <input
-              className={styles.input}
+            <Input
+              label="Start Date"
               id="startDate"
               name="startDate"
               type="date"
@@ -187,9 +184,8 @@ const Form = () => {
                 });
               }}
             />
-            <label>End Date</label>
-            <input
-              className={styles.input}
+            <Input
+              label="End Date"
               id="endDate"
               name="endDate"
               type="date"
@@ -253,8 +249,8 @@ const Form = () => {
             </select>
           </div>
           <div>
-            <label>Rate</label>
-            <input
+            <Input
+              label="Rate"
               name="rate"
               id="rate"
               onChange={(e) => {
@@ -263,7 +259,7 @@ const Form = () => {
                   rate: e.target.value
                 });
               }}
-            ></input>
+            />
           </div>
           <div>
             <Button
