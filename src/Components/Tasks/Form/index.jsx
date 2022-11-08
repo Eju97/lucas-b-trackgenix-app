@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 
 const TaskForm = () => {
@@ -89,17 +90,8 @@ const TaskForm = () => {
           />
         </div>
         <div className={styles.input}>
-          <input
-            type="button"
-            value="Submit"
-            className={styles.submitBtn}
-            onClick={() => {
-              onSubmit();
-            }}
-          />
-          <button type="button" onClick={() => history.goBack()}>
-            Go Back
-          </button>
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </div>

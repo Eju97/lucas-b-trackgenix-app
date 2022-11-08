@@ -1,6 +1,7 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../Modal/modal';
+import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 
 const Form = () => {
@@ -139,15 +140,13 @@ const Form = () => {
               }}
             />
           </div>
-          <input
-            type="button"
-            value="Submit"
+          <Button
             onClick={adminId ? () => editAdmin() : () => createAdmin()}
+            variant="confirm"
+            name="Submit"
           />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </form>
-        <button type="button" onClick={() => history.goBack()}>
-          Go back
-        </button>
       </div>
       {showModal && (
         <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />

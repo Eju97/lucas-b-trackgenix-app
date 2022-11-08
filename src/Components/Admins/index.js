@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Modal from './Modal/modal';
+import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 
 const Admins = () => {
@@ -71,9 +72,7 @@ const Admins = () => {
             );
           })}
           <tfoot>
-            <button type="button" onClick={() => history.push('/admins/form')}>
-              Create
-            </button>
+            <Button onClick={() => history.push('/admins/form')} variant="confirm" name="Create" />
           </tfoot>
         </table>
       </section>

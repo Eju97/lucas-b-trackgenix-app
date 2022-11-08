@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
 import DeleteConfirmationModal from './ModalDelete/modalDelete';
+import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 
 const TimeSheets = () => {
@@ -100,9 +101,13 @@ const TimeSheets = () => {
               );
             })}
           </table>
-          <button type="button" onClick={() => history.push('/time-sheets/form')}>
-            Add a new Timesheet
-          </button>
+          <div>
+            <Button
+              onClick={() => history.push('/time-sheets/form')}
+              variant="confirm"
+              name="Create"
+            />
+          </div>
           <DeleteConfirmationModal
             showModal={showModal}
             closeModal={closeModal}

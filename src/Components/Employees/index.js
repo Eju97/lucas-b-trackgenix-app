@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import ListEmployees from './ListEmployees/listEmployees';
 import DeleteConfirmationModal from './Modal/modal';
+import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 
 const Employees = () => {
@@ -40,9 +41,6 @@ const Employees = () => {
     <section className={styles.container}>
       <DeleteConfirmationModal show={showModal} closeModal={closeModal} onConfirm={onConfirm} />
       <h2>Employees</h2>
-      <button type="button" onClick={() => history.push('/employees/form')}>
-        Add Employee
-      </button>
       <div>
         <ListEmployees
           listEmployes={listEmployes}
@@ -51,6 +49,9 @@ const Employees = () => {
           setShowModal={setShowModal}
           setSelectedEmployee={setSelectedEmployee}
         />
+      </div>
+      <div>
+        <Button onClick={() => history.push('/employees/form')} variant="confirm" name="Create" />
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormEmployee.module.css';
+import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 
 function Form() {
@@ -143,10 +144,10 @@ function Form() {
           value={employeePassword}
           onChange={onChangeEmployeePassword}
         />
-        <button type="submit">Save</button>
-        <button type="button" onClick={() => history.goBack()}>
-          Go Back
-        </button>
+        <div>
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+        </div>
       </form>
     </div>
   );

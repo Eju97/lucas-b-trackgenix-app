@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from './ModalProject/Modal.js';
+import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 
 const Projects = () => {
@@ -93,9 +94,9 @@ const Projects = () => {
           })}
         </tbody>
       </table>
-      <button type="button" onClick={() => history.push('/projects/form')}>
-        Add Project
-      </button>
+      <div>
+        <Button onClick={() => history.push('/projects/form')} variant="confirm" name="Create" />
+      </div>
     </section>
   );
 };

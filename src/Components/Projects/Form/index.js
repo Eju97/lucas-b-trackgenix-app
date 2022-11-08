@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 
 const Form = () => {
@@ -265,17 +266,16 @@ const Form = () => {
             ></input>
           </div>
           <div>
-            <button
-              type="button"
-              onClick={() => {
+            <Button
+              action={() => {
                 setProjectState({
                   ...projectState,
                   employees: [...projectState.employees, employeeProject]
                 });
               }}
-            >
-              Assign Employee
-            </button>
+              variant="confirm"
+              name="Assing Employee"
+            />
           </div>
         </div>
         <div className={styles.employees}>
@@ -302,17 +302,8 @@ const Form = () => {
           })}
         </div>
         <div className={styles.save}>
-          <button
-            type="button"
-            onClick={() => {
-              onSubmit();
-            }}
-          >
-            Save
-          </button>
-          <button type="button" onClick={() => history.goBack()}>
-            Back
-          </button>
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </div>

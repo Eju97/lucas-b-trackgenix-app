@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 
 const Form = () => {
@@ -202,10 +203,10 @@ const Form = () => {
             </select>
           </div>
         </div>
-        <button type="submit">Add</button>
-        <button type="button" onClick={() => history.goBack()}>
-          Go Back
-        </button>
+        <div>
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+        </div>
       </form>
     </div>
   );

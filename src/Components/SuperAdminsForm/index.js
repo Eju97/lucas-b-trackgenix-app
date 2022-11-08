@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
+import Button from '../Shared/Button';
 
 function SuperAdminsForm() {
   const history = useHistory();
@@ -117,12 +118,8 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <button onClick={onSubmit} type="button">
-            Apply
-          </button>
-          <button type="button" onClick={() => history.goBack()}>
-            Go Back
-          </button>
+          <Button onClick={onSubmit} variant="confirm" name="Create" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </section>
