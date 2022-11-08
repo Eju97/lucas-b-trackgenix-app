@@ -23,7 +23,7 @@ const List = (props) => {
               listItem={item}
               showModal={props.showModal}
               setShowModal={props.setShowModal}
-              setSelectedId={props.setSelectedId}
+              deleteId={props.setSelectedId}
             />
           ))}
         </tbody>

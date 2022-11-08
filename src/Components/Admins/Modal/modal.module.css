@@ -93,8 +93,8 @@
     cursor: pointer;
 }
 
-:root {
+/* :root {
     --main-color: #EA3354;
     --close-color: var(--main-color);
     --hover-close-color: #EA3354;
-}
+} */

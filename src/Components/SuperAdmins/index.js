@@ -1,8 +1,11 @@
-import List from './List/List';
+//import List from './List/List';
+import styles from './super-admins.module.css';
 import React, { useEffect, useState } from 'react';
 import Modal from './Modal/Modal';
+import Table from '../Shared/Table';
 
 const SuperAdmins = () => {
+  const urlForm = '/super-admins/form/';
   const [superAdminList, setSuperAdminList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -32,13 +35,13 @@ const SuperAdmins = () => {
   };
 
   return (
-    <div>
-      <List
-        superAdminList={superAdminList}
-        setSuperAdminList={setSuperAdminList}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setSelectedId={setSelectedId}
+    <div className={styles.container}>
+      <Table
+        data={superAdminList}
+        headers={['name', 'lastName', 'email', 'password', 'Delete']}
+        urlForm={urlForm}
+        showModal={setShowModal}
+        deleteId={setSelectedId}
       />
       <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
     </div>

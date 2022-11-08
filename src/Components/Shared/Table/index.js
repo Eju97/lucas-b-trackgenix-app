@@ -1,60 +1,63 @@
 import React from 'react';
-import styles from './index.module.css';
+import tableStyles from './index.module.css';
 import Logo from '../Assets/logoDelete.png';
 import { useHistory } from 'react-router-dom';
 
 const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
-  console.log(data);
   const history = useHistory();
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          {headers.map((header, index) => {
+    <div>
+      <table>
+        <thead>
+          <tr className={tableStyles.trHeader}>
+            {headers.map((header, index) => {
+              return <th key={index}>{header}</th>;
+            })}
+            <th />
+          </tr>
+        </thead>
+        <tbody className={tableStyles.tbody}>
+          {data.map((row) => {
             return (
-              <th key={index} className={styles.tCell}>
-                {header}
-              </th>
+              <>
+                <tr
+                  className={tableStyles.tr}
+                  key={row._id}
+                  onClick={() => history.push(`${urlForm}${row._id}`)}
+                >
+                  {headers.map((header, index) => {
+                    return (
+                      <>
+                        <td key={index}>{row[header]}</td>
+                      </>
+                    );
+                  })}
+                  <td>
+                    <img
+                      src={Logo}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteId(row._id);
+                        showModal(true);
+                      }}
+                    />
+                  </td>
+                </tr>
+              </>
             );
           })}
-          <th />
-        </tr>
-      </thead>
-      <tbody className={styles.tbody}>
-        {data.map((row) => {
-          return (
-            <>
-              <tr key={row._id} onClick={() => history.push(`${urlForm}${row._id}`)}>
-                {headers.map((header, index) => {
-                  return (
-                    <>
-                      <td key={index} className={styles.tCell}>
-                        {row[header]}
-                      </td>
-                    </>
-                  );
-                })}
-                <td className={styles.tCell}>
-                  <img
-                    src={Logo}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteId(row._id);
-                      showModal(true);
-                    }}
-                  />
-                </td>
-              </tr>
-            </>
-          );
-        })}
-      </tbody>
-      <tbody>
-        <button type="button" onClick={() => history.push(urlForm)}>
+        </tbody>
+      </table>
+      <div className={tableStyles.containterButton}>
+        <button
+          className={tableStyles.buttonAdd}
+          type="button"
+          onClick={() => history.push(urlForm)}
+        >
           Create
         </button>
-      </tbody>
-    </table>
+      </div>
+    </div>
   );
 };
 

@@ -46,7 +46,7 @@ const Admins = () => {
         <Table
           data={listAdmins}
           headers={['name', 'lastName', 'email', 'password', 'Delete']}
-          delete={deleteAdmin}
+          deleteId={deleteAdmin}
           showModal={setShowModal}
           urlForm={urlForm}
         />

@@ -21,7 +21,7 @@ const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelectedEmpl
     //       </tr>
     //     </thead>
     //     <tbody>
-    //       {listEmployes.map((item) => (
+    //       {listEmployes.((item) => (
     //         <EmployeeRow
     //           key={item._id}
     //           employee={item}
