@@ -41,6 +41,7 @@ p{
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  cursor: pointer;
 }
 .buttonDelete{
   background-color: #4CAF50;
@@ -51,4 +52,5 @@ p{
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  cursor: pointer;
 }

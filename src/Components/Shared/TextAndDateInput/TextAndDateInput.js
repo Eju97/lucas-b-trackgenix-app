@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './textAndDateInput.module.css';
+import styles from './textDateInput.module.css';
 
 const TextAndDateInput = ({ label, id, name, value, placeholder, onChange, required, type }) => {
   return (

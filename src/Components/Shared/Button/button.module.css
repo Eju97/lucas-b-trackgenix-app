@@ -1,0 +1,35 @@
+.confirm{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+  }
+
+.confirm:hover {
+    background-color: #144b16;
+    color: white;
+  }
+
+.cancel{
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.cancel:hover {
+  background-color: #7a0e0e;
+  color: white;
+}

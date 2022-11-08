@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from './ModalProject/Modal.js';
+import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const Projects = () => {
+  const history = useHistory();
   const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [project, setProject] = useState();
@@ -52,10 +55,7 @@ const Projects = () => {
         <tbody>
           {projects.map((project) => {
             return (
-              <tr
-                key={project._id}
-                onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}
-              >
+              <tr key={project._id} onClick={() => history.push(`/projects/form/${project._id}`)}>
                 <td>{project.name}</td>
                 <td>{project.clientName}</td>
                 <td>{project.description}</td>
@@ -71,7 +71,9 @@ const Projects = () => {
                 {project.employees.map((employee) => {
                   return (
                     <tr key={employee._id}>
-                      <td>{employee.employee.name}</td>
+                      <td>
+                        {!employee.employee ? 'There is no employee' : employee.employee.name}
+                      </td>
                       <td>{employee.rate}</td>
                       <td>{employee.role}</td>
                     </tr>
@@ -92,7 +94,9 @@ const Projects = () => {
           })}
         </tbody>
       </table>
-      <a href="/projects/form">Add Project</a>
+      <div>
+        <Button onClick={() => history.push('/projects/form')} variant="confirm" name="Create" />
+      </div>
     </section>
   );
 };
