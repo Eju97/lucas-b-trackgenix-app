@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const Projects = () => {
+  const history = useHistory();
   const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [project, setProject] = useState();
@@ -40,8 +43,8 @@ const Projects = () => {
           <h3>Do you really want to delete this Project?</h3>
         </div>
         <div>
-          <button onClick={onConfirmModal}>Cancel</button>
-          <button onClick={closeModal}>Accept</button>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onConfirmModal} variant="confirm" name="Accept" />
         </div>
       </Modal>
       ;<h2>Projects</h2>
@@ -60,10 +63,7 @@ const Projects = () => {
         <tbody>
           {projects.map((project) => {
             return (
-              <tr
-                key={project._id}
-                onClick={() => (window.location.href = `/projects/form?id=${project._id}`)}
-              >
+              <tr key={project._id} onClick={() => history.push(`/projects/form/${project._id}`)}>
                 <td>{project.name}</td>
                 <td>{project.clientName}</td>
                 <td>{project.description}</td>
@@ -79,7 +79,9 @@ const Projects = () => {
                 {project.employees.map((employee) => {
                   return (
                     <tr key={employee._id}>
-                      <td>{employee.employee.name}</td>
+                      <td>
+                        {!employee.employee ? 'There is no employee' : employee.employee.name}
+                      </td>
                       <td>{employee.rate}</td>
                       <td>{employee.role}</td>
                     </tr>
@@ -100,7 +102,9 @@ const Projects = () => {
           })}
         </tbody>
       </table>
-      <a href="/projects/form">Add Project</a>
+      <div>
+        <Button onClick={() => history.push('/projects/form')} variant="confirm" name="Create" />
+      </div>
     </section>
   );
 };

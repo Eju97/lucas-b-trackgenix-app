@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
 import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const Admins = () => {
+  const history = useHistory();
   const [listAdmins, setListAdmin] = useState([]);
   const [modalDisplay, setShowModal] = useState(false);
   const [adminId, setAdminId] = useState();
@@ -52,7 +55,7 @@ const Admins = () => {
           {listAdmins.map((admin) => {
             return (
               <tbody key={admin._id}>
-                <tr onClick={() => window.location.assign(`/admins/form?id=${admin._id}`)}>
+                <tr onClick={() => history.push(`/admins/form/${admin._id}`)}>
                   <td>{admin.name}</td>
                   <td>{admin.lastName}</td>
                   <td>{admin.email}</td>
@@ -72,9 +75,7 @@ const Admins = () => {
             );
           })}
           <tfoot>
-            <button type="button" onClick={() => window.location.assign(`/admins/form?`)}>
-              Create
-            </button>
+            <Button onClick={() => history.push('/admins/form')} variant="confirm" name="Create" />
           </tfoot>
         </table>
       </section>
@@ -83,8 +84,8 @@ const Admins = () => {
           <h3>Do you really want to delete this Admin?</h3>
         </div>
         <div>
-          <button onClick={closeModal}>Cancel</button>
-          <button onClick={onConfirmModal}>Accept</button>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onConfirmModal} variant="confirm" name="Accept" />
         </div>
       </Modal>
     </>

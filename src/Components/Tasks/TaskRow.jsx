@@ -1,6 +1,8 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const TaskRow = ({ task, setShowModal, setSelectedId }) => {
+  const history = useHistory();
   const onDeleteIconClick = (event) => {
     event.stopPropagation();
     setShowModal(true);
@@ -9,7 +11,7 @@ const TaskRow = ({ task, setShowModal, setSelectedId }) => {
   return (
     <tr
       onClick={() => {
-        window.location.assign(`/tasks/form?id=${task._id}`);
+        history.push(`/tasks/form/${task._id}`);
       }}
     >
       <td>{task.description}</td>

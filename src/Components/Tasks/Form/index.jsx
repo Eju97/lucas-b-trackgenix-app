@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
+import Button from '../../Shared/Button';
+import { useParams, useHistory } from 'react-router-dom';
 
 const TaskForm = () => {
+  const history = useHistory();
+  const params = useParams();
   const [task, setTask] = useState({
     description: ''
   });
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    const id = params.id;
     if (id) {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'GET'
@@ -30,8 +33,7 @@ const TaskForm = () => {
 
   const editTask = async () => {
     try {
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
+      const id = params.id;
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: {
@@ -41,7 +43,7 @@ const TaskForm = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        window.location.assign('/tasks');
+        history.push('/tasks');
       } else {
         console.log(data.message);
       }
@@ -60,7 +62,7 @@ const TaskForm = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        window.location.assign('/tasks');
+        history.push('/tasks');
       } else {
         console.log(data.message);
       }
@@ -88,14 +90,8 @@ const TaskForm = () => {
           />
         </div>
         <div className={styles.input}>
-          <input
-            type="button"
-            value="Submit"
-            className={styles.submitBtn}
-            onClick={() => {
-              onSubmit();
-            }}
-          />
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </div>

@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
 import ListEmployees from './ListEmployees/listEmployees';
 import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const Employees = () => {
+  const history = useHistory();
   const [listEmployes, setListEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
@@ -41,12 +44,11 @@ const Employees = () => {
           <h3>Do you really want to delete this Timesheet?</h3>
         </div>
         <div>
-          <button onClick={closeModal}>Cancel</button>
-          <button onClick={onConfirm}>Accept</button>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onConfirm} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      ;<h2>Employees</h2>
-      <a href="/employees/form">Add Employee</a>
+      <h2>Employees</h2>
       <div>
         <ListEmployees
           listEmployes={listEmployes}
@@ -55,6 +57,9 @@ const Employees = () => {
           setShowModal={setShowModal}
           setSelectedEmployee={setSelectedEmployee}
         />
+      </div>
+      <div>
+        <Button onClick={() => history.push('/employees/form')} variant="confirm" name="Create" />
       </div>
     </section>
   );

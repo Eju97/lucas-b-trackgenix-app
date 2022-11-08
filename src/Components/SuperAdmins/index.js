@@ -1,6 +1,7 @@
 import List from './List/List';
 import React, { useEffect, useState } from 'react';
 import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
 
 const SuperAdmins = () => {
   const [superAdminList, setSuperAdminList] = useState([]);
@@ -45,8 +46,8 @@ const SuperAdmins = () => {
           <h3>Do you really want to delete this Super Admin?</h3>
         </div>
         <div>
-          <button onClick={closeModal}>Cancel</button>
-          <button onClick={onDeleteTask}>Accept</button>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onDeleteTask} variant="confirm" name="Accept" />
         </div>
       </Modal>
       ;

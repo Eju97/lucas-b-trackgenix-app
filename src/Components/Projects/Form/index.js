@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Button from '../../Shared/Button';
+import { useHistory, useParams } from 'react-router-dom';
 
 const Form = () => {
+  const history = useHistory();
+  const params = useParams();
   const [projectState, setProjectState] = useState({
     name: '',
     clientName: '',
@@ -37,8 +41,7 @@ const Form = () => {
   };
 
   useEffect(async () => {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    const id = params.id;
     if (id) {
       try {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
@@ -46,19 +49,23 @@ const Form = () => {
         });
         const project = await response.json();
         const employeeList = project.data.employees.map((item) => {
-          return {
-            employee: item.employee._id,
-            rate: item.rate,
-            role: item.role
-          };
+          if (item.employee) {
+            return {
+              employee: item.employee._id,
+              rate: item.rate,
+              role: item.role
+            };
+          }
+          return 'noEmployee';
         });
+        const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
         setProjectState({
           name: project.data.name,
           clientName: project.data.clientName,
           description: project.data.description,
           startDate: project.data.startDate,
           endDate: project.data.endDate,
-          employees: employeeList
+          employees: newEmployeeList
         });
         setIsEditing(true);
       } catch (error) {
@@ -86,7 +93,7 @@ const Form = () => {
         });
         const data = await response.json();
         if (!data.error) {
-          window.location.href = '/projects';
+          history.push('/projects');
         } else {
           setErrorMessage(data.message);
         }
@@ -95,8 +102,7 @@ const Form = () => {
       }
     } else {
       try {
-        const url = window.location.href;
-        const id = url.substring(url.lastIndexOf('=') + 1);
+        const id = params.id;
         const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
           method: 'PUT',
           headers: {
@@ -106,7 +112,7 @@ const Form = () => {
         });
         const data = await response.json();
         if (!data.error) {
-          window.location.href = '/projects';
+          history.push('/projects');
         } else {
           setErrorMessage(data.message);
         }
@@ -260,17 +266,16 @@ const Form = () => {
             ></input>
           </div>
           <div>
-            <button
-              type="button"
-              onClick={() => {
+            <Button
+              action={() => {
                 setProjectState({
                   ...projectState,
                   employees: [...projectState.employees, employeeProject]
                 });
               }}
-            >
-              Assign Employee
-            </button>
+              variant="confirm"
+              name="Assing Employee"
+            />
           </div>
         </div>
         <div className={styles.employees}>
@@ -297,14 +302,8 @@ const Form = () => {
           })}
         </div>
         <div className={styles.save}>
-          <button
-            type="button"
-            onClick={() => {
-              onSubmit();
-            }}
-          >
-            Save
-          </button>
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </div>

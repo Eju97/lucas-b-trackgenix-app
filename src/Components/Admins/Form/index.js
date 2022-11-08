@@ -1,10 +1,13 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../../Shared/Modal';
+import Button from '../../Shared/Button';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Form = () => {
-  const paramsURL = new URLSearchParams(window.location.search);
-  const adminId = paramsURL.get('id');
+  const history = useHistory();
+  const params = useParams();
+  const adminId = params.id;
   const [formValues, setFormValues] = useState({
     name: '',
     lastName: '',
@@ -141,11 +144,12 @@ const Form = () => {
               }}
             />
           </div>
-          <input
-            type="button"
-            value="Submit"
+          <Button
             onClick={adminId ? () => editAdmin() : () => createAdmin()}
+            variant="confirm"
+            name="Submit"
           />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </form>
       </div>
       <Modal isOpen={showModal} handleClose={closeModal}>
@@ -154,16 +158,16 @@ const Form = () => {
         </div>
         <div>{contentMessage && <p>{contentMessage}</p>}</div>
         <div>
-          <button
+          <Button
             onClick={() => {
               setShowModal(false);
               if (modalTitle !== 'Error') {
                 window.location.assign(`/admins`);
               }
             }}
-          >
-            Close
-          </button>
+            variant="cancel"
+            name="Close"
+          />
         </div>
       </Modal>
     </>

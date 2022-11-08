@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormEmployee.module.css';
+import Button from '../../Shared/Button';
+import { useHistory, useParams } from 'react-router-dom';
 
 function Form() {
+  const history = useHistory();
+  const params = useParams();
   const [employeeId, setEmployeeId] = useState();
   const [employeeName, setEmployeeName] = useState('');
   const [employeeLastName, setEmployeeLastName] = useState('');
@@ -9,10 +13,8 @@ function Form() {
   const [employeePhone, setEmployeePhone] = useState('');
   const [employeePassword, setEmployeePassword] = useState('');
   const [errorState, setErrorState] = useState();
-
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id') || null;
+    const id = params.id;
     if (id) {
       fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`)
         .then((response) => response.json())
@@ -63,7 +65,7 @@ function Form() {
       const data = await response.json();
       if (!data.error) {
         alert('Edited succefully');
-        window.location.href = '/employees';
+        history.push('/employees');
       } else {
         setErrorState(data.message);
       }
@@ -85,7 +87,7 @@ function Form() {
       const data = await response.json();
       if (!data.error) {
         alert('Employee created succefully');
-        window.location.href = '/employees';
+        history.push('/employees');
       } else {
         setErrorState(data.message);
       }
@@ -142,7 +144,10 @@ function Form() {
           value={employeePassword}
           onChange={onChangeEmployeePassword}
         />
-        <button type="submit">Save</button>
+        <div>
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+        </div>
       </form>
     </div>
   );

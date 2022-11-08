@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
+import Button from '../Shared/Button';
 
 function SuperAdminsForm() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  const history = useHistory();
+  const params = useParams();
+  const id = params.id;
   const formMode = id ? 'edit' : 'create';
   const [inputData, setInputData] = useState({
     name: '',
@@ -46,7 +49,7 @@ function SuperAdminsForm() {
       .then((response) => response.json())
       .then((response) => {
         alert(response.message);
-        window.location.assign('/super-admins');
+        history.push('/super-admins');
       })
       .catch((error) => {
         alert(error);
@@ -64,7 +67,7 @@ function SuperAdminsForm() {
       .then((response) => response.json())
       .then((response) => {
         alert(response.message);
-        window.location.assign('/super-admins');
+        history.push('/super-admins');
       })
       .catch((error) => {
         alert(error);
@@ -115,9 +118,8 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <button onClick={onSubmit} type="button">
-            Apply
-          </button>
+          <Button onClick={onSubmit} variant="confirm" name="Create" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
     </section>
