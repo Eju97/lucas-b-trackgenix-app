@@ -173,7 +173,9 @@ const Form = () => {
                 Select an employee
               </option>
               {employees.map((employee) => {
-                return (
+                return !employee ? (
+                  <option>There is no employee available</option>
+                ) : (
                   <option key={employee._id} value={employee._id}>
                     {employee.name}
                   </option>
@@ -188,7 +190,9 @@ const Form = () => {
                 Select a task
               </option>
               {tasks.map((task) => {
-                return (
+                return !task ? (
+                  <option className={styles.none}>There is no task availabe</option>
+                ) : (
                   <option placeholder="hello" key={task._id} value={task._id}>
                     {task.description}
                   </option>
