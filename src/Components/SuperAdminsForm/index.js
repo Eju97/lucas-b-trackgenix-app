@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
-import TextAndDateInput from '../Shared/TextAndDateInput/TextAndDateInput';
+import Input from '../Shared/Input/Input';
 import Button from '../Shared/Button';
 
 function SuperAdminsForm() {
@@ -79,7 +79,7 @@ function SuperAdminsForm() {
     <section className={styles.container}>
       <form>
         <div className={styles.inputs}>
-          <TextAndDateInput
+          <Input
             label="Name"
             onChange={(e) => {
               setInputData({ ...inputData, name: e.target.value });
@@ -89,7 +89,7 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.inputs}>
-          <TextAndDateInput
+          <Input
             label="Last Name"
             onChange={(e) => {
               setInputData({ ...inputData, last_name: e.target.value });
@@ -99,7 +99,7 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.inputs}>
-          <TextAndDateInput
+          <Input
             label="Email"
             onChange={(e) => {
               setInputData({ ...inputData, email: e.target.value });
@@ -109,7 +109,7 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.inputs}>
-          <TextAndDateInput
+          <Input
             label="Password"
             onChange={(e) => {
               setInputData({ ...inputData, password: e.target.value });

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
+import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -130,7 +130,7 @@ const Form = () => {
         <h2>Form</h2>
         <div className={styles.projectForm}>
           <div>
-            <TextAndDateInput
+            <Input
               label="Name"
               id="name"
               name="name"
@@ -142,7 +142,7 @@ const Form = () => {
                 });
               }}
             />
-            <TextAndDateInput
+            <Input
               label="Client Name"
               id="clientName"
               name="clientName"
@@ -156,7 +156,7 @@ const Form = () => {
             />
           </div>
           <div>
-            <TextAndDateInput
+            <Input
               label="Description"
               id="description"
               name="description"
@@ -170,7 +170,7 @@ const Form = () => {
             />
           </div>
           <div>
-            <TextAndDateInput
+            <Input
               label="Start Date"
               id="startDate"
               name="startDate"
@@ -184,7 +184,7 @@ const Form = () => {
                 });
               }}
             />
-            <TextAndDateInput
+            <Input
               label="End Date"
               id="endDate"
               name="endDate"
@@ -249,7 +249,7 @@ const Form = () => {
             </select>
           </div>
           <div>
-            <TextAndDateInput
+            <Input
               label="Rate"
               name="rate"
               id="rate"

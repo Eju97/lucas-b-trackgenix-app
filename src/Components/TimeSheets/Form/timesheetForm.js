@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
+import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -128,7 +128,7 @@ const Form = () => {
         {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
         {errorState && <h3>{errorState}</h3>}
         <div>
-          <TextAndDateInput
+          <Input
             label="Description"
             name="description"
             type="text"
@@ -136,7 +136,7 @@ const Form = () => {
             value={timesheetAdded.description}
             onChange={onChange}
           />
-          <TextAndDateInput
+          <Input
             label="Date"
             name="date"
             type="date"
@@ -144,7 +144,7 @@ const Form = () => {
             value={formDate(timesheetAdded.date)}
             onChange={onChange}
           />
-          <TextAndDateInput
+          <Input
             label="Hours"
             name="hours"
             type="number"

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
+import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -79,7 +79,7 @@ const TaskForm = () => {
       </div>
       <form>
         <div className={styles.form}>
-          <TextAndDateInput
+          <Input
             label="Description"
             value={task.description}
             type="text"

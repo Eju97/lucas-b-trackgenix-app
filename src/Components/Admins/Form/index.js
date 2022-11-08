@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Modal from '../Modal/modal';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
-import TextAndDateInput from '../../Shared/TextAndDateInput/TextAndDateInput';
+import Input from '../../Shared/Input/Input';
 
 const Form = () => {
   const history = useHistory();
@@ -85,7 +85,7 @@ const Form = () => {
       <div className={styles.container}>
         <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
         <form>
-          <TextAndDateInput
+          <Input
             label="Name"
             type="text"
             placeholder="add First Name"
@@ -97,7 +97,7 @@ const Form = () => {
               });
             }}
           />
-          <TextAndDateInput
+          <Input
             label="Last Name"
             type="text"
             placeholder="add Last Name"
@@ -109,7 +109,7 @@ const Form = () => {
               });
             }}
           />
-          <TextAndDateInput
+          <Input
             label="Email"
             type="email"
             placeholder="add Email"
@@ -121,7 +121,7 @@ const Form = () => {
               });
             }}
           />
-          <TextAndDateInput
+          <Input
             label="Password"
             type="password"
             placeholder="add Password"
