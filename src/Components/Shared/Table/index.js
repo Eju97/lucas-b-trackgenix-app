@@ -4,6 +4,7 @@ import Logo from '../Assets/logoDelete.png';
 import { useHistory } from 'react-router-dom';
 
 const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
+  console.log(data);
   const history = useHistory();
   return (
     <div>
@@ -34,6 +35,7 @@ const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
                   })}
                   <td>
                     <img
+                      className={tableStyles.logo}
                       src={Logo}
                       onClick={(e) => {
                         e.stopPropagation();

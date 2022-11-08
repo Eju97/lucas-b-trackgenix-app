@@ -38,7 +38,7 @@ const SuperAdmins = () => {
     <div className={styles.container}>
       <Table
         data={superAdminList}
-        headers={['name', 'lastName', 'email', 'password', 'Delete']}
+        headers={['name', 'last_name', 'email', 'password']}
         urlForm={urlForm}
         showModal={setShowModal}
         deleteId={setSelectedId}
