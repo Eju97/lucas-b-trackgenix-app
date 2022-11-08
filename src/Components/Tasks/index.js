@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import TaskList from './TaskList';
+// import TaskList from './TaskList';
 import styles from './tasks.module.css';
 import Modal from './Modal';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import Table from '../Shared/Table';
 
 function Tasks() {
-  const history = useHistory();
+  // const history = useHistory();
+  const urlForm = '/tasks/form/';
   const [tasks, setTask] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -35,13 +37,21 @@ function Tasks() {
 
   return (
     <div className={styles.container}>
-      <TaskList list={tasks} setShowModal={setShowModal} setSelectedId={setSelectedId} />
+      <Table
+        data={tasks}
+        headers={['description']}
+        onDeleteTask={onDeleteTask}
+        urlForm={urlForm}
+        showModal={setShowModal}
+        deleteId={setSelectedId}
+      />
+      {/* <TaskList list={tasks} setShowModal={setShowModal} setSelectedId={setSelectedId} /> */}
       <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
-      <img
+      {/* <img
         onClick={() => history.push('/tasks/form')}
         src="../assets/images/add.svg"
         className={styles.addImg}
-      ></img>
+      ></img> */}
     </div>
   );
 }

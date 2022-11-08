@@ -3,7 +3,8 @@ import styles from './index.module.css';
 import Logo from '../Assets/logoDelete.png';
 import { useHistory } from 'react-router-dom';
 
-const Table = ({ data, headers, deleteAdmin }) => {
+const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
+  console.log(data);
   const history = useHistory();
   return (
     <table className={styles.table}>
@@ -23,7 +24,7 @@ const Table = ({ data, headers, deleteAdmin }) => {
         {data.map((row) => {
           return (
             <>
-              <tr key={row._id} onClick={() => history.push(`/admins/form/${row._id}`)}>
+              <tr key={row._id} onClick={() => history.push(`${urlForm}${row._id}`)}>
                 {headers.map((header, index) => {
                   return (
                     <>
@@ -38,8 +39,8 @@ const Table = ({ data, headers, deleteAdmin }) => {
                     src={Logo}
                     onClick={(e) => {
                       e.stopPropagation();
-                      deleteAdmin(row._id);
-                      // showModal(true);
+                      deleteId(row._id);
+                      showModal(true);
                     }}
                   />
                 </td>
@@ -49,7 +50,7 @@ const Table = ({ data, headers, deleteAdmin }) => {
         })}
       </tbody>
       <tbody>
-        <button type="button" onClick={() => window.location.assign(`/admins/form?`)}>
+        <button type="button" onClick={() => history.push(urlForm)}>
           Create
         </button>
       </tbody>

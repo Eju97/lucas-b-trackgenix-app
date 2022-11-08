@@ -6,6 +6,7 @@ import Modal from './Modal/modal';
 
 const Admins = () => {
   // const history = useHistory();
+  const urlForm = '/admins/form/';
   const [listAdmins, setListAdmin] = useState([]);
   const [modalDisplay, setShowModal] = useState('');
   const [contentMessage, setContentMessage] = useState('');
@@ -45,8 +46,9 @@ const Admins = () => {
         <Table
           data={listAdmins}
           headers={['name', 'lastName', 'email', 'password', 'Delete']}
-          deleteAdmin={deleteAdmin}
+          delete={deleteAdmin}
           showModal={setShowModal}
+          urlForm={urlForm}
         />
       </section>
       {modalDisplay ? (
