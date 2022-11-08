@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import DeleteConfirmationModal from './ModalDelete/modalDelete';
+import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 
@@ -101,6 +101,15 @@ const TimeSheets = () => {
               );
             })}
           </table>
+          <Modal isOpen={showModal} handleClose={closeModal}>
+            <div>
+              <h3>Do you really want to delete this Timesheet?</h3>
+            </div>
+            <div>
+              <Button onClick={closeModal} variant="cancel" name="Cancel" />
+              <Button onClick={handleDelete} variant="confirm" name="Accept" />
+            </div>
+          </Modal>
           <div>
             <Button
               onClick={() => history.push('/time-sheets/form')}
@@ -108,11 +117,6 @@ const TimeSheets = () => {
               name="Create"
             />
           </div>
-          <DeleteConfirmationModal
-            showModal={showModal}
-            closeModal={closeModal}
-            handleDelete={handleDelete}
-          />
         </>
       ) : (
         <h3>Loading Timesheets...</h3>

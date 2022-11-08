@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
-import Modal from './Modal/modal';
+import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 
 const Admins = () => {
   const history = useHistory();
   const [listAdmins, setListAdmin] = useState([]);
-  const [modalDisplay, setShowModal] = useState('');
-  const [contentMessage, setContentMessage] = useState('');
-  const [modalTitle, setModalTitle] = useState('');
+  const [modalDisplay, setShowModal] = useState(false);
+  const [adminId, setAdminId] = useState();
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
       .then((response) => response.json())
@@ -17,27 +17,29 @@ const Admins = () => {
         setListAdmin(response.data);
       });
   }, []);
+
   const deleteAdmin = async (_id) => {
-    if (confirm('Are you sure that you want to delete this Admin?')) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${_id}`, {
-          method: 'DELETE'
-        });
-        setListAdmin([...listAdmins.filter((listAdmin) => listAdmin._id !== _id)]);
-        const data = await response.json();
-        setContentMessage(data.message);
-        if (response.ok) {
-          setListAdmin(listAdmins.filter((admin) => admin._id !== _id));
-          setModalTitle('Success');
-        } else {
-          setModalTitle('Error');
-        }
-        setShowModal(true);
-      } catch (error) {
-        alert(error);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${_id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        setListAdmin(listAdmins.filter((admin) => admin._id !== _id));
       }
+    } catch (error) {
+      alert(error);
     }
   };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const onConfirmModal = () => {
+    deleteAdmin(adminId);
+    setShowModal(false);
+  };
+
   return (
     <>
       <section className={styles.container}>
@@ -61,7 +63,8 @@ const Admins = () => {
                     <button
                       onClick={(event) => {
                         event.stopPropagation();
-                        deleteAdmin(admin._id);
+                        setAdminId(admin._id);
+                        setShowModal(true);
                       }}
                     >
                       x
@@ -76,9 +79,15 @@ const Admins = () => {
           </tfoot>
         </table>
       </section>
-      {modalDisplay ? (
-        <Modal title={modalTitle} contentMessage={contentMessage} setShowModal={setShowModal} />
-      ) : null}
+      <Modal isOpen={modalDisplay} handleClose={closeModal}>
+        <div>
+          <h3>Do you really want to delete this Admin?</h3>
+        </div>
+        <div>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onConfirmModal} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
     </>
   );
 };

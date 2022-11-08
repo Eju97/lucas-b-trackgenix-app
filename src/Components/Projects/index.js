@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
-import Modal from './ModalProject/Modal.js';
+import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 
@@ -38,8 +38,16 @@ const Projects = () => {
 
   return (
     <section className={styles.container}>
-      <Modal show={showModal} closeModal={closeModal} onConfirmModal={onConfirmModal} />
-      <h2>Projects</h2>
+      <Modal isOpen={showModal} handleClose={closeModal}>
+        <div>
+          <h3>Do you really want to delete this Project?</h3>
+        </div>
+        <div>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onConfirmModal} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
+      ;<h2>Projects</h2>
       <table>
         <thead>
           <tr>
