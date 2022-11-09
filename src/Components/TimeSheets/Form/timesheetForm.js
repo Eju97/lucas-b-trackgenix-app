@@ -25,47 +25,42 @@ const Form = () => {
     return dateIso;
   };
 
-  useEffect(() => {
-    try {
-      fetch(`${process.env.REACT_APP_API_URL}/projects`)
-        .then((res) => res.json())
-        .then((response) => {
-          setProjects(response.data);
-        });
-    } catch (error) {
-      alert(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      fetch(`${process.env.REACT_APP_API_URL}/tasks`)
-        .then((res) => res.json())
-        .then((response) => {
-          setTasks(response.data);
-        });
-    } catch (error) {
-      alert(error);
-    }
-  }, []);
-
   useEffect(async () => {
-    const id = params.id;
-    if (id) {
-      setIsEditing(true);
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-
-      setTimesheetAdded({
-        description: data.data.description,
-        date: data.data.date,
-        hours: data.data.hours,
-        project: !data.data.project ? '' : data.data.project._id,
-        employee: !data.data.employee ? '' : data.data.employee._id,
-        task: !data.data.task ? '' : data.data.task._id
-      });
+    try {
+      const tasksResponse = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
+      const tasks = await tasksResponse.json();
+      setTasks(tasks.data);
+      const projectsResponse = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
+      const projects = await projectsResponse.json();
+      setProjects(projects.data);
+      const id = params.id;
+      if (id) {
+        setIsEditing(true);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
+          method: 'GET'
+        });
+        const timeSheet = await response.json();
+        const selectedProject = projects.data.find((project) => {
+          if (timeSheet.data.project) {
+            return project._id === timeSheet.data.project._id;
+          }
+          return false;
+        });
+        const projectEmployees = selectedProject
+          ? selectedProject.employees.map((employee) => employee.employee)
+          : [];
+        setEmployees(projectEmployees);
+        setTimesheetAdded({
+          description: timeSheet.data.description,
+          date: timeSheet.data.date,
+          hours: timeSheet.data.hours,
+          project: !timeSheet.data.project ? '' : timeSheet.data.project._id,
+          employee: !timeSheet.data.employee ? '' : timeSheet.data.employee._id,
+          task: !timeSheet.data.task ? '' : timeSheet.data.task._id
+        });
+      }
+    } catch (error) {
+      alert(error);
     }
   }, []);
 
@@ -159,7 +154,11 @@ const Form = () => {
                 Select a project
               </option>
               {projects.map((project) => {
-                return (
+                return !project ? (
+                  <option disabled className={styles.none}>
+                    There is no project
+                  </option>
+                ) : (
                   <option key={project._id} value={project._id}>
                     {project.name}
                   </option>
@@ -174,7 +173,11 @@ const Form = () => {
                 Select an employee
               </option>
               {employees.map((employee) => {
-                return (
+                return !employee ? (
+                  <option disabled className={styles.none}>
+                    There is no employee available
+                  </option>
+                ) : (
                   <option key={employee._id} value={employee._id}>
                     {employee.name}
                   </option>
@@ -189,7 +192,11 @@ const Form = () => {
                 Select a task
               </option>
               {tasks.map((task) => {
-                return (
+                return !task ? (
+                  <option disabled className={styles.none}>
+                    There is no task availabe
+                  </option>
+                ) : (
                   <option placeholder="hello" key={task._id} value={task._id}>
                     {task.description}
                   </option>
