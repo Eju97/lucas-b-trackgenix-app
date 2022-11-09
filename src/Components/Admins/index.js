@@ -3,12 +3,13 @@ import styles from './admins.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const Admins = () => {
-  const urlForm = '/admins/form/';
+  const history = useHistory();
   const [listAdmins, setListAdmin] = useState([]);
   const [modalDisplay, setShowModal] = useState(false);
-  const [adminId] = useState();
+  const [adminId, setAdminId] = useState();
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/admins`)
@@ -31,6 +32,15 @@ const Admins = () => {
     }
   };
 
+  const onDelete = (_id, modalDisplay) => {
+    setAdminId(_id);
+    setShowModal(modalDisplay);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/admins/form/${_id}`);
+  };
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -47,9 +57,8 @@ const Admins = () => {
         <Table
           data={listAdmins}
           headers={['name', 'lastName', 'email', 'password', 'Delete']}
-          deleteId={deleteAdmin}
-          showModal={setShowModal}
-          urlForm={urlForm}
+          onDelete={onDelete}
+          onRowClick={onRowClick}
         />
       </section>
       <Modal isOpen={modalDisplay} handleClose={closeModal}>

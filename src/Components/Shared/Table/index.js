@@ -1,10 +1,12 @@
 import React from 'react';
 import tableStyles from './index.module.css';
 import Logo from '../Assets/logoDelete.png';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
-const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
-  const history = useHistory();
+// urlForm, deleteId, showModal
+
+const Table = ({ data, headers, onDelete, onRowClick }) => {
+  // const history = useHistory();
   return (
     <div>
       <table>
@@ -20,11 +22,7 @@ const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
           {data.map((row) => {
             return (
               <>
-                <tr
-                  className={tableStyles.tr}
-                  key={row._id}
-                  onClick={() => history.push(`${urlForm}${row._id}`)}
-                >
+                <tr className={tableStyles.tr} key={row._id} onClick={() => onRowClick(row._id)}>
                   {headers.map((header, index) => {
                     return (
                       <>
@@ -38,8 +36,7 @@ const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
                       src={Logo}
                       onClick={(e) => {
                         e.stopPropagation();
-                        deleteId(row._id);
-                        showModal(true);
+                        onDelete(row._id, true);
                       }}
                     />
                   </td>
