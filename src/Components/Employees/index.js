@@ -3,9 +3,10 @@ import styles from './employees.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const Employees = () => {
-  const urlForm = '/employees/form/';
+  const history = useHistory();
   const [listEmployes, setListEmployees] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
@@ -25,6 +26,15 @@ const Employees = () => {
     if (response.ok) {
       setListEmployees([...listEmployes.filter((employee) => employee._id !== _id)]);
     }
+  };
+
+  const onDelete = (_id, showModal) => {
+    setSelectedEmployee(_id);
+    setShowModal(showModal);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/employees/form/${_id}`);
   };
 
   const closeModal = () => {
@@ -52,10 +62,8 @@ const Employees = () => {
         <Table
           data={listEmployes}
           headers={['name', 'lastName', 'email', 'password', 'phone']}
-          showModal={setShowModal}
-          setSelectedEmployee={setSelectedEmployee}
-          deleteId={deleteItem}
-          urlForm={urlForm}
+          onDelete={onDelete}
+          onRowClick={onRowClick}
         />
       </div>
     </section>

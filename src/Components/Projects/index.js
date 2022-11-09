@@ -3,9 +3,10 @@ import styles from './projects.module.css';
 import Modal from '../Shared/Modal';
 import Table from '../Shared/Table/';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const Projects = () => {
-  const urlForm = '/projects/form/';
+  const history = useHistory();
   const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [project, setProject] = useState();
@@ -25,6 +26,15 @@ const Projects = () => {
     if (response.ok) {
       saveProjects(projects.filter((project) => project._id !== id));
     }
+  };
+
+  const onDelete = (_id, modalDisplay) => {
+    setProject(_id);
+    setShowModal(modalDisplay);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/projects/form/${_id}`);
   };
 
   const closeModal = () => {
@@ -51,9 +61,8 @@ const Projects = () => {
       <Table
         data={projects}
         headers={['name', 'clientName', 'description', 'startDate', 'endDate']}
-        showModal={setShowModal}
-        urlForm={urlForm}
-        deleteId={setProject}
+        onDelete={onDelete}
+        onRowClick={onRowClick}
       />
     </section>
   );
