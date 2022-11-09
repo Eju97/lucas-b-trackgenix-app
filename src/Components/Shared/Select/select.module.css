@@ -1,0 +1,7 @@
+.select {
+    padding-top: 8px;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-bottom: black 1px solid;
+}
