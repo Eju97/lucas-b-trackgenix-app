@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import TaskList from './TaskList';
 import styles from './tasks.module.css';
-import Modal from './Modal';
+import Modal from '../Shared/Modal';
+import { useHistory } from 'react-router-dom';
+import Button from '../Shared/Button';
 
 function Tasks() {
+  const history = useHistory();
   const [tasks, setTask] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -34,7 +37,20 @@ function Tasks() {
   return (
     <div className={styles.container}>
       <TaskList list={tasks} setShowModal={setShowModal} setSelectedId={setSelectedId} />
-      <Modal closeModal={closeModal} showModal={showModal} handleDelete={onDeleteTask} />
+      <Modal handleClose={closeModal} isOpen={showModal}>
+        <div>
+          <h3>Do you really want to delete this Task?</h3>
+        </div>
+        <div>
+          <Button onClick={closeModal} variant="cancel" name="Cancel" />
+          <Button onClick={onDeleteTask} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
+      <img
+        onClick={() => history.push('/tasks/form')}
+        src="../assets/images/add.svg"
+        className={styles.addImg}
+      ></img>
     </div>
   );
 }

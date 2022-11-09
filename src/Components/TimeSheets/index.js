@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import DeleteConfirmationModal from './ModalDelete/modalDelete';
+import Modal from '../Shared/Modal';
+import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const TimeSheets = () => {
+  const history = useHistory();
   const [timesheets, saveTimesheet] = useState([]);
   const [timesheetId, setTimesheetId] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -56,9 +59,7 @@ const TimeSheets = () => {
             {timesheets.map((timesheet) => {
               return (
                 <tbody key={timesheet._id} className={styles.tbodyContainer}>
-                  <tr
-                    onClick={() => (window.location.href = `/time-sheets/form?id=${timesheet._id}`)}
-                  >
+                  <tr onClick={() => history.push(`/time-sheets/form/${timesheet._id}`)}>
                     <td>{timesheet.description}</td>
                     <td>{dateFormatted(timesheet.date)}</td>
                     <td>{timesheet.hours}</td>
@@ -100,12 +101,22 @@ const TimeSheets = () => {
               );
             })}
           </table>
-          <a href="/time-sheets/form">Add a new Timesheet</a>
-          <DeleteConfirmationModal
-            showModal={showModal}
-            closeModal={closeModal}
-            handleDelete={handleDelete}
-          />
+          <Modal isOpen={showModal} handleClose={closeModal}>
+            <div>
+              <h3>Do you really want to delete this Timesheet?</h3>
+            </div>
+            <div>
+              <Button onClick={closeModal} variant="cancel" name="Cancel" />
+              <Button onClick={handleDelete} variant="confirm" name="Accept" />
+            </div>
+          </Modal>
+          <div>
+            <Button
+              onClick={() => history.push('/time-sheets/form')}
+              variant="confirm"
+              name="Create"
+            />
+          </div>
         </>
       ) : (
         <h3>Loading Timesheets...</h3>

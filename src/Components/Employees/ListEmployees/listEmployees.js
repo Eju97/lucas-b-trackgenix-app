@@ -5,13 +5,14 @@ const ListEmployees = ({ listEmployes, deleteItem, setShowModal, setSelectedEmpl
   return (
     <div className="table-container">
       <table>
-        <thread>
+        <thead>
           <tr>
-            <th id="id">ID</th>
             <th id="Name">Name</th>
+            <th id="LastName">Last name</th>
             <th id="Email">Email</th>
+            <th id="Email">Phone</th>
           </tr>
-        </thread>
+        </thead>
         <tbody>
           {listEmployes.map((item) => (
             <EmployeeRow

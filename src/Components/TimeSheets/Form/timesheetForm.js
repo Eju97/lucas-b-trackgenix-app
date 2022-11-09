@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
+import Input from '../../Shared/Input/Input';
+import Button from '../../Shared/Button';
+import { useParams, useHistory } from 'react-router-dom';
 
 const Form = () => {
+  const params = useParams();
+  const history = useHistory();
   const [projects, setProjects] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [employees, setEmployees] = useState([]);
@@ -15,7 +20,6 @@ const Form = () => {
     project: '',
     employee: ''
   });
-
   const formDate = (date) => {
     const dateIso = date.substr(0, 10);
     return dateIso;
@@ -29,8 +33,7 @@ const Form = () => {
       const projectsResponse = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
       const projects = await projectsResponse.json();
       setProjects(projects.data);
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const id = urlSearchParams.get('id');
+      const id = params.id;
       if (id) {
         setIsEditing(true);
         const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
@@ -87,13 +90,12 @@ const Form = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        window.location.assign('/time-sheets');
+        history.push('/time-sheets');
       } else {
         setErrorState(data.message);
       }
     } else {
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const id = urlSearchParams.get('id');
+      const id = params.id;
       event.preventDefault();
       const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
         method: 'PUT',
@@ -109,7 +111,7 @@ const Form = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        window.location.assign('/time-sheets');
+        history.push('/time-sheets');
       } else {
         setErrorState(data.message);
       }
@@ -121,36 +123,30 @@ const Form = () => {
         {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
         {errorState && <h3>{errorState}</h3>}
         <div>
-          <div>
-            <label htmlFor="description">Description</label>
-            <input
-              name="description"
-              type="text"
-              required
-              value={timesheetAdded.description}
-              onChange={onChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="date">Date</label>
-            <input
-              name="date"
-              type="date"
-              required
-              value={formDate(timesheetAdded.date)}
-              onChange={onChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="hours">Hours</label>
-            <input
-              name="hours"
-              type="number"
-              required
-              value={timesheetAdded.hours}
-              onChange={onChange}
-            />
-          </div>
+          <Input
+            label="Description"
+            name="description"
+            type="text"
+            required
+            value={timesheetAdded.description}
+            onChange={onChange}
+          />
+          <Input
+            label="Date"
+            name="date"
+            type="date"
+            required
+            value={formDate(timesheetAdded.date)}
+            onChange={onChange}
+          />
+          <Input
+            label="Hours"
+            name="hours"
+            type="number"
+            required
+            value={timesheetAdded.hours}
+            onChange={onChange}
+          />
           <div>
             <label htmlFor="project">Project</label>
             <select name="project" required value={timesheetAdded.project} onChange={onChange}>
@@ -158,7 +154,11 @@ const Form = () => {
                 Select a project
               </option>
               {projects.map((project) => {
-                return (
+                return !project ? (
+                  <option disabled className={styles.none}>
+                    There is no project
+                  </option>
+                ) : (
                   <option key={project._id} value={project._id}>
                     {project.name}
                   </option>
@@ -174,7 +174,9 @@ const Form = () => {
               </option>
               {employees.map((employee) => {
                 return !employee ? (
-                  <option>There is no employee available</option>
+                  <option disabled className={styles.none}>
+                    There is no employee available
+                  </option>
                 ) : (
                   <option key={employee._id} value={employee._id}>
                     {employee.name}
@@ -191,7 +193,9 @@ const Form = () => {
               </option>
               {tasks.map((task) => {
                 return !task ? (
-                  <option className={styles.none}>There is no task availabe</option>
+                  <option disabled className={styles.none}>
+                    There is no task availabe
+                  </option>
                 ) : (
                   <option placeholder="hello" key={task._id} value={task._id}>
                     {task.description}
@@ -201,10 +205,10 @@ const Form = () => {
             </select>
           </div>
         </div>
-        <button type="submit">Add</button>
-        <a href="/time-sheets">
-          <button>Go Back</button>
-        </a>
+        <div>
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+        </div>
       </form>
     </div>
   );

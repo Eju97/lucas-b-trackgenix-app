@@ -1,16 +1,22 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const TaskRow = ({ task, setShowModal, setSelectedId }) => {
-  const onDeleteIconClick = () => {
+  const history = useHistory();
+  const onDeleteIconClick = (event) => {
+    event.stopPropagation();
     setShowModal(true);
     setSelectedId(task._id);
   };
-
   return (
-    <tr>
+    <tr
+      onClick={() => {
+        history.push(`/tasks/form/${task._id}`);
+      }}
+    >
       <td>{task.description}</td>
       <td>
-        <button onClick={onDeleteIconClick}>X</button>
+        <img src="../assets/images/remove.svg" onClick={onDeleteIconClick}></img>
       </td>
     </tr>
   );
