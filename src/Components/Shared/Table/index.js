@@ -4,7 +4,6 @@ import Logo from '../Assets/logoDelete.png';
 import { useHistory } from 'react-router-dom';
 
 const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
-  console.log(data);
   const history = useHistory();
   return (
     <div>
@@ -50,15 +49,6 @@ const Table = ({ data, headers, urlForm, showModal, deleteId }) => {
           })}
         </tbody>
       </table>
-      <div className={tableStyles.containterButton}>
-        <button
-          className={tableStyles.buttonAdd}
-          type="button"
-          onClick={() => history.push(urlForm)}
-        >
-          Create
-        </button>
-      </div>
     </div>
   );
 };
