@@ -58,9 +58,6 @@ const Employees = () => {
           urlForm={urlForm}
         />
       </div>
-      <div>
-        <Button onClick={() => history.push('/employees/form')} variant="confirm" name="Create" />
-      </div>
     </section>
   );
 };
