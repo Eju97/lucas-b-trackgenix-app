@@ -3,9 +3,10 @@ import styles from './super-admins.module.css';
 import Modal from '../Shared/Modal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const SuperAdmins = () => {
-  const urlForm = '/super-admins/form/';
+  const history = useHistory();
   const [superAdminList, setSuperAdminList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -27,6 +28,15 @@ const SuperAdmins = () => {
     setShowModal(false);
   };
 
+  const onDelete = (_id, modalDisplay) => {
+    setSelectedId(_id);
+    setShowModal(modalDisplay);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/super-admins/form/${_id}`);
+  };
+
   const handleDelete = (id) => {
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
       method: 'DELETE'
@@ -39,9 +49,8 @@ const SuperAdmins = () => {
       <Table
         data={superAdminList}
         headers={['name', 'last_name', 'email', 'password']}
-        urlForm={urlForm}
-        showModal={setShowModal}
-        deleteId={setSelectedId}
+        onDelete={onDelete}
+        onRowClick={onRowClick}
       />
       <Modal handleClose={closeModal} isOpen={showModal}>
         <div>

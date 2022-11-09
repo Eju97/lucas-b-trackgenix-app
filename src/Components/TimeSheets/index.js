@@ -3,9 +3,10 @@ import styles from './time-sheets.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const TimeSheets = () => {
-  const urlForm = '/time-sheets/form/';
+  const history = useHistory();
   const [timesheets, setTimesheet] = useState([]);
   const [timesheetId, setTimesheetId] = useState();
   const [showModal, setShowModal] = useState(false);
@@ -64,6 +65,15 @@ const TimeSheets = () => {
     setShowModal(false);
   };
 
+  const onDelete = (_id, modalDisplay) => {
+    setTimesheetId(_id);
+    setShowModal(modalDisplay);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/time-sheets/form/${_id}`);
+  };
+
   return (
     <section className={styles.container}>
       <Modal isOpen={showModal} handleClose={closeModal}>
@@ -79,10 +89,8 @@ const TimeSheets = () => {
       <Table
         data={timeSheetData()}
         headers={['description', 'date', 'hours', 'project', 'employee', 'task', 'delete']}
-        deleteId={setTimesheetId}
-        showModal={setShowModal}
-        setData={setTimesheet}
-        urlForm={urlForm}
+        onDelete={onDelete}
+        onRowClick={onRowClick}
       />
     </section>
   );

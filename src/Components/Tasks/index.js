@@ -3,9 +3,10 @@ import styles from './tasks.module.css';
 import Modal from '../Shared/Modal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 function Tasks() {
-  const urlForm = '/tasks/form/';
+  const history = useHistory();
   const [tasks, setTask] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -33,16 +34,18 @@ function Tasks() {
     setTask([...tasks.filter((newListItem) => newListItem._id !== id)]);
   };
 
+  const onDelete = (_id, modalDisplay) => {
+    setSelectedId(_id);
+    setShowModal(modalDisplay);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/tasks/form/${_id}`);
+  };
+
   return (
     <div className={styles.container}>
-      <Table
-        data={tasks}
-        headers={['description']}
-        onDeleteTask={onDeleteTask}
-        urlForm={urlForm}
-        showModal={setShowModal}
-        deleteId={setSelectedId}
-      />
+      <Table data={tasks} headers={['description']} onDelete={onDelete} onRowClick={onRowClick} />
       <Modal handleClose={closeModal} isOpen={showModal}>
         <div>
           <h3>Do you really want to delete this Task?</h3>
