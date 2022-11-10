@@ -60,6 +60,15 @@ const Admins = () => {
           onDelete={onDelete}
           onRowClick={onRowClick}
         />
+        <div className={styles.containerButton}>
+          <button
+            className={styles.buttonAdd}
+            type="button"
+            onClick={() => history.push('/admins/form')}
+          >
+            Create
+          </button>
+        </div>
       </section>
       <Modal isOpen={modalDisplay} handleClose={closeModal}>
         <div>

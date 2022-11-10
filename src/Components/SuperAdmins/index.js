@@ -46,12 +46,23 @@ const SuperAdmins = () => {
 
   return (
     <div className={styles.container}>
-      <Table
-        data={superAdminList}
-        headers={['name', 'last_name', 'email', 'password']}
-        onDelete={onDelete}
-        onRowClick={onRowClick}
-      />
+      <div>
+        <Table
+          data={superAdminList}
+          headers={['name', 'last_name', 'email', 'password']}
+          onDelete={onDelete}
+          onRowClick={onRowClick}
+        />
+        <div className={styles.containerButton}>
+          <button
+            className={styles.buttonAdd}
+            type="button"
+            onClick={() => history.push('/super-admins/form')}
+          >
+            Create
+          </button>
+        </div>
+      </div>
       <Modal handleClose={closeModal} isOpen={showModal}>
         <div>
           <h3>Do you really want to delete this Super Admin?</h3>
@@ -61,7 +72,6 @@ const SuperAdmins = () => {
           <Button onClick={onDeleteTask} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      ;
     </div>
   );
 };

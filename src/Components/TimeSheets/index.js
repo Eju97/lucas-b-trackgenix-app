@@ -92,6 +92,15 @@ const TimeSheets = () => {
         onDelete={onDelete}
         onRowClick={onRowClick}
       />
+      <div className={styles.containerButton}>
+        <button
+          className={styles.buttonAdd}
+          type="button"
+          onClick={() => history.push('/time-sheets/form')}
+        >
+          Create
+        </button>
+      </div>
     </section>
   );
 };

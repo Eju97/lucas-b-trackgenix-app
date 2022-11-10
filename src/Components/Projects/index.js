@@ -64,6 +64,15 @@ const Projects = () => {
         onDelete={onDelete}
         onRowClick={onRowClick}
       />
+      <div className={styles.containerButton}>
+        <button
+          className={styles.buttonAdd}
+          type="button"
+          onClick={() => history.push('/projects/form')}
+        >
+          Create
+        </button>
+      </div>
     </section>
   );
 };
