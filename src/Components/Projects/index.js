@@ -28,9 +28,9 @@ const Projects = () => {
     }
   };
 
-  const onDelete = (_id, modalDisplay) => {
+  const onDelete = (_id) => {
     setProject(_id);
-    setShowModal(modalDisplay);
+    setShowModal(true);
   };
 
   const onRowClick = (_id) => {

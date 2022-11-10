@@ -34,9 +34,9 @@ function Tasks() {
     setTask([...tasks.filter((newListItem) => newListItem._id !== id)]);
   };
 
-  const onDelete = (_id, modalDisplay) => {
+  const onDelete = (_id) => {
     setSelectedId(_id);
-    setShowModal(modalDisplay);
+    setShowModal(true);
   };
 
   const onRowClick = (_id) => {

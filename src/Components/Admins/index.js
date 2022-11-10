@@ -32,9 +32,9 @@ const Admins = () => {
     }
   };
 
-  const onDelete = (_id, modalDisplay) => {
+  const onDelete = (_id) => {
     setAdminId(_id);
-    setShowModal(modalDisplay);
+    setShowModal(true);
   };
 
   const onRowClick = (_id) => {

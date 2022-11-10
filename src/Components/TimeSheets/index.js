@@ -65,9 +65,9 @@ const TimeSheets = () => {
     setShowModal(false);
   };
 
-  const onDelete = (_id, modalDisplay) => {
+  const onDelete = (_id) => {
     setTimesheetId(_id);
-    setShowModal(modalDisplay);
+    setShowModal(true);
   };
 
   const onRowClick = (_id) => {

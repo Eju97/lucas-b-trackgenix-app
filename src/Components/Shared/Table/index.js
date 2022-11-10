@@ -1,12 +1,8 @@
 import React from 'react';
 import tableStyles from './index.module.css';
-import Logo from '../Assets/logoDelete.png';
-// import { useHistory } from 'react-router-dom';
-
-// urlForm, deleteId, showModal
+import Logo from '../../../assets/logoDelete.png';
 
 const Table = ({ data, headers, onDelete, onRowClick }) => {
-  // const history = useHistory();
   return (
     <div>
       <table>

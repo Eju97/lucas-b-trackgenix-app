@@ -28,9 +28,9 @@ const Employees = () => {
     }
   };
 
-  const onDelete = (_id, showModal) => {
+  const onDelete = (_id) => {
     setSelectedEmployee(_id);
-    setShowModal(showModal);
+    setShowModal(true);
   };
 
   const onRowClick = (_id) => {
@@ -50,7 +50,7 @@ const Employees = () => {
     <section className={styles.container}>
       <Modal isOpen={showModal} handleClose={closeModal}>
         <div>
-          <h3>Do you really want to delete this Timesheet?</h3>
+          <h3>Do you really want to delete this Employee?</h3>
         </div>
         <div>
           <Button onClick={closeModal} variant="cancel" name="Cancel" />

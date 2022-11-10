@@ -28,9 +28,9 @@ const SuperAdmins = () => {
     setShowModal(false);
   };
 
-  const onDelete = (_id, modalDisplay) => {
+  const onDelete = (_id) => {
     setSelectedId(_id);
-    setShowModal(modalDisplay);
+    setShowModal(true);
   };
 
   const onRowClick = (_id) => {
