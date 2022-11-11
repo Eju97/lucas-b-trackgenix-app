@@ -177,42 +177,6 @@ const Form = () => {
                     }
               )}
             />
-            {/* // <label htmlFor="project">Project</label>
-            // <select name="project" required value={timesheetAdded.project} onChange={onChange}>
-            //   <option value="" disabled hidden>
-            //     Select a project
-            //   </option>
-            //   {projects.map((project) => {
-            //     return !project ? (
-            //       <option disabled className={styles.none}>
-            //         There is no project
-            //       </option>
-            //     ) : (
-            //       <option key={project._id} value={project._id}>
-            //         {project.name}
-            //       </option>
-            //     );
-            //   })}
-            // </select> */}
-          </div>
-          <div>
-            {/* <label htmlFor="employee">Employee</label>
-            <select name="employee" required value={timesheetAdded.employee} onChange={onChange}>
-              <option value="" disabled hidden>
-                Select an employee
-              </option>
-              {employees.map((employee) => {
-                return !employee ? (
-                  <option disabled className={styles.none}>
-                    There is no employee available
-                  </option>
-                ) : (
-                  <option key={employee._id} value={employee._id}>
-                    {employee.name}
-                  </option>
-                );
-              })}
-            </select> */}
           </div>
           <div>
             <SelectInput
@@ -229,23 +193,6 @@ const Form = () => {
                     }
               )}
             />
-            {/* <label htmlFor="task">Task</label>
-            <select name="task" required value={timesheetAdded.task} onChange={onChange}>
-              <option value="" disabled hidden>
-                Select a task
-              </option>
-              {tasks.map((task) => {
-                return !task ? (
-                  <option disabled className={styles.none}>
-                    There is no task availabe
-                  </option>
-                ) : (
-                  <option placeholder="hello" key={task._id} value={task._id}>
-                    {task.description}
-                  </option>
-                );
-              })}
-            </select> */}
           </div>
         </div>
         <div>
