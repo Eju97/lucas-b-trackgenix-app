@@ -66,7 +66,6 @@ const Form = () => {
   }, []);
 
   const onChange = (event) => {
-    console.log(event.target.value);
     setTimesheetAdded({ ...timesheetAdded, [event.target.name]: event.target.value });
     if (event.target.name === 'project') {
       const selectedProject = projects.find((project) => project._id === event.target.value);

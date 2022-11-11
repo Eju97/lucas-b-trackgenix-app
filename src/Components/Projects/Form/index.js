@@ -3,6 +3,7 @@ import styles from './form.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
+import SelectInput from '../../Shared/Select';
 
 const Form = () => {
   const history = useHistory();
@@ -203,50 +204,43 @@ const Form = () => {
         <h3>Employees</h3>
         <div className={styles.employeeForm}>
           <div>
-            <label>Employees</label>
-            <select
+            <SelectInput
               name="role"
-              id="role"
-              required
-              onChange={(e) => {
-                setEmployeeProject({
-                  ...employeeProject,
-                  employee: e.target.value
-                });
-              }}
-            >
-              <option value="" disabled hidden selected>
-                Select Employee
-              </option>
-              {employeeList.map((employee) => {
-                return (
-                  <option key={employee._id} value={employee._id}>
-                    {employee.name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div>
-            <label>Role</label>
-            <select
-              name="role"
-              id="role"
+              label="Role"
+              value={employeeProject.role}
               onChange={(e) => {
                 setEmployeeProject({
                   ...employeeProject,
                   role: e.target.value
                 });
               }}
-            >
-              <option value="" disabled hidden selected>
-                Select Rol
-              </option>
-              <option value="DEV">DEV</option>
-              <option value="TL">TL</option>
-              <option value="PM">PM</option>
-              <option value="QA">QA</option>
-            </select>
+              data={[
+                { id: 'DEV', value: 'DEV' },
+                { id: 'TL', value: 'TL' },
+                { id: 'PM', value: 'PM' },
+                { id: 'QA', value: 'QA' }
+              ]}
+            />
+            <label>Employees</label>
+            <SelectInput
+              name="employe"
+              label="Employe"
+              value={employeeProject.employee}
+              onChange={(e) => {
+                setEmployeeProject({
+                  ...employeeProject,
+                  employee: e.target.value
+                });
+              }}
+              data={employeeList.map((employee) =>
+                !employee
+                  ? ''
+                  : {
+                      id: employee._id,
+                      value: employee.name
+                    }
+              )}
+            />
           </div>
           <div>
             <Input
@@ -263,7 +257,8 @@ const Form = () => {
           </div>
           <div>
             <Button
-              action={() => {
+              onClick={() => {
+                console.log(projectState);
                 setProjectState({
                   ...projectState,
                   employees: [...projectState.employees, employeeProject]
