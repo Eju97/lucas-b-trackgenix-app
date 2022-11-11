@@ -1,9 +1,12 @@
-import List from './List/List';
 import React, { useEffect, useState } from 'react';
+import styles from './super-admins.module.css';
 import Modal from '../Shared/Modal';
+import Table from '../Shared/Table';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 const SuperAdmins = () => {
+  const history = useHistory();
   const [superAdminList, setSuperAdminList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -25,6 +28,15 @@ const SuperAdmins = () => {
     setShowModal(false);
   };
 
+  const onDelete = (_id) => {
+    setSelectedId(_id);
+    setShowModal(true);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/super-admins/form/${_id}`);
+  };
+
   const handleDelete = (id) => {
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
       method: 'DELETE'
@@ -33,14 +45,24 @@ const SuperAdmins = () => {
   };
 
   return (
-    <div>
-      <List
-        superAdminList={superAdminList}
-        setSuperAdminList={setSuperAdminList}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        setSelectedId={setSelectedId}
-      />
+    <div className={styles.container}>
+      <div>
+        <Table
+          data={superAdminList}
+          headers={['name', 'last_name', 'email', 'password']}
+          onDelete={onDelete}
+          onRowClick={onRowClick}
+        />
+        <div className={styles.containerButton}>
+          <button
+            className={styles.buttonAdd}
+            type="button"
+            onClick={() => history.push('/super-admins/form')}
+          >
+            Create
+          </button>
+        </div>
+      </div>
       <Modal handleClose={closeModal} isOpen={showModal}>
         <div>
           <h3>Do you really want to delete this Super Admin?</h3>
@@ -50,7 +72,6 @@ const SuperAdmins = () => {
           <Button onClick={onDeleteTask} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      ;
     </div>
   );
 };

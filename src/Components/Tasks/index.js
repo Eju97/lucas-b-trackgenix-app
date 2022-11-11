@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import TaskList from './TaskList';
 import styles from './tasks.module.css';
 import Modal from '../Shared/Modal';
-import { useHistory } from 'react-router-dom';
+import Table from '../Shared/Table';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 
 function Tasks() {
   const history = useHistory();
@@ -34,9 +34,29 @@ function Tasks() {
     setTask([...tasks.filter((newListItem) => newListItem._id !== id)]);
   };
 
+  const onDelete = (_id) => {
+    setSelectedId(_id);
+    setShowModal(true);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/tasks/form/${_id}`);
+  };
+
   return (
     <div className={styles.container}>
-      <TaskList list={tasks} setShowModal={setShowModal} setSelectedId={setSelectedId} />
+      <div>
+        <Table data={tasks} headers={['description']} onDelete={onDelete} onRowClick={onRowClick} />
+        <div className={styles.containerButton}>
+          <button
+            className={styles.buttonAdd}
+            type="button"
+            onClick={() => history.push('/tasks/form')}
+          >
+            Create
+          </button>
+        </div>
+      </div>
       <Modal handleClose={closeModal} isOpen={showModal}>
         <div>
           <h3>Do you really want to delete this Task?</h3>
@@ -46,11 +66,6 @@ function Tasks() {
           <Button onClick={onDeleteTask} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      <img
-        onClick={() => history.push('/tasks/form')}
-        src="../assets/images/add.svg"
-        className={styles.addImg}
-      ></img>
     </div>
   );
 }

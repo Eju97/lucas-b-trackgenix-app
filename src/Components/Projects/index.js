@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './projects.module.css';
 import Modal from '../Shared/Modal';
+import Table from '../Shared/Table/';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ const Projects = () => {
       });
   }, []);
 
-  const deleteTask = async (id) => {
+  const deleteProject = async (id) => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'DELETE'
     });
@@ -27,12 +28,21 @@ const Projects = () => {
     }
   };
 
+  const onDelete = (_id) => {
+    setProject(_id);
+    setShowModal(true);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/projects/form/${_id}`);
+  };
+
   const closeModal = () => {
     setShowModal(false);
   };
 
   const onConfirmModal = () => {
-    deleteTask(project);
+    deleteProject(project);
     setShowModal(false);
   };
 
@@ -47,63 +57,21 @@ const Projects = () => {
           <Button onClick={onConfirmModal} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      ;<h2>Projects</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Client Name</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Employees</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {projects.map((project) => {
-            return (
-              <tr key={project._id} onClick={() => history.push(`/projects/form/${project._id}`)}>
-                <td>{project.name}</td>
-                <td>{project.clientName}</td>
-                <td>{project.description}</td>
-                <td>{project.startDate}</td>
-                <td>{project.endDate}</td>
-                <div>
-                  <tr>
-                    <th>Name</th>
-                    <th>Rate</th>
-                    <th>Role</th>
-                  </tr>
-                </div>
-                {project.employees.map((employee) => {
-                  return (
-                    <tr key={employee._id}>
-                      <td>
-                        {!employee.employee ? 'There is no employee' : employee.employee.name}
-                      </td>
-                      <td>{employee.rate}</td>
-                      <td>{employee.role}</td>
-                    </tr>
-                  );
-                })}
-                <td>
-                  <img
-                    src="../assets/images/remove.svg"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowModal(true);
-                      setProject(project._id);
-                    }}
-                  ></img>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      <div>
-        <Button onClick={() => history.push('/projects/form')} variant="confirm" name="Create" />
+      <h2>Projects</h2>
+      <Table
+        data={projects}
+        headers={['name', 'clientName', 'description', 'startDate', 'endDate']}
+        onDelete={onDelete}
+        onRowClick={onRowClick}
+      />
+      <div className={styles.containerButton}>
+        <button
+          className={styles.buttonAdd}
+          type="button"
+          onClick={() => history.push('/projects/form')}
+        >
+          Create
+        </button>
       </div>
     </section>
   );

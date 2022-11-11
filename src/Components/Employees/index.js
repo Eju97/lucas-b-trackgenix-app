@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-import ListEmployees from './ListEmployees/listEmployees';
+import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
@@ -28,6 +28,15 @@ const Employees = () => {
     }
   };
 
+  const onDelete = (_id) => {
+    setSelectedEmployee(_id);
+    setShowModal(true);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/employees/form/${_id}`);
+  };
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -41,7 +50,7 @@ const Employees = () => {
     <section className={styles.container}>
       <Modal isOpen={showModal} handleClose={closeModal}>
         <div>
-          <h3>Do you really want to delete this Timesheet?</h3>
+          <h3>Do you really want to delete this Employee?</h3>
         </div>
         <div>
           <Button onClick={closeModal} variant="cancel" name="Cancel" />
@@ -50,16 +59,21 @@ const Employees = () => {
       </Modal>
       <h2>Employees</h2>
       <div>
-        <ListEmployees
-          listEmployes={listEmployes}
-          setListEmployees={setListEmployees}
-          deleteItem={deleteItem}
-          setShowModal={setShowModal}
-          setSelectedEmployee={setSelectedEmployee}
+        <Table
+          data={listEmployes}
+          headers={['name', 'lastName', 'email', 'password', 'phone']}
+          onDelete={onDelete}
+          onRowClick={onRowClick}
         />
-      </div>
-      <div>
-        <Button onClick={() => history.push('/employees/form')} variant="confirm" name="Create" />
+        <div className={styles.containerButton}>
+          <button
+            className={styles.buttonAdd}
+            type="button"
+            onClick={() => history.push('/employees/form')}
+          >
+            Create
+          </button>
+        </div>
       </div>
     </section>
   );

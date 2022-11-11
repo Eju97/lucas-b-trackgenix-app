@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
+import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
@@ -31,6 +32,15 @@ const Admins = () => {
     }
   };
 
+  const onDelete = (_id) => {
+    setAdminId(_id);
+    setShowModal(true);
+  };
+
+  const onRowClick = (_id) => {
+    history.push(`/admins/form/${_id}`);
+  };
+
   const closeModal = () => {
     setShowModal(false);
   };
@@ -44,40 +54,21 @@ const Admins = () => {
     <>
       <section className={styles.container}>
         <h2>Admins</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          {listAdmins.map((admin) => {
-            return (
-              <tbody key={admin._id}>
-                <tr onClick={() => history.push(`/admins/form/${admin._id}`)}>
-                  <td>{admin.name}</td>
-                  <td>{admin.lastName}</td>
-                  <td>{admin.email}</td>
-                  <td>
-                    <button
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        setAdminId(admin._id);
-                        setShowModal(true);
-                      }}
-                    >
-                      x
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            );
-          })}
-          <tfoot>
-            <Button onClick={() => history.push('/admins/form')} variant="confirm" name="Create" />
-          </tfoot>
-        </table>
+        <Table
+          data={listAdmins}
+          headers={['name', 'lastName', 'email', 'password', 'Delete']}
+          onDelete={onDelete}
+          onRowClick={onRowClick}
+        />
+        <div className={styles.containerButton}>
+          <button
+            className={styles.buttonAdd}
+            type="button"
+            onClick={() => history.push('/admins/form')}
+          >
+            Create
+          </button>
+        </div>
       </section>
       <Modal isOpen={modalDisplay} handleClose={closeModal}>
         <div>
