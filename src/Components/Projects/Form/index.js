@@ -258,7 +258,6 @@ const Form = () => {
           <div>
             <Button
               onClick={() => {
-                console.log(projectState);
                 setProjectState({
                   ...projectState,
                   employees: [...projectState.employees, employeeProject]
