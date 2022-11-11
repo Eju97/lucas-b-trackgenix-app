@@ -22,7 +22,8 @@
 
 .employeeForm {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     padding: 2%;
 }
 
@@ -39,5 +40,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: wrap;
 }

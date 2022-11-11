@@ -3,6 +3,7 @@ import styles from './form.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
+import SelectInput from '../../Shared/Select';
 
 const Form = () => {
   const params = useParams();
@@ -148,61 +149,50 @@ const Form = () => {
             onChange={onChange}
           />
           <div>
-            <label htmlFor="project">Project</label>
-            <select name="project" required value={timesheetAdded.project} onChange={onChange}>
-              <option value="" disabled hidden>
-                Select a project
-              </option>
-              {projects.map((project) => {
-                return !project ? (
-                  <option disabled className={styles.none}>
-                    There is no project
-                  </option>
-                ) : (
-                  <option key={project._id} value={project._id}>
-                    {project.name}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectInput
+              name="project"
+              label="Projects"
+              value={timesheetAdded.project._id}
+              onChange={onChange}
+              data={projects.map((project) =>
+                !project
+                  ? ''
+                  : {
+                      id: project._id,
+                      value: project.name
+                    }
+              )}
+            />
+            <SelectInput
+              name="employee"
+              label="Employee"
+              value={timesheetAdded.employee._id}
+              onChange={onChange}
+              data={employees.map((employee) =>
+                !employee
+                  ? ''
+                  : {
+                      id: employee._id,
+                      value: employee.name
+                    }
+              )}
+            />
           </div>
           <div>
-            <label htmlFor="employee">Employee</label>
-            <select name="employee" required value={timesheetAdded.employee} onChange={onChange}>
-              <option value="" disabled hidden>
-                Select an employee
-              </option>
-              {employees.map((employee) => {
-                return !employee ? (
-                  <option disabled className={styles.none}>
-                    There is no employee available
-                  </option>
-                ) : (
-                  <option key={employee._id} value={employee._id}>
-                    {employee.name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="task">Task</label>
-            <select name="task" required value={timesheetAdded.task} onChange={onChange}>
-              <option value="" disabled hidden>
-                Select a task
-              </option>
-              {tasks.map((task) => {
-                return !task ? (
-                  <option disabled className={styles.none}>
-                    There is no task availabe
-                  </option>
-                ) : (
-                  <option placeholder="hello" key={task._id} value={task._id}>
-                    {task.description}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectInput
+              name="task"
+              label="Task"
+              value={timesheetAdded.task._id}
+              onChange={onChange}
+              data={tasks.map((task) =>
+                !task
+                  ? ''
+                  : {
+                      id: task._id,
+                      value: task.description
+                    }
+              )}
+            />
           </div>
         </div>
         <div>
