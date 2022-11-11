@@ -223,8 +223,8 @@ const Form = () => {
             />
             <label>Employees</label>
             <SelectInput
-              name="employe"
-              label="Employe"
+              name="employee"
+              label="Employee"
               value={employeeProject.employee}
               onChange={(e) => {
                 setEmployeeProject({
