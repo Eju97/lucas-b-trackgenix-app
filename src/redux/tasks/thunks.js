@@ -1,4 +1,11 @@
-import { getTaskSuccess, getTaskPending, getTaskError } from './actions';
+import {
+  getTaskSuccess,
+  getTaskPending,
+  getTaskError,
+  deleteTaskSuccess,
+  deleteTaskPendig,
+  deleteTaskError
+} from './actions';
 
 export const getTask = () => {
   return (dispatch) => {
@@ -12,5 +19,23 @@ export const getTask = () => {
       .catch((error) => {
         dispatch(getTaskError(error.toString()));
       });
+  };
+};
+
+export const deleteTask = (id) => {
+  return (dispatch) => {
+    dispatch(deleteTaskPendig());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+      method: 'DELETE'
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.error) {
+            throw new Error(response.message);
+          } else dispatch(deleteTaskSuccess(id));
+        })
+        .catch((error) => {
+          dispatch(deleteTaskError(error.toString()));
+        })
+    });
   };
 };

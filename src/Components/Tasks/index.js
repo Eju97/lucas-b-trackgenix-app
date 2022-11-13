@@ -5,16 +5,15 @@ import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTask } from '../../redux/tasks/thunks';
+import { getTask, deleteTask } from '../../redux/tasks/thunks';
 
 function Tasks() {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
-  const [selectedId, setSelectedId] = useState();
+  // const [selectedId, setSelectedId] = useState();
   const taskList = useSelector((state) => state.tasks.list);
   const dispatch = useDispatch();
 
-  console.log(taskList);
   useEffect(() => {
     dispatch(getTask());
   }, []);
@@ -24,17 +23,12 @@ function Tasks() {
   };
 
   const onDeleteTask = () => {
-    handleDelete(selectedId);
+    dispatch(deleteTask(taskList));
     setShowModal(false);
   };
-  const handleDelete = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
-    });
-  };
 
-  const onDelete = (_id) => {
-    setSelectedId(_id);
+  const onDelete = () => {
+    // setSelectedId(_id);
     setShowModal(true);
   };
 
