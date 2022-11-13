@@ -1,4 +1,11 @@
-import { GET_PROJECTS_ERROR, GET_PROJECTS_PENDING, GET_PROJECTS_SUCCESS } from './constants';
+import {
+  GET_PROJECTS_ERROR,
+  GET_PROJECTS_PENDING,
+  GET_PROJECTS_SUCCESS,
+  DELETE_PROJECTS_ERROR,
+  DELETE_PROJECTS_PENDING,
+  DELETE_PROJECTS_SUCCESS
+} from './constants';
 
 const INITIAL_STATE = {
   list: [],
@@ -21,6 +28,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         list: action.payload
       };
     case GET_PROJECTS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: []
+      };
+    case DELETE_PROJECTS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case DELETE_PROJECTS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: [...state.list.filter((project) => project._id !== action.payload)]
+      };
+    case DELETE_PROJECTS_ERROR:
       return {
         ...state,
         isLoading: false,
