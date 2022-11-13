@@ -11,7 +11,7 @@ function Tasks() {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
-  const taskList = useSelector((state) => state.tasks.list);
+  const { taskList, isLoading, error } = useSelector((state) => state.tasks.list);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,6 +21,14 @@ function Tasks() {
   const closeModal = () => {
     setShowModal(false);
   };
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    return <h2>{error}</h2>;
+  }
 
   const onDeleteTask = () => {
     dispatch(deleteTask(selectedId));
