@@ -10,7 +10,7 @@ import { getTask, deleteTask } from '../../redux/tasks/thunks';
 function Tasks() {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
-  // const [selectedId, setSelectedId] = useState();
+  const [selectedId, setSelectedId] = useState();
   const taskList = useSelector((state) => state.tasks.list);
   const dispatch = useDispatch();
 
@@ -23,12 +23,12 @@ function Tasks() {
   };
 
   const onDeleteTask = () => {
-    dispatch(deleteTask(taskList));
+    dispatch(deleteTask(selectedId));
     setShowModal(false);
   };
 
-  const onDelete = () => {
-    // setSelectedId(_id);
+  const onDelete = (_id) => {
+    setSelectedId(_id);
     setShowModal(true);
   };
 

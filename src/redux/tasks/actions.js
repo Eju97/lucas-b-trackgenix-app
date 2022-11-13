@@ -16,8 +16,8 @@ export const getTaskSuccess = (data) => {
 export const getTaskError = (error) => {
   return { type: GET_TASK_ERROR, payload: error };
 };
-export const deleteTaskSuccess = (data) => {
-  return { type: DELETE_TASK_SUCCESS, payload: data };
+export const deleteTaskSuccess = (payload) => {
+  return { type: DELETE_TASK_SUCCESS, payload };
 };
 export const deleteTaskPendig = () => {
   return { type: DELETE_TASK_PENDING };

@@ -27,15 +27,15 @@ export const deleteTask = (id) => {
     dispatch(deleteTaskPendig());
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
       method: 'DELETE'
-        .then((response) => response.json())
-        .then((response) => {
-          if (response.error) {
-            throw new Error(response.message);
-          } else dispatch(deleteTaskSuccess(id));
-        })
-        .catch((error) => {
-          dispatch(deleteTaskError(error.toString()));
-        })
-    });
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else dispatch(deleteTaskSuccess(id));
+      })
+      .catch((error) => {
+        dispatch(deleteTaskError(error.toString()));
+      });
   };
 };
