@@ -4,36 +4,30 @@ import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteAdmin, getAdmins } from '../../redux/admins/thunks';
 
 const Admins = () => {
   const history = useHistory();
-  const [listAdmins, setListAdmin] = useState([]);
+  const [adminsList, setListAdmin] = useState([]);
+  const { list: adminList, isLoading, error } = useSelector((state) => state.admins);
+  const dispatch = useDispatch();
   const [modalDisplay, setShowModal] = useState(false);
-  const [adminId, setAdminId] = useState();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
-      .then((response) => response.json())
-      .then((response) => {
-        setListAdmin(response.data);
-      });
+    dispatch(getAdmins());
   }, []);
 
-  const deleteAdmin = async (_id) => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${_id}`, {
-        method: 'DELETE'
-      });
-      if (response.ok) {
-        setListAdmin(listAdmins.filter((admin) => admin._id !== _id));
-      }
-    } catch (error) {
-      alert(error);
-    }
-  };
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    return <h2>error</h2>;
+  }
 
   const onDelete = (_id) => {
-    setAdminId(_id);
+    setListAdmin(_id);
     setShowModal(true);
   };
 
@@ -46,7 +40,7 @@ const Admins = () => {
   };
 
   const onConfirmModal = () => {
-    deleteAdmin(adminId);
+    dispatch(deleteAdmin(adminsList));
     setShowModal(false);
   };
 
@@ -55,8 +49,8 @@ const Admins = () => {
       <section className={styles.container}>
         <h2>Admins</h2>
         <Table
-          data={listAdmins}
-          headers={['name', 'lastName', 'email', 'password', 'Delete']}
+          data={adminList}
+          headers={['name', 'lastName', 'email', 'password']}
           onDelete={onDelete}
           onRowClick={onRowClick}
         />
