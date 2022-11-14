@@ -4,34 +4,35 @@ import Modal from '../Shared/Modal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getTask, deleteTask } from '../../redux/tasks/thunks';
 
 function Tasks() {
   const history = useHistory();
-  const [tasks, setTask] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
+  const { list: taskList, isLoading, error } = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/tasks`)
-      .then((response) => response.json())
-      .then((response) => {
-        setTask(response.data);
-      });
+    dispatch(getTask());
   }, []);
 
   const closeModal = () => {
     setShowModal(false);
   };
 
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    return <h2>{error}</h2>;
+  }
+
   const onDeleteTask = () => {
-    handleDelete(selectedId);
+    dispatch(deleteTask(selectedId));
     setShowModal(false);
-  };
-  const handleDelete = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
-    });
-    setTask([...tasks.filter((newListItem) => newListItem._id !== id)]);
   };
 
   const onDelete = (_id) => {
@@ -46,7 +47,12 @@ function Tasks() {
   return (
     <div className={styles.container}>
       <div>
-        <Table data={tasks} headers={['description']} onDelete={onDelete} onRowClick={onRowClick} />
+        <Table
+          data={taskList}
+          headers={['description']}
+          onDelete={onDelete}
+          onRowClick={onRowClick}
+        />
         <div className={styles.containerButton}>
           <button
             className={styles.buttonAdd}
