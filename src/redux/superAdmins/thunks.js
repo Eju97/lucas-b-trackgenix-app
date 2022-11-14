@@ -12,7 +12,9 @@ export const getSuperAdmins = (dispatch) => {
   fetch(`${process.env.REACT_APP_API_URL}/super-admins`)
     .then((response) => response.json())
     .then((response) => {
-      dispatch(getSuperAdminsSuccess(response.data));
+      if (response.error) {
+        throw new Error(response.message);
+      } else dispatch(getSuperAdminsSuccess(response.data));
       return response.data;
     })
     .catch((error) => {
@@ -28,7 +30,9 @@ export const deleteSuperAdmins = (id) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        dispatch(deleteSuperAdminsSuccess(id));
+        if (response.error) {
+          throw new Error(response.message);
+        } else dispatch(deleteSuperAdminsSuccess(id));
         return response.data;
       })
       .catch((error) => {
