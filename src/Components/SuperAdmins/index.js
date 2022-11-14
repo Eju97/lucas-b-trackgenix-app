@@ -4,27 +4,32 @@ import Modal from '../Shared/Modal';
 import Table from '../Shared/Table';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superAdmins/thunks';
 
 const SuperAdmins = () => {
   const history = useHistory();
-  const [superAdminList, setSuperAdminList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
+  const { list, isLoading, error } = useSelector((state) => state.superAdmins);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/super-admins/`)
-      .then((res) => res.json())
-      .then((data) => {
-        setSuperAdminList(data.data);
-      });
+    dispatch(getSuperAdmins);
   }, []);
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+  if (error !== '') {
+    return <h2>{error}</h2>;
+  }
 
   const closeModal = () => {
     setShowModal(false);
   };
 
   const onDeleteTask = () => {
-    handleDelete(selectedId);
+    dispatch(deleteSuperAdmins(selectedId));
     setShowModal(false);
   };
 
@@ -37,18 +42,11 @@ const SuperAdmins = () => {
     history.push(`/super-admins/form/${_id}`);
   };
 
-  const handleDelete = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
-      method: 'DELETE'
-    });
-    setSuperAdminList([...superAdminList.filter((newListItem) => newListItem._id !== id)]);
-  };
-
   return (
     <div className={styles.container}>
       <div>
         <Table
-          data={superAdminList}
+          data={list}
           headers={['name', 'last_name', 'email', 'password']}
           onDelete={onDelete}
           onRowClick={onRowClick}
