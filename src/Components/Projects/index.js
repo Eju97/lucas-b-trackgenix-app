@@ -4,29 +4,27 @@ import Modal from '../Shared/Modal';
 import Table from '../Shared/Table/';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteProject, getProjects } from '../../redux/projects/thunks';
 
 const Projects = () => {
   const history = useHistory();
-  const [projects, saveProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [project, setProject] = useState();
+  const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/projects`)
-      .then((response) => response.json())
-      .then((response) => {
-        saveProjects(response.data);
-      });
+    dispatch(getProjects());
   }, []);
 
-  const deleteProject = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'DELETE'
-    });
-    if (response.ok) {
-      saveProjects(projects.filter((project) => project._id !== id));
-    }
-  };
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    return <h2>{error}</h2>;
+  }
 
   const onDelete = (_id) => {
     setProject(_id);
@@ -42,7 +40,7 @@ const Projects = () => {
   };
 
   const onConfirmModal = () => {
-    deleteProject(project);
+    dispatch(deleteProject(project));
     setShowModal(false);
   };
 
@@ -59,7 +57,7 @@ const Projects = () => {
       </Modal>
       <h2>Projects</h2>
       <Table
-        data={projects}
+        data={projectList}
         headers={['name', 'clientName', 'description', 'startDate', 'endDate']}
         onDelete={onDelete}
         onRowClick={onRowClick}
