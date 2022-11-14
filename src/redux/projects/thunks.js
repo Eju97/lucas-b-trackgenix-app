@@ -4,7 +4,10 @@ import {
   getProjectsError,
   deleteProjectsPending,
   deleteProjectsError,
-  deleteProjectsSuccess
+  deleteProjectsSuccess,
+  postProjectsError,
+  postProjectsPending,
+  postProjectsSuccess
 } from './actions';
 
 export const getProjects = () => {
@@ -37,6 +40,28 @@ export const deleteProject = (id) => {
       })
       .catch((err) => {
         dispatch(deleteProjectsError(err.toString()));
+      });
+  };
+};
+
+export const postProject = (project) => {
+  return (dispatch) => {
+    dispatch(postProjectsPending());
+    fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(project)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else dispatch(postProjectsSuccess(project));
+      })
+      .catch((err) => {
+        dispatch(postProjectsError(err.toString()));
       });
   };
 };

@@ -4,6 +4,8 @@ import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import SelectInput from '../../Shared/Select';
+import { useDispatch, useSelector } from 'react-redux';
+import { postProject } from '../../../redux/projects/thunks';
 
 const Form = () => {
   const history = useHistory();
@@ -22,8 +24,10 @@ const Form = () => {
     role: '',
     employee: ''
   });
-  const [errorMessage, setErrorMessage] = useState();
+  // const [errorMessage, setErrorMessage] = useState();
   const [isEditing, setIsEditing] = useState(false);
+  const error = useSelector((state) => state.projects.error);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     try {
@@ -85,48 +89,52 @@ const Form = () => {
 
   const onSubmit = async () => {
     if (!isEditing) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(projectState)
-        });
-        const data = await response.json();
-        if (!data.error) {
-          history.push('/projects');
-        } else {
-          setErrorMessage(data.message);
-        }
-      } catch (error) {
-        alert(error.message);
+      dispatch(postProject(projectState));
+      if (!error) {
+        history.push('/projects');
       }
-    } else {
-      try {
-        const id = params.id;
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(projectState)
-        });
-        const data = await response.json();
-        if (!data.error) {
-          history.push('/projects');
-        } else {
-          setErrorMessage(data.message);
-        }
-      } catch (error) {
-        alert(error.message);
-      }
+      // try {
+      //   const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+      //     method: 'POST',
+      //     headers: {
+      //       'Content-Type': 'application/json'
+      //     },
+      //     body: JSON.stringify(projectState)
+      //   });
+      //   const data = await response.json();
+      //   if (!data.error) {
+      //     history.push('/projects');
+      //   } else {
+      //     setErrorMessage(data.message);
+      //   }
+      // } catch (error) {
+      //   alert(error.message);
+      // }
+      // } else {
+      //   try {
+      //     const id = params.id;
+      //     const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+      //       method: 'PUT',
+      //       headers: {
+      //         'Content-Type': 'application/json'
+      //       },
+      //       body: JSON.stringify(projectState)
+      //     });
+      //     const data = await response.json();
+      //     if (!data.error) {
+      //       history.push('/projects');
+      //     } else {
+      //       setErrorMessage(data.message);
+      //     }
+      //   } catch (error) {
+      //     alert(error.message);
+      //   }
     }
   };
 
   return (
     <div className={styles.container}>
-      <div>{errorMessage && <h3>{errorMessage}</h3>}</div>
+      <div>{error && <h3>{error}</h3>}</div>
       <form>
         <h2>Form</h2>
         <div className={styles.projectForm}>
