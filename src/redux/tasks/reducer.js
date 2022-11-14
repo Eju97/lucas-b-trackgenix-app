@@ -17,13 +17,15 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_TASK_SUCCESS:
       return {
         ...state,
-        list: action.payload
+        list: action.payload,
+        isLoading: false
       };
     case GET_TASK_ERROR:
       return {
         ...state,
         list: [],
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
     case GET_TASK_PENDING:
       return {
@@ -34,7 +36,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         list: [...state.list.filter((tasks) => tasks._id !== action.payload)],
-        error: ''
+        error: '',
+        isLoading: false
       };
     case DELETE_TASK_PENDING:
       return {
@@ -45,7 +48,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         list: [],
-        error: action.payload
+        error: action.payload,
+        isLoading: false
       };
     default:
       return state;

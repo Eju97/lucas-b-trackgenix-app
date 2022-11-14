@@ -11,7 +11,7 @@ function Tasks() {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
-  const { taskList, isLoading, error } = useSelector((state) => state.tasks.list);
+  const { list: taskList, isLoading, error } = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
 
   useEffect(() => {
