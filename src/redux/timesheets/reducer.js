@@ -1,4 +1,11 @@
-import { GET_TIMESHEETS_ERROR, GET_TIMESHEETS_PENDING, GET_TIMESHEETS_SUCCESS } from './constants';
+import {
+  DELETE_TIMESHEETS_ERROR,
+  DELETE_TIMESHEETS_PENDING,
+  DELETE_TIMESHEETS_SUCCESS,
+  GET_TIMESHEETS_ERROR,
+  GET_TIMESHEETS_PENDING,
+  GET_TIMESHEETS_SUCCESS
+} from './constants';
 
 const INITIAL_STATE = {
   list: [],
@@ -12,12 +19,42 @@ const timesheetsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
-        error: ''
+        error: false
       };
     case GET_TIMESHEETS_SUCCESS:
-      return { ...state, list: action.payload, isLoading: false, error: false };
+      return {
+        ...state,
+        list: action.payload,
+        isLoading: false,
+        error: false
+      };
     case GET_TIMESHEETS_ERROR:
-      return { ...state, list: [], isLoading: false, error: action.payload };
+      return {
+        ...state,
+        list: [],
+        isLoading: false,
+        error: action.payload
+      };
+    case DELETE_TIMESHEETS_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: false
+      };
+    case DELETE_TIMESHEETS_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list.filter((newtimesheet) => newtimesheet._id !== action.payload)],
+        isLoading: false,
+        error: false
+      };
+    case DELETE_TIMESHEETS_ERROR:
+      return {
+        ...state,
+        list: [],
+        isLoading: false,
+        error: action.payload
+      };
     default:
       return state;
   }
