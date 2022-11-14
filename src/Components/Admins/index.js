@@ -23,7 +23,7 @@ const Admins = () => {
   }
 
   if (error) {
-    return <h2>error</h2>;
+    return <h2>{error}</h2>;
   }
 
   const onDelete = (_id) => {
