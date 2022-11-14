@@ -5,13 +5,12 @@ import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTimesheets } from '../../redux/timesheets/thunks';
+import { getTimesheets, deleteTimesheet } from '../../redux/timesheets/thunks';
 
 const TimeSheets = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { list: timesheetList, isLoading, error } = useSelector((state) => state.timesheets);
-  const [timesheets, setTimesheet] = useState([]);
   const [timesheetId, setTimesheetId] = useState();
   const [showModal, setShowModal] = useState(false);
 
@@ -54,18 +53,8 @@ const TimeSheets = () => {
     });
   };
 
-  const deleteTimesheet = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
-      method: 'DELETE'
-    });
-    const data = await response.json();
-    if (!data.error) {
-      setTimesheet([...timesheets.filter((timesheet) => timesheet._id !== id)]);
-    }
-  };
-
-  const handleDelete = () => {
-    deleteTimesheet(timesheetId);
+  const confirmationDelete = () => {
+    dispatch(deleteTimesheet(timesheetId));
     closeModal(false);
   };
 
@@ -90,7 +79,7 @@ const TimeSheets = () => {
         </div>
         <div>
           <Button onClick={closeModal} variant="cancel" name="Cancel" />
-          <Button onClick={handleDelete} variant="confirm" name="Accept" />
+          <Button onClick={confirmationDelete} variant="confirm" name="Accept" />
         </div>
       </Modal>
       <h2>TimeSheets</h2>
