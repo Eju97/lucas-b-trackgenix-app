@@ -3,6 +3,8 @@ import styles from './form.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { createTask } from '../../../redux/tasks/thunks';
 
 const TaskForm = () => {
   const history = useHistory();
@@ -11,6 +13,16 @@ const TaskForm = () => {
     description: ''
   });
   const [isEditing, setIsEditing] = useState(false);
+  const { isLoading, error } = useSelector((state) => state.tasks);
+  const dispatch = useDispatch();
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    return <h2>{error}</h2>;
+  }
 
   useEffect(async () => {
     const id = params.id;
@@ -26,7 +38,8 @@ const TaskForm = () => {
 
   const onSubmit = async () => {
     if (!isEditing) {
-      await createTask();
+      dispatch(createTask(task));
+      history.push('/tasks');
     } else {
       await editTask();
     }
@@ -37,25 +50,6 @@ const TaskForm = () => {
       const id = params.id;
       const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(task)
-      });
-      const data = await response.json();
-      if (!data.error) {
-        history.push('/tasks');
-      } else {
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const createTask = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
-        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
