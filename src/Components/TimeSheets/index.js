@@ -4,26 +4,33 @@ import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTimesheets, deleteTimesheet } from '../../redux/timesheets/thunks';
 
 const TimeSheets = () => {
   const history = useHistory();
-  const [timesheets, setTimesheet] = useState([]);
+  const dispatch = useDispatch();
+  const { list: timesheetList, isLoading, error } = useSelector((state) => state.timesheets);
   const [timesheetId, setTimesheetId] = useState();
   const [showModal, setShowModal] = useState(false);
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/time-sheets`)
-      .then((response) => response.json())
-      .then((response) => {
-        setTimesheet(response.data);
-      });
-  }, []);
 
   const dateFormatted = (date) => {
     return new Date(date).toISOString().split('T')[0];
   };
 
+  useEffect(() => {
+    dispatch(getTimesheets());
+  }, []);
+
+  if (isLoading) {
+    return <h3 className={styles.position}>Loading Timesheets...</h3>;
+  }
+  if (error) {
+    return <h3 className={styles.position}>Error: Could not load timesheets</h3>;
+  }
+
   const timeSheetData = () => {
-    return timesheets.map((timesheet) => {
+    return timesheetList.map((timesheet) => {
       return {
         ...timesheet,
         date: dateFormatted(timesheet.date),
@@ -46,18 +53,8 @@ const TimeSheets = () => {
     });
   };
 
-  const deleteTimesheet = async (id) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
-      method: 'DELETE'
-    });
-    const data = await response.json();
-    if (!data.error) {
-      setTimesheet([...timesheets.filter((timesheet) => timesheet._id !== id)]);
-    }
-  };
-
-  const handleDelete = () => {
-    deleteTimesheet(timesheetId);
+  const confirmationDelete = () => {
+    dispatch(deleteTimesheet(timesheetId));
     closeModal(false);
   };
 
@@ -82,7 +79,7 @@ const TimeSheets = () => {
         </div>
         <div>
           <Button onClick={closeModal} variant="cancel" name="Cancel" />
-          <Button onClick={handleDelete} variant="confirm" name="Accept" />
+          <Button onClick={confirmationDelete} variant="confirm" name="Accept" />
         </div>
       </Modal>
       <h2>TimeSheets</h2>
