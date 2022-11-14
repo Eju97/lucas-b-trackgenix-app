@@ -4,7 +4,10 @@ import {
   GET_TASK_ERROR,
   DELETE_TASK_ERROR,
   DELETE_TASK_PENDING,
-  DELETE_TASK_SUCCESS
+  DELETE_TASK_SUCCESS,
+  CREATE_TASK_SUCCESS,
+  CREATE_TASK_ERROR,
+  CREATE_TASK_PENDING
 } from './constants';
 
 const INITIAL_STATE = {
@@ -45,6 +48,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: true
       };
     case DELETE_TASK_ERROR:
+      return {
+        ...state,
+        list: [],
+        error: action.payload,
+        isLoading: false
+      };
+    case CREATE_TASK_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list, action.payload],
+        error: '',
+        isLoading: false
+      };
+    case CREATE_TASK_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case CREATE_TASK_ERROR:
       return {
         ...state,
         list: [],

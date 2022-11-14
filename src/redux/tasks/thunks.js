@@ -4,7 +4,10 @@ import {
   getTaskError,
   deleteTaskSuccess,
   deleteTaskPendig,
-  deleteTaskError
+  deleteTaskError,
+  createTaskSuccess,
+  createTaskPendig,
+  createTaskError
 } from './actions';
 
 export const getTask = () => {
@@ -36,6 +39,28 @@ export const deleteTask = (id) => {
       })
       .catch((error) => {
         dispatch(deleteTaskError(error.toString()));
+      });
+  };
+};
+
+export const createTask = (description) => {
+  return (dispatch) => {
+    dispatch(createTaskPendig());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(description)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else dispatch(createTaskSuccess(description));
+      })
+      .catch((error) => {
+        dispatch(createTaskError(error.toString()));
       });
   };
 };
