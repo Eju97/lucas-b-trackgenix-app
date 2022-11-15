@@ -1,11 +1,16 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
-import Modal from '../../Shared/Modal';
+// import Modal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 import Input from '../../Shared/Input/Input';
+import { useSelector, useDispatch } from 'react-redux';
+import { createAdmin, editAdmin, getAdmins } from '../../../redux/admins/thunks';
+import { POST_ADMINS_FULLFILLED, PUT_ADMINS_FULLFILLED } from '../../../redux/admins/constants';
 
 const Form = () => {
+  const dispatch = useDispatch();
+  const { error, isLoading } = useSelector((state) => state.admins);
   const history = useHistory();
   const params = useParams();
   const adminId = params.id;
@@ -15,74 +20,80 @@ const Form = () => {
     email: '',
     password: ''
   });
-  const [showModal, setShowModal] = useState(false);
-  const [contentMessage, setContentMessage] = useState('');
-  const [modalTitle, setModalTitle] = useState('');
+  const currentAdmin = useSelector((state) =>
+    state.admins.list.find((admin) => admin._id === params.id)
+  );
 
-  useEffect(async () => {
-    if (adminId) {
-      try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`);
-        const data = await res.json();
-        setFormValues({
-          name: data.data.name,
-          lastName: data.data.lastName,
-          email: data.data.email,
-          password: data.data.password
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  useEffect(() => {
+    dispatch(getAdmins());
   }, []);
 
-  const createAdmin = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formValues)
-      });
-      const data = await response.json();
-      setContentMessage(data.message);
-      if (response.ok) {
-        setModalTitle('Success');
-      } else {
-        setModalTitle('Error');
+  useEffect(async () => {
+    if (adminId && currentAdmin) {
+      try {
+        setFormValues({
+          name: currentAdmin.name,
+          lastName: currentAdmin.lastName,
+          email: currentAdmin.email,
+          password: currentAdmin.password
+        });
+      } catch (error) {
+        alert(error);
       }
-      setShowModal(true);
-    } catch (error) {
-      alert(error);
+    }
+  }, [currentAdmin]);
+
+  const onCreateAdmin = async () => {
+    const response = await dispatch(createAdmin(formValues));
+    if (response.type === POST_ADMINS_FULLFILLED) {
+      history.push('/admins');
     }
   };
 
-  const editAdmin = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formValues)
-      });
-      const data = await response.json();
-      setContentMessage(data.message);
-      if (response.ok) {
-        setModalTitle('Success');
-      } else {
-        setModalTitle('Error');
-      }
-      setShowModal(true);
-    } catch (error) {
-      alert(error);
+  const onEditAdmin = async () => {
+    const response = await dispatch(editAdmin(adminId, formValues));
+    if (response.type === PUT_ADMINS_FULLFILLED) {
+      history.push('/admins');
     }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    return <h2>{error}</h2>;
+  }
+
+  // const editAdmin = async () => {
+  //   try {
+  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(formValues)
+  //     });
+  //     const data = await response.json();
+  //     setContentMessage(data.message);
+  //     if (response.ok) {
+  //       setModalTitle('Success');
+  //     } else {
+  //       setModalTitle('Error');
+  //     }
+  //     setShowModal(true);
+  //   } catch (error) {
+  //     alert(error);
+  //   }
+  // };
+
+  // const closeModal = () => {
+  //   setShowModal(false);
+  // };
+
+  if (error) {
+    return <h3>Error: Could not load Admin form</h3>;
+  }
 
   return (
     <>
@@ -138,14 +149,14 @@ const Form = () => {
             }}
           />
           <Button
-            onClick={adminId ? () => editAdmin() : () => createAdmin()}
+            onClick={adminId ? () => onEditAdmin() : () => onCreateAdmin()}
             variant="confirm"
             name="Submit"
           />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </form>
       </div>
-      <Modal isOpen={showModal} handleClose={closeModal}>
+      {/* <Modal isOpen={showModal} handleClose={closeModal}>
         <div>
           <h3>{modalTitle}</h3>
         </div>
@@ -162,7 +173,7 @@ const Form = () => {
             name="Close"
           />
         </div>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
