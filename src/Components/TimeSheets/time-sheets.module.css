@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.position{
+  align-self: center;
+}
+
 .theadContainer {
   align-items: center;
 }
