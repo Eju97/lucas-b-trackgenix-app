@@ -83,7 +83,6 @@ const Form = () => {
   const onSubmit = async () => {
     if (!isEditing) {
       const response = await dispatch(postProject(projectState));
-      console.log(response);
       if (response?.type === POST_PROJECTS_SUCCESS) {
         history.push('/projects');
       }
