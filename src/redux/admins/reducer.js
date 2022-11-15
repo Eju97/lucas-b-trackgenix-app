@@ -86,7 +86,12 @@ const reducer = (state = INITIAL_STATE, action) => {
     case PUT_ADMINS_FULLFILLED:
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list: state.list.map((admin) => {
+          if (admin._id === action.payload._id) {
+            return action.payload;
+          }
+          return admin;
+        }),
         isLoading: false,
         error: ''
       };

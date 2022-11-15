@@ -1,6 +1,5 @@
 import styles from './form.module.css';
 import { useState, useEffect } from 'react';
-// import Modal from '../../Shared/Modal';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 import Input from '../../Shared/Input/Input';
@@ -65,36 +64,6 @@ const Form = () => {
     return <h2>{error}</h2>;
   }
 
-  // const editAdmin = async () => {
-  //   try {
-  //     const response = await fetch(`${process.env.REACT_APP_API_URL}/admins/${adminId}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(formValues)
-  //     });
-  //     const data = await response.json();
-  //     setContentMessage(data.message);
-  //     if (response.ok) {
-  //       setModalTitle('Success');
-  //     } else {
-  //       setModalTitle('Error');
-  //     }
-  //     setShowModal(true);
-  //   } catch (error) {
-  //     alert(error);
-  //   }
-  // };
-
-  // const closeModal = () => {
-  //   setShowModal(false);
-  // };
-
-  if (error) {
-    return <h3>Error: Could not load Admin form</h3>;
-  }
-
   return (
     <>
       <div className={styles.container}>
@@ -156,24 +125,6 @@ const Form = () => {
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </form>
       </div>
-      {/* <Modal isOpen={showModal} handleClose={closeModal}>
-        <div>
-          <h3>{modalTitle}</h3>
-        </div>
-        <div>{contentMessage && <p>{contentMessage}</p>}</div>
-        <div>
-          <Button
-            onClick={() => {
-              setShowModal(false);
-              if (modalTitle !== 'Error') {
-                window.location.assign(`/admins`);
-              }
-            }}
-            variant="cancel"
-            name="Close"
-          />
-        </div>
-      </Modal> */}
     </>
   );
 };
