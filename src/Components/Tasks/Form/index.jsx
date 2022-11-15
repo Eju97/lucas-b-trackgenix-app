@@ -4,7 +4,8 @@ import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { createTask } from '../../../redux/tasks/thunks';
+import { createTask, updateTask } from '../../../redux/tasks/thunks';
+import { CREATE_TASK_SUCCESS, UPDATE_TASK_SUCCESS } from '../../../redux/tasks/constants';
 
 const TaskForm = () => {
   const history = useHistory();
@@ -13,16 +14,9 @@ const TaskForm = () => {
     description: ''
   });
   const [isEditing, setIsEditing] = useState(false);
-  const { isLoading, error } = useSelector((state) => state.tasks);
+  const { isLoading } = useSelector((state) => state.tasks);
+  const error = useSelector((state) => state.tasks.error);
   const dispatch = useDispatch();
-
-  if (isLoading) {
-    return <h2>Loading...</h2>;
-  }
-
-  if (error) {
-    return <h2>{error}</h2>;
-  }
 
   useEffect(async () => {
     const id = params.id;
@@ -38,36 +32,26 @@ const TaskForm = () => {
 
   const onSubmit = async () => {
     if (!isEditing) {
-      dispatch(createTask(task));
-      history.push('/tasks');
+      const response = await dispatch(createTask(task));
+      if (response.type === CREATE_TASK_SUCCESS) {
+        history.push('/tasks');
+      }
     } else {
-      await editTask();
+      const id = params.id;
+      const response = await dispatch(updateTask(id, task));
+      if (response.type === UPDATE_TASK_SUCCESS) {
+        history.push('/tasks');
+      }
     }
   };
 
-  const editTask = async () => {
-    try {
-      const id = params.id;
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(task)
-      });
-      const data = await response.json();
-      if (!data.error) {
-        history.push('/tasks');
-      } else {
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div className={styles.container}>
+      <div>{error && <h3>{error}</h3>}</div>
       <div>
         <h2>{isEditing ? 'Edit Task' : 'Create New Task'}</h2>
       </div>

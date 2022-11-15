@@ -27,7 +27,7 @@ function Tasks() {
   }
 
   if (error) {
-    return <h2>{error} can not carge taks</h2>;
+    return <h2>{error} Cant show task</h2>;
   }
 
   const onDeleteTask = () => {

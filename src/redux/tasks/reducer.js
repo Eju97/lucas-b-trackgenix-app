@@ -24,7 +24,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         list: action.payload,
-        isLoading: false
+        isLoading: false,
+        error: ''
       };
     case GET_TASK_ERROR:
       return {
@@ -79,7 +80,12 @@ const reducer = (state = INITIAL_STATE, action) => {
     case UPDATE_TASK_SUCCESS:
       return {
         ...state,
-        list: [...state.list, action.payload],
+        list: state.list.map((task) => {
+          if (task._id === action.payload._id) {
+            return action.payload;
+          }
+          return task;
+        }),
         error: '',
         isLoading: false
       };

@@ -46,46 +46,48 @@ export const deleteTask = (id) => {
   };
 };
 
-export const createTask = (description) => {
+export const createTask = (newTask) => {
   return (dispatch) => {
     dispatch(createTaskPendig());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(description)
+      body: JSON.stringify(newTask)
     })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
           throw new Error(response.message);
-        } else dispatch(createTaskSuccess(description));
+        }
+        return dispatch(createTaskSuccess(newTask));
       })
       .catch((error) => {
-        dispatch(createTaskError(error.toString()));
+        return dispatch(createTaskError(error.toString()));
       });
   };
 };
 
-export const putProject = (id, taks) => {
+export const updateTask = (id, task) => {
   return (dispatch) => {
     dispatch(updateTaskPendig());
-    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify(taks)
+      body: JSON.stringify(task)
     })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
           throw new Error(response.message);
-        } else dispatch(updateTaskSuccess(response.data));
+        }
+        return dispatch(updateTaskSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(updateTaskError(error.toString()));
+        return dispatch(updateTaskError(error.toString()));
       });
   };
 };
