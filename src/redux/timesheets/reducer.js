@@ -7,7 +7,10 @@ import {
   GET_TIMESHEETS_SUCCESS,
   POST_TIMESHEETS_PENDING,
   POST_TIMESHEETS_SUCCESS,
-  POST_TIMESHEETS_ERROR
+  POST_TIMESHEETS_ERROR,
+  PUT_TIMESHEET_PENDING,
+  PUT_TIMESHEET_SUCCESS,
+  PUT_TIMESHEET_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
@@ -73,6 +76,32 @@ const timesheetsReducer = (state = INITIAL_STATE, action) => {
         error: ''
       };
     case POST_TIMESHEETS_ERROR:
+      return {
+        ...state,
+        list: [],
+        isLoading: false,
+        error: action.payload
+      };
+    case PUT_TIMESHEET_PENDING:
+      return {
+        ...state,
+        isLoading: true,
+        error: ''
+      };
+    case PUT_TIMESHEET_SUCCESS:
+      return {
+        ...state,
+        // list: [...state.list, action.payload],
+        list: state.list.map((timesheet) => {
+          if (timesheet._id === action.payload._id) {
+            return action.payload;
+          }
+          return timesheet;
+        }),
+        isLoading: false,
+        error: ''
+      };
+    case PUT_TIMESHEET_ERROR:
       return {
         ...state,
         list: [],
