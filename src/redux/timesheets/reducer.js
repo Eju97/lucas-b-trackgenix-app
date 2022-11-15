@@ -14,7 +14,6 @@ import {
 } from './constants';
 
 const INITIAL_STATE = {
-  newTimesheet: {},
   list: [],
   isLoading: false,
   error: ''
