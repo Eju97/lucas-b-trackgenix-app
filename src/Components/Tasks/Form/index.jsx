@@ -4,7 +4,7 @@ import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { createTask, updateTask } from '../../../redux/tasks/thunks';
+import { createTask, updateTask, getTask } from '../../../redux/tasks/thunks';
 import { CREATE_TASK_SUCCESS, UPDATE_TASK_SUCCESS } from '../../../redux/tasks/constants';
 
 const TaskForm = () => {
@@ -18,17 +18,19 @@ const TaskForm = () => {
   const error = useSelector((state) => state.tasks.error);
   const dispatch = useDispatch();
 
+  const currentTask = useSelector((state) =>
+    state.tasks.list.find((task) => task._id === params.id)
+  );
+  useEffect(() => {
+    dispatch(getTask());
+  }, []);
   useEffect(async () => {
     const id = params.id;
-    if (id) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-        method: 'GET'
-      });
-      const data = await response.json();
+    if (id && currentTask) {
       setIsEditing(true);
-      setTask({ description: data.data.description });
+      setTask({ description: currentTask.description });
     }
-  }, []);
+  }, [currentTask]);
 
   const onSubmit = async () => {
     if (!isEditing) {
