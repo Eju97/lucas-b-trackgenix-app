@@ -3,20 +3,28 @@ import styles from './FormEmployee.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { postEmployee } from '../../../redux/employees/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import { postEmployee, putEmployee } from '../../../redux/employees/thunks';
+import { POST_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
 
 function Form() {
   const history = useHistory();
   const params = useParams();
+  const [employee, setEmployee] = useState({
+    name: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    password: ''
+  });
   const [employeeId, setEmployeeId] = useState();
-  const [employeeName, setEmployeeName] = useState('');
+  /*const [employeeName, setEmployeeName] = useState('');
   const [employeeLastName, setEmployeeLastName] = useState('');
   const [employeeEmail, setEmployeeEmail] = useState('');
   const [employeePhone, setEmployeePhone] = useState('');
-  const [employeePassword, setEmployeePassword] = useState('');
-  const [errorState, setErrorState] = useState();
+  const [employeePassword, setEmployeePassword] = useState('');*/
   const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.employees);
 
   useEffect(() => {
     const id = params.id;
@@ -25,16 +33,19 @@ function Form() {
         .then((response) => response.json())
         .then((response) => {
           setEmployeeId(id);
-          setEmployeeName(response.data?.name);
-          setEmployeeLastName(response.data?.lastName);
-          setEmployeeEmail(response.data?.email);
-          setEmployeePhone(response.data?.phone);
-          setEmployeePassword(response.data?.password);
+          setEmployee(response.data?.name);
+          setEmployee(response.data?.lastName);
+          setEmployee(response.data?.email);
+          setEmployee(response.data?.phone);
+          setEmployee(response.data?.password);
         });
     }
   }, []);
+  const onChange = (event) => {
+    setEmployee({ ...employee, [event.target.name]: event.target.value });
+  };
 
-  const onChangeEmployeeName = (event) => {
+  /*const onChangeEmployeeName = (event) => {
     setEmployeeName(event.target.value);
   };
   const onChangeEmployeeLastName = (event) => {
@@ -48,19 +59,21 @@ function Form() {
   };
   const onChangeEmployeePassword = (event) => {
     setEmployeePassword(event.target.value);
-  };
+  };*/
 
   const onSubmit = async (event) => {
     event.preventDefault();
     if (employeeId) {
-      let newEmployee = {
-        name: employeeName,
-        lastName: employeeLastName,
-        phone: employeePhone,
-        email: employeeEmail,
-        password: employeePassword
-      };
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`, {
+      console.log(employeeId);
+      try {
+        const id = params.id;
+        dispatch(putEmployee(id, employee));
+        alert('Edited succefully');
+        history.push('/employees');
+      } catch (error) {
+        alert(error);
+      }
+      /*const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -73,21 +86,17 @@ function Form() {
         history.push('/employees');
       } else {
         setErrorState(data.message);
-      }
+      }*/
     } else {
-      let newEmployee = {
-        name: employeeName,
-        lastName: employeeLastName,
-        phone: employeePhone,
-        email: employeeEmail,
-        password: employeePassword
-      };
       try {
-        dispatch(postEmployee(newEmployee));
-        alert('Employee created succefully');
-        history.push('/employees');
+        const response = await dispatch(postEmployee(employee));
+        if (response.type === POST_EMPLOYEES_SUCCESS) {
+          history.push('/employees');
+        }
+        //alert('Employee created succefully');
+        console.log(employee);
       } catch (error) {
-        setErrorState(error);
+        alert(error);
       }
       /*.then(() => {
               alert('Employee created succefully');
@@ -112,51 +121,54 @@ function Form() {
       }*/
     }
   };
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div className={styles.container}>
-      {errorState && <h3>{errorState}</h3>}
+      {error && <h3>{error}</h3>}
       <form onSubmit={onSubmit}>
         <h2>Form</h2>
         <Input
           label="Name"
           id="employeeName"
-          name="employeeName"
+          name="name"
           required
-          value={employeeName}
-          onChange={onChangeEmployeeName}
+          value={employee.name}
+          onChange={onChange}
         />
         <Input
           label="LastName"
-          id="employeeLastName"
-          name="employeeLastName"
+          id="lastName"
+          name="lastName"
           required
-          value={employeeLastName}
-          onChange={onChangeEmployeeLastName}
+          value={employee.lastName}
+          onChange={onChange}
         />
         <Input
           label="Email"
-          id="employeeEmail"
-          name="employeeEmail"
+          id="email"
+          name="email"
           required
-          value={employeeEmail}
-          onChange={onChangeEmployeeEmail}
+          value={employee.email}
+          onChange={onChange}
         />
         <Input
           label="Phone"
-          id="employeePhone"
-          name="employeePhone"
+          id="phone"
+          name="phone"
           required
-          value={employeePhone}
-          onChange={onChangeEmployeePhone}
+          value={employee.phone}
+          onChange={onChange}
         />
         <Input
           label="Password"
-          id="employeePassword"
-          name="employeePassword"
+          id="password"
+          name="password"
           required
-          value={employeePassword}
-          onChange={onChangeEmployeePassword}
+          value={employee.password}
+          onChange={onChange}
         />
         <div>
           <Button onClick={onSubmit} variant="confirm" name="Submit" />

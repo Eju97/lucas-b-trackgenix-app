@@ -7,7 +7,10 @@ import {
   deleteEmployeesSuccess,
   postEmployeesPending,
   postEmployeesSuccess,
-  postEmployeesError
+  postEmployeesError,
+  putEmployeesPending,
+  putEmployeesSuccess,
+  putEmployeesError
 } from './actions';
 
 export const getEmployees = () => {
@@ -44,7 +47,7 @@ export const deleteEmployees = (id) => {
 export const postEmployee = (newEmployee) => {
   return (dispatch) => {
     dispatch(postEmployeesPending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/employees`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -56,11 +59,34 @@ export const postEmployee = (newEmployee) => {
         if (response.error) {
           throw new Error(response.message);
         } else {
-          dispatch(postEmployeesSuccess(response));
+          return dispatch(postEmployeesSuccess(response));
         }
       })
       .catch((error) => {
-        dispatch(postEmployeesError(error.toString()));
+        return dispatch(postEmployeesError(error.toString()));
+      });
+  };
+};
+export const putEmployee = (newEmployee, id) => {
+  return (dispatch) => {
+    dispatch(putEmployeesPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/employees${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newEmployee)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          return dispatch(putEmployeesSuccess(response));
+        }
+      })
+      .catch((error) => {
+        return dispatch(putEmployeesError(error.toString()));
       });
   };
 };
