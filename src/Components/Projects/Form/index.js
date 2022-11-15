@@ -5,7 +5,8 @@ import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import SelectInput from '../../Shared/Select';
 import { useDispatch, useSelector } from 'react-redux';
-import { postProject } from '../../../redux/projects/thunks';
+import { postProject, putProject } from '../../../redux/projects/thunks';
+import { postProjectsSuccess } from '../../../redux/projects/actions';
 
 const Form = () => {
   const history = useHistory();
@@ -24,7 +25,6 @@ const Form = () => {
     role: '',
     employee: ''
   });
-  // const [errorMessage, setErrorMessage] = useState();
   const [isEditing, setIsEditing] = useState(false);
   const error = useSelector((state) => state.projects.error);
   const dispatch = useDispatch();
@@ -89,46 +89,16 @@ const Form = () => {
 
   const onSubmit = async () => {
     if (!isEditing) {
-      dispatch(postProject(projectState));
+      const response = await dispatch(postProject(projectState));
+      if (response.type === postProjectsSuccess.POST_PROJECTS_SUCCESS) {
+        history.push('/projects');
+      }
+    } else {
+      const id = params.id;
+      dispatch(putProject(id, projectState));
       if (!error) {
         history.push('/projects');
       }
-      // try {
-      //   const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
-      //     method: 'POST',
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //     },
-      //     body: JSON.stringify(projectState)
-      //   });
-      //   const data = await response.json();
-      //   if (!data.error) {
-      //     history.push('/projects');
-      //   } else {
-      //     setErrorMessage(data.message);
-      //   }
-      // } catch (error) {
-      //   alert(error.message);
-      // }
-      // } else {
-      //   try {
-      //     const id = params.id;
-      //     const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      //       method: 'PUT',
-      //       headers: {
-      //         'Content-Type': 'application/json'
-      //       },
-      //       body: JSON.stringify(projectState)
-      //     });
-      //     const data = await response.json();
-      //     if (!data.error) {
-      //       history.push('/projects');
-      //     } else {
-      //       setErrorMessage(data.message);
-      //     }
-      //   } catch (error) {
-      //     alert(error.message);
-      //   }
     }
   };
 
