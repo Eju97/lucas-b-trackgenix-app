@@ -11,11 +11,11 @@ const SuperAdmins = () => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
-  const { list, isLoading, error } = useSelector((state) => state.superAdmins);
+  const { list: superAdminList, isLoading, error } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSuperAdmins);
+    dispatch(getSuperAdmins());
   }, []);
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -46,7 +46,7 @@ const SuperAdmins = () => {
     <div className={styles.container}>
       <div>
         <Table
-          data={list}
+          data={superAdminList}
           headers={['name', 'last_name', 'email', 'password']}
           onDelete={onDelete}
           onRowClick={onRowClick}

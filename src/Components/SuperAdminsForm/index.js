@@ -3,8 +3,12 @@ import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
 import Input from '../Shared/Input/Input';
 import Button from '../Shared/Button';
-import { useDispatch } from 'react-redux';
-import { postSuperAdmins } from '../../redux/superAdmins/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import { postSuperAdmins, putSuperAdmins, getSuperAdmins } from '../../redux/superAdmins/thunks';
+import {
+  POST_SUPERADMINS_SUCCESS,
+  PUT_SUPERADMINS_SUCCESS
+} from '../../redux/superAdmins/constants';
 
 function SuperAdminsForm() {
   const history = useHistory();
@@ -18,28 +22,38 @@ function SuperAdminsForm() {
     password: ''
   });
   const dispatch = useDispatch();
-
+  const currentSuperAdmin = useSelector((state) =>
+    state.superAdmins.list.find((superAdmin) => superAdmin._id === params.id)
+  );
+  /* const {isLoading, error} = useSelector((state) => state.superAdmins) */
   useEffect(() => {
-    if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setInputData({
-            name: data.data.name,
-            last_name: data.data.last_name,
-            email: data.data.email,
-            password: data.data.password
-          });
-        });
-    }
+    dispatch(getSuperAdmins());
   }, []);
+
+  useEffect(async () => {
+    if (id && currentSuperAdmin) {
+      setInputData({
+        name: currentSuperAdmin.name,
+        last_name: currentSuperAdmin.last_name,
+        email: currentSuperAdmin.email,
+        password: currentSuperAdmin.password
+      });
+    }
+  }, [currentSuperAdmin]);
 
   const onSubmit = async () => {
     if (formMode === 'edit') {
-      return onEditSuperAdmin();
+      const id = params.id;
+      const response = await dispatch(putSuperAdmins(id, inputData));
+      if (response.type === PUT_SUPERADMINS_SUCCESS) {
+        history.push('/super-admins');
+      }
+    } else {
+      const response = await dispatch(postSuperAdmins(inputData));
+      if (response.type === POST_SUPERADMINS_SUCCESS) {
+        history.push('/super-admins');
+      }
     }
-    await dispatch(postSuperAdmins(inputData));
-    history.push('/super-admins');
   };
 
   /*  const onCreateSuperAdmin = () => {
@@ -60,7 +74,7 @@ function SuperAdminsForm() {
       });
   }; */
 
-  const onEditSuperAdmin = () => {
+  /* const onEditSuperAdmin = () => {
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
       method: 'PUT',
       headers: {
@@ -76,7 +90,7 @@ function SuperAdminsForm() {
       .catch((error) => {
         alert(error);
       });
-  };
+  }; */
 
   return (
     <section className={styles.container}>
@@ -122,7 +136,7 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <Button onClick={onSubmit} variant="confirm" name="Create" />
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>

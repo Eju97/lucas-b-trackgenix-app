@@ -7,22 +7,27 @@ import {
   deleteSuperAdminsError,
   postSuperAdminError,
   postSuperAdminsPending,
-  postSuperAdminsSuccess
+  postSuperAdminsSuccess,
+  putSuperAdminsPending,
+  putSuperAdminsSuccess,
+  putSuperAdminsError
 } from './actions';
 
-export const getSuperAdmins = (dispatch) => {
-  dispatch(getSuperAdminsPending());
-  fetch(`${process.env.REACT_APP_API_URL}/super-admins`)
-    .then((response) => response.json())
-    .then((response) => {
-      if (response.error) {
-        throw new Error(response.message);
-      } else dispatch(getSuperAdminsSuccess(response.data));
-      return response.data;
-    })
-    .catch((error) => {
-      dispatch(getSuperAdminsError(error.toString()));
-    });
+export const getSuperAdmins = () => {
+  return (dispatch) => {
+    dispatch(getSuperAdminsPending());
+    fetch(`${process.env.REACT_APP_API_URL}/super-admins`)
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else dispatch(getSuperAdminsSuccess(response.data));
+        return response.data;
+      })
+      .catch((error) => {
+        dispatch(getSuperAdminsError(error.toString()));
+      });
+  };
 };
 
 export const deleteSuperAdmins = (id) => {
@@ -64,6 +69,31 @@ export const postSuperAdmins = (inputData) => {
       })
       .catch((error) => {
         dispatch(postSuperAdminError(error.toString()));
+      });
+  };
+};
+
+export const putSuperAdmins = (id, superAdmin) => {
+  console.log(id, superAdmin);
+  return (dispatch) => {
+    dispatch(putSuperAdminsPending());
+    return fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(superAdmin)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          return dispatch(putSuperAdminsSuccess(response.data));
+        }
+      })
+      .catch((error) => {
+        return dispatch(putSuperAdminsError(error.toString()));
       });
   };
 };

@@ -7,7 +7,10 @@ import {
   DELETE_SUPERADMINS_SUCCESS,
   POST_SUPERADMINS_SUCCESS,
   POST_SUPERADMINS_PENDING,
-  POST_SUPERADMINS_ERROR
+  POST_SUPERADMINS_ERROR,
+  PUT_SUPERADMINS_ERROR,
+  PUT_SUPERADMINS_PENDING,
+  PUT_SUPERADMINS_SUCCESS
 } from './constants';
 
 export const getSuperAdminsSuccess = (payload) => {
@@ -66,6 +69,26 @@ export const postSuperAdminsSuccess = (payload) => {
 export const postSuperAdminError = (error) => {
   return {
     type: POST_SUPERADMINS_ERROR,
+    payload: error
+  };
+};
+
+export const putSuperAdminsPending = () => {
+  return {
+    type: PUT_SUPERADMINS_PENDING
+  };
+};
+
+export const putSuperAdminsSuccess = (payload) => {
+  return {
+    type: PUT_SUPERADMINS_SUCCESS,
+    payload
+  };
+};
+
+export const putSuperAdminsError = (error) => {
+  return {
+    type: PUT_SUPERADMINS_ERROR,
     payload: error
   };
 };

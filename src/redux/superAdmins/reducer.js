@@ -7,7 +7,10 @@ import {
   GET_SUPERADMINS_SUCCESS,
   POST_SUPERADMINS_PENDING,
   POST_SUPERADMINS_SUCCESS,
-  POST_SUPERADMINS_ERROR
+  POST_SUPERADMINS_ERROR,
+  PUT_SUPERADMINS_PENDING,
+  PUT_SUPERADMINS_SUCCESS,
+  PUT_SUPERADMINS_ERROR
 } from './constants';
 
 const initialState = {
@@ -69,6 +72,31 @@ const reducer = (state = initialState, action) => {
         list: [...state.list, action.payload]
       };
     case POST_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: []
+      };
+    case PUT_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case PUT_SUPERADMINS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: state.list.map((superadmin) => {
+          if (superadmin._id === action.payload._id) {
+            return action.payload;
+          } else {
+            return superadmin;
+          }
+        })
+      };
+    case PUT_SUPERADMINS_ERROR:
       return {
         ...state,
         isLoading: false,
