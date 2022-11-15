@@ -7,7 +7,10 @@ import {
   DELETE_TIMESHEETS_ERROR,
   POST_TIMESHEETS_PENDING,
   POST_TIMESHEETS_SUCCESS,
-  POST_TIMESHEETS_ERROR
+  POST_TIMESHEETS_ERROR,
+  PUT_TIMESHEET_PENDING,
+  PUT_TIMESHEET_SUCCESS,
+  PUT_TIMESHEET_ERROR
 } from './constants';
 
 export const getTimesheetsPending = () => {
@@ -25,6 +28,12 @@ export const deleteTimesheetsPending = () => {
 export const createTimesheetPending = () => {
   return {
     type: POST_TIMESHEETS_PENDING
+  };
+};
+
+export const editTimesheetPending = () => {
+  return {
+    type: PUT_TIMESHEET_PENDING
   };
 };
 
@@ -49,6 +58,13 @@ export const createTimesheetSuccess = (payload) => {
   };
 };
 
+export const editTimesheetSuccess = (payload) => {
+  return {
+    type: PUT_TIMESHEET_SUCCESS,
+    payload
+  };
+};
+
 export const getTimesheetsError = (error) => {
   return {
     type: GET_TIMESHEETS_ERROR,
@@ -66,6 +82,13 @@ export const deleteTimesheetsError = (error) => {
 export const createTimesheetError = (error) => {
   return {
     type: POST_TIMESHEETS_ERROR,
+    payload: error
+  };
+};
+
+export const editTimesheetError = (error) => {
+  return {
+    type: PUT_TIMESHEET_ERROR,
     payload: error
   };
 };
