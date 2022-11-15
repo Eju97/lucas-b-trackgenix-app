@@ -28,6 +28,8 @@ const Form = () => {
   const [isEditing, setIsEditing] = useState(false);
   const error = useSelector((state) => state.projects.error);
   const employeeList = useSelector((state) => state.employees.list);
+  const isLoadingEmployees = useSelector((state) => state.employees.isLoading);
+  const isLoadingProjects = useSelector((state) => state.projects.isLoading);
   const dispatch = useDispatch();
   const currentProject = useSelector((state) =>
     state.projects.list.find((project) => project._id === params.id)
@@ -47,7 +49,7 @@ const Form = () => {
     const id = params.id;
     if (id && currentProject) {
       try {
-        const employeeList = currentProject?.employees.map((item) => {
+        const employeeList = currentProject.employees.map((item) => {
           if (item.employee) {
             return {
               employee: item.employee._id,
@@ -57,13 +59,13 @@ const Form = () => {
           }
           return 'noEmployee';
         });
-        const newEmployeeList = employeeList?.filter((employee) => employee !== 'noEmployee');
+        const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
         setProjectState({
-          name: currentProject?.name,
-          clientName: currentProject?.clientName,
-          description: currentProject?.description,
-          startDate: currentProject?.startDate,
-          endDate: currentProject?.endDate,
+          name: currentProject.name,
+          clientName: currentProject.clientName,
+          description: currentProject.description,
+          startDate: currentProject.startDate,
+          endDate: currentProject.endDate,
           employees: newEmployeeList
         });
         setIsEditing(true);
@@ -83,7 +85,7 @@ const Form = () => {
   const onSubmit = async () => {
     if (!isEditing) {
       const response = await dispatch(postProject(projectState));
-      if (response?.type === POST_PROJECTS_SUCCESS) {
+      if (response.type === POST_PROJECTS_SUCCESS) {
         history.push('/projects');
       }
     } else {
@@ -94,6 +96,10 @@ const Form = () => {
       }
     }
   };
+
+  if (isLoadingEmployees || isLoadingProjects) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div className={styles.container}>
