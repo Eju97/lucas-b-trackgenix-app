@@ -7,7 +7,10 @@ import {
   deleteTaskError,
   createTaskSuccess,
   createTaskPendig,
-  createTaskError
+  createTaskError,
+  updateTaskSuccess,
+  updateTaskPendig,
+  updateTaskError
 } from './actions';
 
 export const getTask = () => {
@@ -61,6 +64,28 @@ export const createTask = (description) => {
       })
       .catch((error) => {
         dispatch(createTaskError(error.toString()));
+      });
+  };
+};
+
+export const putProject = (id, taks) => {
+  return (dispatch) => {
+    dispatch(updateTaskPendig());
+    fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(taks)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else dispatch(updateTaskSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(updateTaskError(error.toString()));
       });
   };
 };

@@ -7,7 +7,10 @@ import {
   DELETE_TASK_SUCCESS,
   CREATE_TASK_SUCCESS,
   CREATE_TASK_ERROR,
-  CREATE_TASK_PENDING
+  CREATE_TASK_PENDING,
+  UPDATE_TASK_SUCCESS,
+  UPDATE_TASK_PENDING,
+  UPDATE_TASK_ERROR
 } from './constants';
 
 const INITIAL_STATE = {
@@ -67,6 +70,25 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: true
       };
     case CREATE_TASK_ERROR:
+      return {
+        ...state,
+        list: [],
+        error: action.payload,
+        isLoading: false
+      };
+    case UPDATE_TASK_SUCCESS:
+      return {
+        ...state,
+        list: [...state.list, action.payload],
+        error: '',
+        isLoading: false
+      };
+    case UPDATE_TASK_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case UPDATE_TASK_ERROR:
       return {
         ...state,
         list: [],

@@ -7,7 +7,10 @@ import {
   DELETE_TASK_SUCCESS,
   CREATE_TASK_SUCCESS,
   CREATE_TASK_ERROR,
-  CREATE_TASK_PENDING
+  CREATE_TASK_PENDING,
+  UPDATE_TASK_SUCCESS,
+  UPDATE_TASK_PENDING,
+  UPDATE_TASK_ERROR
 } from './constants';
 
 export const getTaskPending = () => {
@@ -36,4 +39,13 @@ export const createTaskPendig = () => {
 };
 export const createTaskError = (error) => {
   return { type: CREATE_TASK_ERROR, payload: error };
+};
+export const updateTaskSuccess = (payload) => {
+  return { type: UPDATE_TASK_SUCCESS, payload };
+};
+export const updateTaskPendig = () => {
+  return { type: UPDATE_TASK_PENDING };
+};
+export const updateTaskError = (error) => {
+  return { type: UPDATE_TASK_ERROR, payload: error };
 };
