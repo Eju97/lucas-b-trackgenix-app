@@ -79,7 +79,7 @@ export const createTimesheet = (newTimesheet) => {
 
 export const editTimesheet = (id, timesheet) => {
   return (dispatch) => {
-    dispatch(editTimesheetPending);
+    dispatch(editTimesheetPending());
     return fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
