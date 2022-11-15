@@ -6,7 +6,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import SelectInput from '../../Shared/Select';
 import { useDispatch, useSelector } from 'react-redux';
 import { postProject, putProject } from '../../../redux/projects/thunks';
-import { postProjectsSuccess } from '../../../redux/projects/actions';
+import { POST_PROJECTS_SUCCESS } from '../../../redux/projects/constants';
+import { getEmployees } from '../../../redux/employees/thunks';
 
 const Form = () => {
   const history = useHistory();
@@ -19,7 +20,6 @@ const Form = () => {
     endDate: '',
     employees: []
   });
-  const [employeeList, setEmployeeList] = useState([]);
   const [employeeProject, setEmployeeProject] = useState({
     rate: null,
     role: '',
@@ -27,18 +27,14 @@ const Form = () => {
   });
   const [isEditing, setIsEditing] = useState(false);
   const error = useSelector((state) => state.projects.error);
+  const employeeList = useSelector((state) => state.employees.list);
   const dispatch = useDispatch();
+  const currentProject = useSelector((state) =>
+    state.projects.list.find((project) => project._id === params.id)
+  );
 
   useEffect(() => {
-    try {
-      fetch(`${process.env.REACT_APP_API_URL}/employees`)
-        .then((response) => response.json())
-        .then((response) => {
-          setEmployeeList(response.data);
-        });
-    } catch (error) {
-      alert(error);
-    }
+    dispatch(getEmployees());
   }, []);
 
   const formatDate = (date) => {
@@ -50,11 +46,7 @@ const Form = () => {
     const id = params.id;
     if (id) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-          method: 'GET'
-        });
-        const project = await response.json();
-        const employeeList = project.data.employees.map((item) => {
+        const employeeList = currentProject.employees.map((item) => {
           if (item.employee) {
             return {
               employee: item.employee._id,
@@ -66,11 +58,11 @@ const Form = () => {
         });
         const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
         setProjectState({
-          name: project.data.name,
-          clientName: project.data.clientName,
-          description: project.data.description,
-          startDate: project.data.startDate,
-          endDate: project.data.endDate,
+          name: currentProject.name,
+          clientName: currentProject.clientName,
+          description: currentProject.description,
+          startDate: currentProject.startDate,
+          endDate: currentProject.endDate,
           employees: newEmployeeList
         });
         setIsEditing(true);
@@ -90,7 +82,7 @@ const Form = () => {
   const onSubmit = async () => {
     if (!isEditing) {
       const response = await dispatch(postProject(projectState));
-      if (response.type === postProjectsSuccess.POST_PROJECTS_SUCCESS) {
+      if (response.type === POST_PROJECTS_SUCCESS) {
         history.push('/projects');
       }
     } else {
