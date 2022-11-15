@@ -3,6 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
 import Input from '../Shared/Input/Input';
 import Button from '../Shared/Button';
+import { useDispatch } from 'react-redux';
+import { postSuperAdmins } from '../../redux/superAdmins/thunks';
 
 function SuperAdminsForm() {
   const history = useHistory();
@@ -15,9 +17,9 @@ function SuperAdminsForm() {
     email: '',
     password: ''
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(id);
     if (id) {
       fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`)
         .then((response) => response.json())
@@ -32,14 +34,15 @@ function SuperAdminsForm() {
     }
   }, []);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (formMode === 'edit') {
       return onEditSuperAdmin();
     }
-    return onCreateSuperAdmin();
+    await dispatch(postSuperAdmins(inputData));
+    history.push('/super-admins');
   };
 
-  const onCreateSuperAdmin = () => {
+  /*  const onCreateSuperAdmin = () => {
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
       method: 'POST',
       headers: {
@@ -55,7 +58,7 @@ function SuperAdminsForm() {
       .catch((error) => {
         alert(error);
       });
-  };
+  }; */
 
   const onEditSuperAdmin = () => {
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {

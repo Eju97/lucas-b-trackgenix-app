@@ -4,7 +4,10 @@ import {
   DELETE_SUPERADMINS_ERROR,
   GET_SUPERADMINS_ERROR,
   GET_SUPERADMINS_PENDING,
-  GET_SUPERADMINS_SUCCESS
+  GET_SUPERADMINS_SUCCESS,
+  POST_SUPERADMINS_PENDING,
+  POST_SUPERADMINS_SUCCESS,
+  POST_SUPERADMINS_ERROR
 } from './constants';
 
 const initialState = {
@@ -52,6 +55,25 @@ const reducer = (state = initialState, action) => {
         error: action.payload,
         list: [],
         isLoading: false
+      };
+    case POST_SUPERADMINS_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case POST_SUPERADMINS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        error: '',
+        list: [...state.list, action.payload]
+      };
+    case POST_SUPERADMINS_ERROR:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+        list: []
       };
     default:
       return state;

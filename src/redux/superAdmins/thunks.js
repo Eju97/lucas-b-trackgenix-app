@@ -4,7 +4,10 @@ import {
   getSuperAdminsPending,
   deleteSuperAdminsPending,
   deleteSuperAdminsSuccess,
-  deleteSuperAdminsError
+  deleteSuperAdminsError,
+  postSuperAdminError,
+  postSuperAdminsPending,
+  postSuperAdminsSuccess
 } from './actions';
 
 export const getSuperAdmins = (dispatch) => {
@@ -37,6 +40,30 @@ export const deleteSuperAdmins = (id) => {
       })
       .catch((error) => {
         dispatch(deleteSuperAdminsError(error.toString()));
+      });
+  };
+};
+
+export const postSuperAdmins = (inputData) => {
+  return (dispatch) => {
+    dispatch(postSuperAdminsPending());
+    fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(inputData)
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error(response.message);
+        } else {
+          dispatch(postSuperAdminsSuccess(response.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(postSuperAdminError(error.toString()));
       });
   };
 };
