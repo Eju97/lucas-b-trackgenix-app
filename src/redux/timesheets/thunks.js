@@ -4,7 +4,10 @@ import {
   getTimesheetsPending,
   deleteTimesheetsError,
   deleteTimesheetsSuccess,
-  deleteTimesheetsPending
+  deleteTimesheetsPending,
+  createTimesheetPending,
+  createTimesheetSuccess,
+  createTimesheetError
 } from './actions';
 
 export const getTimesheets = () => {
@@ -29,7 +32,6 @@ export const deleteTimesheet = (id) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         if (response.error) {
           throw new Error('Could not delete the timesheet');
         } else {
@@ -38,6 +40,35 @@ export const deleteTimesheet = (id) => {
       })
       .catch((error) => {
         dispatch(deleteTimesheetsError(error));
+      });
+  };
+};
+
+export const createTimesheet = (newTimesheet) => {
+  return (dispatch) => {
+    dispatch(createTimesheetPending());
+    fetch(`${process.env.REACT_APP_API_URL}/time-sheets`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        description: newTimesheet.description,
+        date: newTimesheet.date,
+        hours: newTimesheet.hours,
+        project: newTimesheet.project,
+        employee: newTimesheet.employee,
+        task: newTimesheet.task
+      })
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new Error('Could not create a new Timesheet');
+        } else {
+          dispatch(createTimesheetSuccess(response.data));
+        }
+      })
+      .catch((error) => {
+        dispatch(createTimesheetError(error));
       });
   };
 };
