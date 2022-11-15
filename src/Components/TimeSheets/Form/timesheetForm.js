@@ -3,13 +3,19 @@ import styles from './form.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
+import { createTimesheet } from '../../../redux/timesheets/thunks';
+import { getProjects } from '../../../redux/projects/thunks';
+import { getTask } from '../../../redux/tasks/thunks';
 import SelectInput from '../../Shared/Select';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const params = useParams();
   const history = useHistory();
-  const [projects, setProjects] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.timesheets);
+  const { list: tasks } = useSelector((state) => state.tasks);
+  const { list: projects } = useSelector((state) => state.projects);
   const [employees, setEmployees] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [errorState, setErrorState] = useState();
@@ -28,12 +34,8 @@ const Form = () => {
 
   useEffect(async () => {
     try {
-      const tasksResponse = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
-      const tasks = await tasksResponse.json();
-      setTasks(tasks.data);
-      const projectsResponse = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
-      const projects = await projectsResponse.json();
-      setProjects(projects.data);
+      dispatch(getTask());
+      dispatch(getProjects());
       const id = params.id;
       if (id) {
         setIsEditing(true);
@@ -76,25 +78,8 @@ const Form = () => {
 
   const onSubmit = async (event) => {
     if (!isEditing) {
-      event.preventDefault();
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          description: timesheetAdded.description,
-          date: timesheetAdded.date,
-          hours: timesheetAdded.hours,
-          project: timesheetAdded.project,
-          employee: timesheetAdded.employee,
-          task: timesheetAdded.task
-        })
-      });
-      const data = await response.json();
-      if (!data.error) {
-        history.push('/time-sheets');
-      } else {
-        setErrorState(data.message);
-      }
+      dispatch(createTimesheet(timesheetAdded));
+      history.push('/time-sheets');
     } else {
       const id = params.id;
       event.preventDefault();
@@ -118,6 +103,13 @@ const Form = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <h3 className={styles.position}>Loading form...</h3>;
+  }
+  if (error) {
+    return <h3 className={styles.position}>Error: Could not load Timesheet form</h3>;
+  }
   return (
     <div>
       <form onSubmit={onSubmit} className={styles.container}>
