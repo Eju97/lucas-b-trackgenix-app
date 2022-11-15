@@ -3,6 +3,8 @@ import styles from './FormEmployee.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { postEmployee } from '../../../redux/employees/thunks';
 
 function Form() {
   const history = useHistory();
@@ -14,6 +16,8 @@ function Form() {
   const [employeePhone, setEmployeePhone] = useState('');
   const [employeePassword, setEmployeePassword] = useState('');
   const [errorState, setErrorState] = useState();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const id = params.id;
     if (id) {
@@ -78,7 +82,21 @@ function Form() {
         email: employeeEmail,
         password: employeePassword
       };
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/`, {
+      try {
+        dispatch(postEmployee(newEmployee));
+        alert('Employee created succefully');
+        history.push('/employees');
+      } catch (error) {
+        setErrorState(error);
+      }
+      /*.then(() => {
+              alert('Employee created succefully');
+              history.push('/employees');
+            })
+            .catch((error) => {
+              setErrorState(error);
+            })*/
+      /*const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -91,7 +109,7 @@ function Form() {
         history.push('/employees');
       } else {
         setErrorState(data.message);
-      }
+      }*/
     }
   };
 
