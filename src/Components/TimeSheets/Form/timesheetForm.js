@@ -17,9 +17,9 @@ const Form = () => {
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.timesheets);
-  const { list: tasks } = useSelector((state) => state.tasks);
-  const { list: projects } = useSelector((state) => state.projects);
+  const { isLoading: isLoadingTimesheets, error } = useSelector((state) => state.timesheets);
+  const { list: tasks, isLoading: isLoadingTasks } = useSelector((state) => state.tasks);
+  const { list: projects, isLoading: isLoadingProjects } = useSelector((state) => state.projects);
   const [employees, setEmployees] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const currentTimesheet = useSelector((state) =>
@@ -97,7 +97,7 @@ const Form = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoadingTimesheets || isLoadingTasks || isLoadingProjects) {
     return <h3 className={styles.position}>Loading form...</h3>;
   }
 
