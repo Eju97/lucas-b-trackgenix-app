@@ -91,7 +91,6 @@ const timesheetsReducer = (state = INITIAL_STATE, action) => {
     case PUT_TIMESHEET_SUCCESS:
       return {
         ...state,
-        // list: [...state.list, action.payload],
         list: state.list.map((timesheet) => {
           if (timesheet._id === action.payload._id) {
             return action.payload;
