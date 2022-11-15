@@ -50,7 +50,7 @@ export const deleteProject = (id) => {
 export const postProject = (project) => {
   return (dispatch) => {
     dispatch(postProjectsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -59,12 +59,14 @@ export const postProject = (project) => {
     })
       .then((response) => response.json())
       .then((response) => {
+        console.log(response);
         if (response.error) {
           throw new Error(response.message);
-        } else dispatch(postProjectsSuccess(project));
+        }
+        return dispatch(postProjectsSuccess(project));
       })
       .catch((err) => {
-        dispatch(postProjectsError(err.toString()));
+        return dispatch(postProjectsError(err.toString()));
       });
   };
 };
@@ -72,7 +74,7 @@ export const postProject = (project) => {
 export const putProject = (id, project) => {
   return (dispatch) => {
     dispatch(putProjectsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json'
@@ -83,10 +85,11 @@ export const putProject = (id, project) => {
       .then((response) => {
         if (response.error) {
           throw new Error(response.message);
-        } else dispatch(putProjectsSuccess(response.data));
+        }
+        return dispatch(putProjectsSuccess(response.data));
       })
       .catch((err) => {
-        dispatch(putProjectsError(err.toString()));
+        return dispatch(putProjectsError(err.toString()));
       });
   };
 };

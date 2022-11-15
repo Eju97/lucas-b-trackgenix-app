@@ -5,8 +5,8 @@ import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import SelectInput from '../../Shared/Select';
 import { useDispatch, useSelector } from 'react-redux';
-import { postProject, putProject } from '../../../redux/projects/thunks';
-import { POST_PROJECTS_SUCCESS } from '../../../redux/projects/constants';
+import { getProjects, postProject, putProject } from '../../../redux/projects/thunks';
+import { POST_PROJECTS_SUCCESS, PUT_PROJECTS_SUCCESS } from '../../../redux/projects/constants';
 import { getEmployees } from '../../../redux/employees/thunks';
 
 const Form = () => {
@@ -35,6 +35,7 @@ const Form = () => {
 
   useEffect(() => {
     dispatch(getEmployees());
+    dispatch(getProjects());
   }, []);
 
   const formatDate = (date) => {
@@ -44,9 +45,9 @@ const Form = () => {
 
   useEffect(async () => {
     const id = params.id;
-    if (id) {
+    if (id && currentProject) {
       try {
-        const employeeList = currentProject.employees.map((item) => {
+        const employeeList = currentProject?.employees.map((item) => {
           if (item.employee) {
             return {
               employee: item.employee._id,
@@ -56,13 +57,13 @@ const Form = () => {
           }
           return 'noEmployee';
         });
-        const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
+        const newEmployeeList = employeeList?.filter((employee) => employee !== 'noEmployee');
         setProjectState({
-          name: currentProject.name,
-          clientName: currentProject.clientName,
-          description: currentProject.description,
-          startDate: currentProject.startDate,
-          endDate: currentProject.endDate,
+          name: currentProject?.name,
+          clientName: currentProject?.clientName,
+          description: currentProject?.description,
+          startDate: currentProject?.startDate,
+          endDate: currentProject?.endDate,
           employees: newEmployeeList
         });
         setIsEditing(true);
@@ -70,7 +71,7 @@ const Form = () => {
         alert(error);
       }
     }
-  }, []);
+  }, [currentProject]);
 
   const deleteEmployees = (id) => {
     setProjectState({
@@ -82,13 +83,14 @@ const Form = () => {
   const onSubmit = async () => {
     if (!isEditing) {
       const response = await dispatch(postProject(projectState));
-      if (response.type === POST_PROJECTS_SUCCESS) {
+      console.log(response);
+      if (response?.type === POST_PROJECTS_SUCCESS) {
         history.push('/projects');
       }
     } else {
       const id = params.id;
-      dispatch(putProject(id, projectState));
-      if (!error) {
+      const response = await dispatch(putProject(id, projectState));
+      if (response.type === PUT_PROJECTS_SUCCESS) {
         history.push('/projects');
       }
     }
