@@ -63,14 +63,14 @@ const timesheetsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: true,
-        error: false
+        error: ''
       };
     case POST_TIMESHEETS_SUCCESS:
       return {
         ...state,
-        list: action.payload,
+        list: [...state.list, action.payload],
         isLoading: false,
-        error: false
+        error: ''
       };
     case POST_TIMESHEETS_ERROR:
       return {
