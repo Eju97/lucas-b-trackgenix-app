@@ -52,7 +52,7 @@ export const deleteSuperAdmins = (id) => {
 export const postSuperAdmins = (inputData) => {
   return (dispatch) => {
     dispatch(postSuperAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -64,11 +64,11 @@ export const postSuperAdmins = (inputData) => {
         if (response.error) {
           throw new Error(response.message);
         } else {
-          dispatch(postSuperAdminsSuccess(response.data));
+          return dispatch(postSuperAdminsSuccess(response.data));
         }
       })
       .catch((error) => {
-        dispatch(postSuperAdminError(error.toString()));
+        return dispatch(postSuperAdminError(error.toString()));
       });
   };
 };

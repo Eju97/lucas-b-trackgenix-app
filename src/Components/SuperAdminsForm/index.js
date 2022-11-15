@@ -11,6 +11,8 @@ import {
 } from '../../redux/superAdmins/constants';
 
 function SuperAdminsForm() {
+  const { isLoading, error } = useSelector((state) => state.superAdmins);
+  const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
   const id = params.id;
@@ -21,16 +23,16 @@ function SuperAdminsForm() {
     email: '',
     password: ''
   });
-  const dispatch = useDispatch();
+
   const currentSuperAdmin = useSelector((state) =>
     state.superAdmins.list.find((superAdmin) => superAdmin._id === params.id)
   );
-  /* const {isLoading, error} = useSelector((state) => state.superAdmins) */
+
   useEffect(() => {
     dispatch(getSuperAdmins());
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (id && currentSuperAdmin) {
       setInputData({
         name: currentSuperAdmin.name,
@@ -43,7 +45,6 @@ function SuperAdminsForm() {
 
   const onSubmit = async () => {
     if (formMode === 'edit') {
-      const id = params.id;
       const response = await dispatch(putSuperAdmins(id, inputData));
       if (response.type === PUT_SUPERADMINS_SUCCESS) {
         history.push('/super-admins');
@@ -56,41 +57,13 @@ function SuperAdminsForm() {
     }
   };
 
-  /*  const onCreateSuperAdmin = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(inputData)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        alert(response.message);
-        history.push('/super-admins');
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }; */
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
 
-  /* const onEditSuperAdmin = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(inputData)
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        alert(response.message);
-        history.push('/super-admins');
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }; */
+  if (error) {
+    return <h2>{error}</h2>;
+  }
 
   return (
     <section className={styles.container}>
