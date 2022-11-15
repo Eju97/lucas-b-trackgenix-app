@@ -19,6 +19,9 @@ export const getTimesheets = () => {
     fetch(`${process.env.REACT_APP_API_URL}/time-sheets`)
       .then((response) => response.json())
       .then((response) => {
+        if (response.error) {
+          throw new Error('ERROR: Could not get Timesheets');
+        }
         dispatch(getTimesheetsSuccess(response.data));
       })
       .catch((error) => {
@@ -37,9 +40,8 @@ export const deleteTimesheet = (id) => {
       .then((response) => {
         if (response.error) {
           throw new Error('Could not delete the timesheet');
-        } else {
-          dispatch(deleteTimesheetsSuccess(id));
         }
+        dispatch(deleteTimesheetsSuccess(id));
       })
       .catch((error) => {
         dispatch(deleteTimesheetsError(error));
@@ -50,7 +52,7 @@ export const deleteTimesheet = (id) => {
 export const createTimesheet = (newTimesheet) => {
   return (dispatch) => {
     dispatch(createTimesheetPending());
-    fetch(`${process.env.REACT_APP_API_URL}/time-sheets`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/time-sheets`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -65,13 +67,12 @@ export const createTimesheet = (newTimesheet) => {
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
-          throw new Error('Could not create a new Timesheet');
-        } else {
-          dispatch(createTimesheetSuccess(response.data));
+          throw new Error(response.message);
         }
+        return dispatch(createTimesheetSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(createTimesheetError(error));
+        return dispatch(createTimesheetError(error));
       });
   };
 };
@@ -79,7 +80,7 @@ export const createTimesheet = (newTimesheet) => {
 export const editTimesheet = (id, timesheet) => {
   return (dispatch) => {
     dispatch(editTimesheetPending);
-    fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -94,13 +95,12 @@ export const editTimesheet = (id, timesheet) => {
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
-          throw new Error('Could not edit the Timesheet');
-        } else {
-          dispatch(editTimesheetSuccess(response.data));
+          throw new Error(response.message);
         }
+        return dispatch(editTimesheetSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(editTimesheetError(error));
+        return dispatch(editTimesheetError(error.toString()));
       });
   };
 };
