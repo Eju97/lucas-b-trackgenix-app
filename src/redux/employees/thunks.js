@@ -44,6 +44,7 @@ export const deleteEmployees = (id) => {
       });
   };
 };
+
 export const postEmployee = (newEmployee) => {
   return (dispatch) => {
     dispatch(postEmployeesPending());
@@ -67,22 +68,23 @@ export const postEmployee = (newEmployee) => {
       });
   };
 };
-export const putEmployee = (newEmployee, id) => {
+
+export const putEmployee = (id, data) => {
   return (dispatch) => {
     dispatch(putEmployeesPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/employees${id}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newEmployee)
+      body: JSON.stringify(data)
     })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
           throw new Error(response.message);
         } else {
-          return dispatch(putEmployeesSuccess(response));
+          return dispatch(putEmployeesSuccess(response.data));
         }
       })
       .catch((error) => {
