@@ -18,10 +18,10 @@ const SuperAdmins = () => {
     dispatch(getSuperAdmins());
   }, []);
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <h2 className={styles.position}>Loading...</h2>;
   }
   if (error) {
-    return <h2>{error}</h2>;
+    return <h2 className={styles.position}>{error}</h2>;
   }
 
   const closeModal = () => {

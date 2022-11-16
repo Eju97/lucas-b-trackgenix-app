@@ -58,16 +58,13 @@ function SuperAdminsForm() {
   };
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
-  }
-
-  if (error) {
-    return <h2>{error}</h2>;
+    return <h2 className={styles.position}>Loading...</h2>;
   }
 
   return (
     <section className={styles.container}>
       <form>
+        {error && <h3 className={styles.position}>{error.message}</h3>}
         <div className={styles.inputs}>
           <Input
             label="Name"

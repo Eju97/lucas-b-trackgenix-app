@@ -68,7 +68,7 @@ export const postSuperAdmins = (inputData) => {
         }
       })
       .catch((error) => {
-        return dispatch(postSuperAdminError(error.toString()));
+        return dispatch(postSuperAdminError(error));
       });
   };
 };
@@ -93,7 +93,7 @@ export const putSuperAdmins = (id, superAdmin) => {
         }
       })
       .catch((error) => {
-        return dispatch(putSuperAdminsError(error.toString()));
+        return dispatch(putSuperAdminsError(error));
       });
   };
 };
