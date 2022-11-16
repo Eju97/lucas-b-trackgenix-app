@@ -3,16 +3,28 @@ import styles from './form.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
+import {
+  POST_TIMESHEETS_SUCCESS,
+  PUT_TIMESHEET_SUCCESS
+} from '../../../redux/timesheets/constants';
+import { createTimesheet, editTimesheet, getTimesheets } from '../../../redux/timesheets/thunks';
+import { getProjects } from '../../../redux/projects/thunks';
+import { getTask } from '../../../redux/tasks/thunks';
 import SelectInput from '../../Shared/Select';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Form = () => {
   const params = useParams();
   const history = useHistory();
-  const [projects, setProjects] = useState([]);
-  const [tasks, setTasks] = useState([]);
+  const dispatch = useDispatch();
+  const { isLoading: isLoadingTimesheets, error } = useSelector((state) => state.timesheets);
+  const { list: tasks, isLoading: isLoadingTasks } = useSelector((state) => state.tasks);
+  const { list: projects, isLoading: isLoadingProjects } = useSelector((state) => state.projects);
   const [employees, setEmployees] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const [errorState, setErrorState] = useState();
+  const currentTimesheet = useSelector((state) =>
+    state.timesheets.list.find((timesheet) => timesheet._id === params.id)
+  );
   const [timesheetAdded, setTimesheetAdded] = useState({
     description: '',
     date: '',
@@ -25,25 +37,20 @@ const Form = () => {
     const dateIso = date.substr(0, 10);
     return dateIso;
   };
+  useEffect(() => {
+    dispatch(getTimesheets());
+    dispatch(getTask());
+    dispatch(getProjects());
+  }, []);
 
   useEffect(async () => {
     try {
-      const tasksResponse = await fetch(`${process.env.REACT_APP_API_URL}/tasks`);
-      const tasks = await tasksResponse.json();
-      setTasks(tasks.data);
-      const projectsResponse = await fetch(`${process.env.REACT_APP_API_URL}/projects`);
-      const projects = await projectsResponse.json();
-      setProjects(projects.data);
       const id = params.id;
-      if (id) {
+      if (id && currentTimesheet) {
         setIsEditing(true);
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
-          method: 'GET'
-        });
-        const timeSheet = await response.json();
-        const selectedProject = projects.data.find((project) => {
-          if (timeSheet.data.project) {
-            return project._id === timeSheet.data.project._id;
+        const selectedProject = projects.find((project) => {
+          if (currentTimesheet.project) {
+            return project._id === currentTimesheet.project._id;
           }
           return false;
         });
@@ -52,18 +59,18 @@ const Form = () => {
           : [];
         setEmployees(projectEmployees);
         setTimesheetAdded({
-          description: timeSheet.data.description,
-          date: timeSheet.data.date,
-          hours: timeSheet.data.hours,
-          project: !timeSheet.data.project ? '' : timeSheet.data.project._id,
-          employee: !timeSheet.data.employee ? '' : timeSheet.data.employee._id,
-          task: !timeSheet.data.task ? '' : timeSheet.data.task._id
+          description: currentTimesheet.description,
+          date: currentTimesheet.date,
+          hours: currentTimesheet.hours,
+          project: !currentTimesheet.project ? '' : currentTimesheet.project._id,
+          employee: !currentTimesheet.employee ? '' : currentTimesheet.employee._id,
+          task: !currentTimesheet.task ? '' : currentTimesheet.task._id
         });
       }
     } catch (error) {
       alert(error);
     }
-  }, []);
+  }, [currentTimesheet]);
 
   const onChange = (event) => {
     setTimesheetAdded({ ...timesheetAdded, [event.target.name]: event.target.value });
@@ -76,53 +83,29 @@ const Form = () => {
 
   const onSubmit = async (event) => {
     if (!isEditing) {
-      event.preventDefault();
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          description: timesheetAdded.description,
-          date: timesheetAdded.date,
-          hours: timesheetAdded.hours,
-          project: timesheetAdded.project,
-          employee: timesheetAdded.employee,
-          task: timesheetAdded.task
-        })
-      });
-      const data = await response.json();
-      if (!data.error) {
+      const response = await dispatch(createTimesheet(timesheetAdded));
+      if (response.type === POST_TIMESHEETS_SUCCESS) {
         history.push('/time-sheets');
-      } else {
-        setErrorState(data.message);
       }
     } else {
       const id = params.id;
       event.preventDefault();
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          description: timesheetAdded.description,
-          date: timesheetAdded.date,
-          hours: timesheetAdded.hours,
-          project: timesheetAdded.project,
-          employee: timesheetAdded.employee,
-          task: timesheetAdded.task
-        })
-      });
-      const data = await response.json();
-      if (!data.error) {
+      const response = await dispatch(editTimesheet(id, timesheetAdded));
+      if (response.type === PUT_TIMESHEET_SUCCESS) {
         history.push('/time-sheets');
-      } else {
-        setErrorState(data.message);
       }
     }
   };
+
+  if (isLoadingTimesheets || isLoadingTasks || isLoadingProjects) {
+    return <h3 className={styles.position}>Loading form...</h3>;
+  }
+
   return (
     <div>
       <form onSubmit={onSubmit} className={styles.container}>
         {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
-        {errorState && <h3>{errorState}</h3>}
+        {error && <h3>{error.message}</h3>}
         <div>
           <Input
             label="Description"
@@ -152,7 +135,7 @@ const Form = () => {
             <SelectInput
               name="project"
               label="Projects"
-              value={timesheetAdded.project._id}
+              value={timesheetAdded.project}
               onChange={onChange}
               data={projects.map((project) =>
                 !project
@@ -166,7 +149,7 @@ const Form = () => {
             <SelectInput
               name="employee"
               label="Employee"
-              value={timesheetAdded.employee._id}
+              value={timesheetAdded.employee}
               onChange={onChange}
               data={employees.map((employee) =>
                 !employee
@@ -182,7 +165,7 @@ const Form = () => {
             <SelectInput
               name="task"
               label="Task"
-              value={timesheetAdded.task._id}
+              value={timesheetAdded.task}
               onChange={onChange}
               data={tasks.map((task) =>
                 !task
