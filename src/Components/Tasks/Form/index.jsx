@@ -3,6 +3,9 @@ import styles from './form.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { createTask, updateTask, getTask } from '../../../redux/tasks/thunks';
+import { CREATE_TASK_SUCCESS, UPDATE_TASK_SUCCESS } from '../../../redux/tasks/constants';
 
 const TaskForm = () => {
   const history = useHistory();
@@ -11,69 +14,46 @@ const TaskForm = () => {
     description: ''
   });
   const [isEditing, setIsEditing] = useState(false);
+  const { isLoading } = useSelector((state) => state.tasks);
+  const error = useSelector((state) => state.tasks.error);
+  const dispatch = useDispatch();
 
+  const currentTask = useSelector((state) =>
+    state.tasks.list.find((task) => task._id === params.id)
+  );
+  useEffect(() => {
+    dispatch(getTask());
+  }, []);
   useEffect(async () => {
     const id = params.id;
-    if (id) {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-        method: 'GET'
-      });
-      const data = await response.json();
+    if (id && currentTask) {
       setIsEditing(true);
-      setTask({ description: data.data.description });
+      setTask({ description: currentTask.description });
     }
-  }, []);
+  }, [currentTask]);
 
   const onSubmit = async () => {
     if (!isEditing) {
-      await createTask();
+      const response = await dispatch(createTask(task));
+      if (response.type === CREATE_TASK_SUCCESS) {
+        history.push('/tasks');
+      }
     } else {
-      await editTask();
+      const id = params.id;
+      const response = await dispatch(updateTask(id, task));
+      if (response.type === UPDATE_TASK_SUCCESS) {
+        history.push('/tasks');
+      }
     }
   };
 
-  const editTask = async () => {
-    try {
-      const id = params.id;
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(task)
-      });
-      const data = await response.json();
-      if (!data.error) {
-        history.push('/tasks');
-      } else {
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const createTask = async () => {
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(task)
-      });
-      const data = await response.json();
-      if (!data.error) {
-        history.push('/tasks');
-      } else {
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div className={styles.container}>
+      <div>{error && <h3>{error}</h3>}</div>
       <div>
         <h2>{isEditing ? 'Edit Task' : 'Create New Task'}</h2>
       </div>
