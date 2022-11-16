@@ -4,6 +4,10 @@ import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import SelectInput from '../../Shared/Select';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProjects, postProject, putProject } from '../../../redux/projects/thunks';
+import { POST_PROJECTS_SUCCESS, PUT_PROJECTS_SUCCESS } from '../../../redux/projects/constants';
+import { getEmployees } from '../../../redux/employees/thunks';
 
 const Form = () => {
   const history = useHistory();
@@ -16,25 +20,24 @@ const Form = () => {
     endDate: '',
     employees: []
   });
-  const [employeeList, setEmployeeList] = useState([]);
   const [employeeProject, setEmployeeProject] = useState({
     rate: null,
     role: '',
     employee: ''
   });
-  const [errorMessage, setErrorMessage] = useState();
   const [isEditing, setIsEditing] = useState(false);
+  const error = useSelector((state) => state.projects.error);
+  const employeeList = useSelector((state) => state.employees.list);
+  const isLoadingEmployees = useSelector((state) => state.employees.isLoading);
+  const isLoadingProjects = useSelector((state) => state.projects.isLoading);
+  const dispatch = useDispatch();
+  const currentProject = useSelector((state) =>
+    state.projects.list.find((project) => project._id === params.id)
+  );
 
   useEffect(() => {
-    try {
-      fetch(`${process.env.REACT_APP_API_URL}/employees`)
-        .then((response) => response.json())
-        .then((response) => {
-          setEmployeeList(response.data);
-        });
-    } catch (error) {
-      alert(error);
-    }
+    dispatch(getEmployees());
+    dispatch(getProjects());
   }, []);
 
   const formatDate = (date) => {
@@ -44,13 +47,9 @@ const Form = () => {
 
   useEffect(async () => {
     const id = params.id;
-    if (id) {
+    if (id && currentProject) {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-          method: 'GET'
-        });
-        const project = await response.json();
-        const employeeList = project.data.employees.map((item) => {
+        const employeeList = currentProject.employees.map((item) => {
           if (item.employee) {
             return {
               employee: item.employee._id,
@@ -62,11 +61,11 @@ const Form = () => {
         });
         const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
         setProjectState({
-          name: project.data.name,
-          clientName: project.data.clientName,
-          description: project.data.description,
-          startDate: project.data.startDate,
-          endDate: project.data.endDate,
+          name: currentProject.name,
+          clientName: currentProject.clientName,
+          description: currentProject.description,
+          startDate: currentProject.startDate,
+          endDate: currentProject.endDate,
           employees: newEmployeeList
         });
         setIsEditing(true);
@@ -74,7 +73,7 @@ const Form = () => {
         alert(error);
       }
     }
-  }, []);
+  }, [currentProject]);
 
   const deleteEmployees = (id) => {
     setProjectState({
@@ -85,48 +84,26 @@ const Form = () => {
 
   const onSubmit = async () => {
     if (!isEditing) {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(projectState)
-        });
-        const data = await response.json();
-        if (!data.error) {
-          history.push('/projects');
-        } else {
-          setErrorMessage(data.message);
-        }
-      } catch (error) {
-        alert(error.message);
+      const response = await dispatch(postProject(projectState));
+      if (response.type === POST_PROJECTS_SUCCESS) {
+        history.push('/projects');
       }
     } else {
-      try {
-        const id = params.id;
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(projectState)
-        });
-        const data = await response.json();
-        if (!data.error) {
-          history.push('/projects');
-        } else {
-          setErrorMessage(data.message);
-        }
-      } catch (error) {
-        alert(error.message);
+      const id = params.id;
+      const response = await dispatch(putProject(id, projectState));
+      if (response.type === PUT_PROJECTS_SUCCESS) {
+        history.push('/projects');
       }
     }
   };
 
+  if (isLoadingEmployees || isLoadingProjects) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <div className={styles.container}>
-      <div>{errorMessage && <h3>{errorMessage}</h3>}</div>
+      <div>{error && <h3>{error}</h3>}</div>
       <form>
         <h2>Form</h2>
         <div className={styles.projectForm}>
