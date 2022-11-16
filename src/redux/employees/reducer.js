@@ -70,7 +70,6 @@ const reducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
         error: false,
         list: [...state.list, action.payload.data]
-        //message: action.payload.message
       };
     case POST_EMPLOYEES_ERROR:
       return {
