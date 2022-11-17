@@ -105,6 +105,7 @@ function Form() {
           id="password"
           name="password"
           required
+          type={'password'}
           value={employee.password}
           onChange={onChange}
         />
