@@ -3,10 +3,12 @@ import styles from './employees.module.css';
 import Table from '../Shared/Table';
 import Modal from '../Shared/Modal';
 import Button from '../Shared/Button';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees, deleteEmployees } from '../../redux/employees/thunks';
 
 const Employees = () => {
+  const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
   const dispatch = useDispatch();

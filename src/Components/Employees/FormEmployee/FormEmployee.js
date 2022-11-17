@@ -3,142 +3,110 @@ import styles from './FormEmployee.module.css';
 import Input from '../../Shared/Input/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEmployees, postEmployee, putEmployee } from '../../../redux/employees/thunks';
+import { POST_EMPLOYEES_SUCCESS, PUT_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
 
 function Form() {
   const history = useHistory();
   const params = useParams();
-  const [employeeId, setEmployeeId] = useState();
-  const [employeeName, setEmployeeName] = useState('');
-  const [employeeLastName, setEmployeeLastName] = useState('');
-  const [employeeEmail, setEmployeeEmail] = useState('');
-  const [employeePhone, setEmployeePhone] = useState('');
-  const [employeePassword, setEmployeePassword] = useState('');
-  const [errorState, setErrorState] = useState();
+  const [employee, setEmployee] = useState({
+    name: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    password: ''
+  });
+
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.employees);
+  const currentEmployee = useSelector((state) =>
+    state.employees.list.find((employee) => employee._id === params.id)
+  );
+
   useEffect(() => {
-    const id = params.id;
-    if (id) {
-      fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`)
-        .then((response) => response.json())
-        .then((response) => {
-          setEmployeeId(id);
-          setEmployeeName(response.data?.name);
-          setEmployeeLastName(response.data?.lastName);
-          setEmployeeEmail(response.data?.email);
-          setEmployeePhone(response.data?.phone);
-          setEmployeePassword(response.data?.password);
-        });
-    }
+    dispatch(getEmployees());
   }, []);
 
-  const onChangeEmployeeName = (event) => {
-    setEmployeeName(event.target.value);
+  useEffect(async () => {
+    const id = params.id;
+    if (id && currentEmployee) {
+      setEmployee({
+        name: currentEmployee.name,
+        lastName: currentEmployee.lastName,
+        email: currentEmployee.email,
+        phone: currentEmployee.phone,
+        password: currentEmployee.password
+      });
+    }
+  }, [currentEmployee]);
+  const onChange = (event) => {
+    setEmployee({ ...employee, [event.target.name]: event.target.value });
   };
-  const onChangeEmployeeLastName = (event) => {
-    setEmployeeLastName(event.target.value);
-  };
-  const onChangeEmployeeEmail = (event) => {
-    setEmployeeEmail(event.target.value);
-  };
-  const onChangeEmployeePhone = (event) => {
-    setEmployeePhone(event.target.value);
-  };
-  const onChangeEmployeePassword = (event) => {
-    setEmployeePassword(event.target.value);
-  };
-
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (employeeId) {
-      let newEmployee = {
-        name: employeeName,
-        lastName: employeeLastName,
-        phone: employeePhone,
-        email: employeeEmail,
-        password: employeePassword
-      };
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/${employeeId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newEmployee)
-      });
-      const data = await response.json();
-      if (!data.error) {
-        alert('Edited succefully');
+    const id = params.id;
+    if (id) {
+      const response = await dispatch(putEmployee(id, employee));
+      if (response.type === PUT_EMPLOYEES_SUCCESS) {
         history.push('/employees');
-      } else {
-        setErrorState(data.message);
+        alert('Edited succefully');
       }
     } else {
-      let newEmployee = {
-        name: employeeName,
-        lastName: employeeLastName,
-        phone: employeePhone,
-        email: employeeEmail,
-        password: employeePassword
-      };
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/employees/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newEmployee)
-      });
-      const data = await response.json();
-      if (!data.error) {
-        alert('Employee created succefully');
+      const response = await dispatch(postEmployee(employee));
+      if (response.type === POST_EMPLOYEES_SUCCESS) {
         history.push('/employees');
-      } else {
-        setErrorState(data.message);
+        alert('Employee created succefully');
       }
     }
   };
-
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
   return (
     <div className={styles.container}>
-      {errorState && <h3>{errorState}</h3>}
+      {error && <h3>{error}</h3>}
       <form onSubmit={onSubmit}>
         <h2>Form</h2>
         <Input
           label="Name"
           id="employeeName"
-          name="employeeName"
+          name="name"
           required
-          value={employeeName}
-          onChange={onChangeEmployeeName}
+          value={employee.name}
+          onChange={onChange}
         />
         <Input
           label="LastName"
-          id="employeeLastName"
-          name="employeeLastName"
+          id="lastName"
+          name="lastName"
           required
-          value={employeeLastName}
-          onChange={onChangeEmployeeLastName}
+          value={employee.lastName}
+          onChange={onChange}
         />
         <Input
           label="Email"
-          id="employeeEmail"
-          name="employeeEmail"
+          id="email"
+          name="email"
           required
-          value={employeeEmail}
-          onChange={onChangeEmployeeEmail}
+          value={employee.email}
+          onChange={onChange}
         />
         <Input
           label="Phone"
-          id="employeePhone"
-          name="employeePhone"
+          id="phone"
+          name="phone"
           required
-          value={employeePhone}
-          onChange={onChangeEmployeePhone}
+          value={employee.phone}
+          onChange={onChange}
         />
         <Input
           label="Password"
-          id="employeePassword"
-          name="employeePassword"
+          id="password"
+          name="password"
           required
-          value={employeePassword}
-          onChange={onChangeEmployeePassword}
+          value={employee.password}
+          onChange={onChange}
         />
         <div>
           <Button onClick={onSubmit} variant="confirm" name="Submit" />
