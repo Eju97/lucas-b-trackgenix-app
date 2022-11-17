@@ -119,7 +119,7 @@ function SuperAdminsForm() {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <Button onClick={onSubmit} variant="confirm" name="Create" />
+          <Button onClick={onSubmit} variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
       </form>
