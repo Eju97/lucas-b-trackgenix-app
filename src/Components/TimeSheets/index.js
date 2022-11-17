@@ -85,7 +85,7 @@ const TimeSheets = () => {
       <h2>TimeSheets</h2>
       <Table
         data={timeSheetData()}
-        headers={['description', 'date', 'hours', 'project', 'employee', 'task', 'delete']}
+        headers={['description', 'date', 'hours', 'project', 'employee', 'task']}
         onDelete={onDelete}
         onRowClick={onRowClick}
       />
