@@ -114,7 +114,7 @@ function SuperAdminsForm() {
             onChange={(e) => {
               setInputData({ ...inputData, password: e.target.value });
             }}
-            type="text"
+            type={'password'}
             value={inputData.password}
           />
         </div>
