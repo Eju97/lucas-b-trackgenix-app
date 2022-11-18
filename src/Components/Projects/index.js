@@ -14,9 +14,23 @@ const Projects = () => {
   const { list: projectList, isLoading, error } = useSelector((state) => state.projects);
   const dispatch = useDispatch();
 
+  const dateFormatted = (date) => {
+    return new Date(date).toISOString().split('T')[0];
+  };
+
   useEffect(() => {
     dispatch(getProjects());
   }, []);
+
+  const projectsData = () => {
+    return projectList.map((project) => {
+      return {
+        ...project,
+        startDate: dateFormatted(project.startDate),
+        endDate: dateFormatted(project.endDate)
+      };
+    });
+  };
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -57,7 +71,7 @@ const Projects = () => {
       </Modal>
       <h2>Projects</h2>
       <Table
-        data={projectList}
+        data={projectsData()}
         headers={['name', 'clientName', 'description', 'startDate', 'endDate']}
         onDelete={onDelete}
         onRowClick={onRowClick}

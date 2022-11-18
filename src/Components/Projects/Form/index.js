@@ -241,7 +241,7 @@ const Form = () => {
                 });
               }}
               variant="confirm"
-              name="Assing Employee"
+              name="Assign Employee"
             />
           </div>
         </div>
