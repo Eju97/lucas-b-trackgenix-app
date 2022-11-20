@@ -8,9 +8,9 @@ import { useSelector, useDispatch } from 'react-redux';
 const EmployeeProfile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const hardCodedEmployee = '6379122be0921a237292eebb';
+  const id = '6379122be0921a237292eebb';
   const currentEmployee = useSelector((state) =>
-    state.employees.list.find((employee) => employee._id === hardCodedEmployee)
+    state.employees.list.find((employee) => employee._id === id)
   );
   const [employeeProfile, setEmployeeProfile] = useState({
     name: '',
@@ -24,7 +24,7 @@ const EmployeeProfile = () => {
   }, []);
 
   useEffect(() => {
-    if (hardCodedEmployee && currentEmployee) {
+    if (id && currentEmployee) {
       setEmployeeProfile({
         name: currentEmployee.name,
         lastName: currentEmployee.lastName,
@@ -62,7 +62,7 @@ const EmployeeProfile = () => {
       </div>
       <div>
         <Button onClick={() => history.goBack()} name="Go Back" />
-        <Button onClick={editProfile} name="Edit Profile" />
+        <Button onClick={() => editProfile(id)} name="Edit Profile" />
       </div>
     </div>
   );
