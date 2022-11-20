@@ -7,10 +7,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createTask, updateTask, getTask } from '../../../redux/tasks/thunks';
 import { CREATE_TASK_SUCCESS, UPDATE_TASK_SUCCESS } from '../../../redux/tasks/constants';
 import { useForm } from 'react-hook-form';
+import { schema } from './validations.jsx';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const TaskForm = () => {
-  const { handleSubmit, register, reset } = useForm({
-    mode: 'onChange'
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
   });
 
   const history = useHistory();
@@ -23,14 +31,18 @@ const TaskForm = () => {
   const currentTask = useSelector((state) =>
     state.tasks.list.find((task) => task._id === params.id)
   );
+
   useEffect(() => {
     dispatch(getTask());
   }, []);
+
   useEffect(async () => {
     const id = params.id;
     if (id && currentTask) {
       setIsEditing(true);
-      reset(currentTask);
+      reset({
+        description: currentTask.description
+      });
     }
   }, [currentTask]);
 
@@ -61,7 +73,13 @@ const TaskForm = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form}>
-          <Input label="Description" name="description" type="text" register={register} />
+          <Input
+            label="Description"
+            name="description"
+            type="text"
+            register={register}
+            error={errors.description?.message}
+          />
         </div>
         <div className={styles.input}>
           <Button onClick={handleSubmit(onSubmit)} variant="confirm" name="Submit" />
