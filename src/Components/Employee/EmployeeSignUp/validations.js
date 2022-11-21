@@ -40,7 +40,8 @@ export const employeeValidation = Joi.object({
       'string.empty': 'Phone number is not allowed to be empty',
       'string.base': 'Phone number can only contain numbers',
       'string.pattern.base': 'Phone number can only contain numbers',
-      'string.required': 'Phone number field is required'
+      'string.required': 'Phone number field is required',
+      'string.length': 'Phone number must be 10 characters long'
     }),
   email: Joi.string()
     .email({ tlds: { allow: false } })

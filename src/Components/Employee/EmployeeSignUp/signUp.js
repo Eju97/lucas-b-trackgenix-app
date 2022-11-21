@@ -28,6 +28,7 @@ const EmployeeSignUp = () => {
 
   const onSubmit = async (Data) => {
     const response = await dispatch(postEmployee(Data));
+    alert('Profile created succefully');
     if (response.type === POST_EMPLOYEES_SUCCESS) {
       history.push('/employee/profile');
       alert('Profile created succefully');
