@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getEmployees, postEmployee } from '../../../redux/employees/thunks';
 import { POST_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
-// import { useParams } from 'react-router-dom';
 import Input from '../../Shared/Input';
 import Button from '../../Shared/Button';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -12,6 +11,8 @@ import { employeeValidation } from './validations';
 import styles from './signupemployee.module.css';
 
 const EmployeeSignUp = () => {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.employees);
   const {
     handleSubmit,
     register,
@@ -20,9 +21,6 @@ const EmployeeSignUp = () => {
     mode: 'onBlur',
     resolver: joiResolver(employeeValidation)
   });
-
-  const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.employees);
 
   useEffect(async () => {
     dispatch(getEmployees());
