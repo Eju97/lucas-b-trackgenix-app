@@ -16,6 +16,7 @@ import Tasks from '../Tasks/index';
 import TaskForm from '../Tasks/Form';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import EmployeesHome from '../EmployeesHome/EmployeesHome';
 
 function Layout() {
   return (
@@ -42,6 +43,7 @@ function Layout() {
           <Route exact path="/tasks" component={Tasks} />
           <Route exact path="/tasks/form" component={TaskForm} />
           <Route path="/tasks/form/:id" component={TaskForm} />
+          <Route exact path="/employees/home" component={EmployeesHome} />
           <Redirect to="/" />
         </Switch>
       </Router>
