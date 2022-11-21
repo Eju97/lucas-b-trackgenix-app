@@ -1,13 +1,5 @@
-import Button from './Button';
-import Input from './Input';
-import Modal from './Modal';
-import Select from './Select';
-import Table from './Table';
-
-export default {
-  Button,
-  Input,
-  Modal,
-  Select,
-  Table
-};
+export * from './Button';
+export * from './Input';
+export * from './Select';
+export * from './Modal';
+export * from './Table';

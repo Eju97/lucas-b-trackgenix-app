@@ -6,6 +6,7 @@ import { getEmployees, postEmployee } from '../../../redux/employees/thunks';
 import { POST_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
 import Input from '../../Shared/Input';
 import Button from '../../Shared/Button';
+// import {} from '../../Shared';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from './validations';
 import styles from './signupemployee.module.css';
@@ -77,12 +78,7 @@ const EmployeeSignUp = () => {
           type="password"
           error={errors.password?.message}
         ></Input>
-        <Button
-          type="submit"
-          variant="confirm"
-          name="Submit"
-          onClick={handleSubmit(onSubmit)}
-        ></Button>
+        <Button type="submit" variant="confirm" name="Submit"></Button>
       </form>
     </div>
   );
