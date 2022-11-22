@@ -8,7 +8,7 @@ import { getEmployees, postEmployee, putEmployee } from '../../../redux/employee
 import { POST_EMPLOYEES_SUCCESS, PUT_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { schema } from '../validations/validations';
+import { employeeSchema } from '../validations/validations';
 
 const Form = () => {
   const {
@@ -18,7 +18,7 @@ const Form = () => {
     reset
   } = useForm({
     mode: 'onBlur',
-    resolver: joiResolver(schema)
+    resolver: joiResolver(employeeSchema)
   });
   const history = useHistory();
   const params = useParams();
