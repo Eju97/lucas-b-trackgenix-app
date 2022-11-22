@@ -8,3 +8,9 @@
 .container {
   margin-bottom: 5px;
 }
+
+.warning{
+  color: red;
+  font-size: 12px;
+  text-align: center;
+}
