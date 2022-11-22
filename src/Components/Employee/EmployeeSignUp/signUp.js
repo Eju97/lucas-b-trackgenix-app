@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getEmployees, postEmployee } from '../../../redux/employees/thunks';
 import { POST_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
-import Input from '../../Shared/Input';
-import Button from '../../Shared/Button';
-// import {} from '../../Shared';
+import { Input, Button, Modal } from '../../Shared';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from './validations';
 import styles from './signupemployee.module.css';
@@ -14,9 +12,11 @@ import styles from './signupemployee.module.css';
 const EmployeeSignUp = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.employees);
+  const [showModal, setShowModal] = useState(false);
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
@@ -27,20 +27,32 @@ const EmployeeSignUp = () => {
     dispatch(getEmployees());
   }, []);
 
+  const closeModal = () => {
+    setShowModal(false);
+    reset();
+  };
+
   const onSubmit = async (Data) => {
     const response = await dispatch(postEmployee(Data));
-    alert('Profile created succefully');
     if (response.type === POST_EMPLOYEES_SUCCESS) {
-      history.push('/employee/profile');
-      alert('Profile created succefully');
+      setShowModal(true);
     }
   };
 
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
+
   return (
     <div className={styles.container}>
+      <Modal isOpen={showModal}>
+        <div>
+          <h3>Employee Created Succesfuly</h3>
+        </div>
+        <div>
+          <Button variant="confirm" name="Accept" onClick={closeModal} />
+        </div>
+      </Modal>
       <h2>Sign Up Employee</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
@@ -78,7 +90,9 @@ const EmployeeSignUp = () => {
           type="password"
           error={errors.password?.message}
         ></Input>
-        <Button type="submit" variant="confirm" name="Submit"></Button>
+        <div className={styles.buttonContainer}>
+          <Button type="submit" variant="confirm" name="Submit"></Button>
+        </div>
       </form>
     </div>
   );
