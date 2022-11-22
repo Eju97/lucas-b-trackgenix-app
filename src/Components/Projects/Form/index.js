@@ -8,23 +8,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProjects, postProject, putProject } from '../../../redux/projects/thunks';
 import { POST_PROJECTS_SUCCESS, PUT_PROJECTS_SUCCESS } from '../../../redux/projects/constants';
 import { getEmployees } from '../../../redux/employees/thunks';
+import { useForm, useFieldArray } from 'react-hook-form';
+import { schema } from './validations.js';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const Form = () => {
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'employees'
+  });
+
   const history = useHistory();
   const params = useParams();
-  const [projectState, setProjectState] = useState({
-    name: '',
-    clientName: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    employees: []
-  });
-  const [employeeProject, setEmployeeProject] = useState({
-    rate: null,
-    role: '',
-    employee: ''
-  });
   const [isEditing, setIsEditing] = useState(false);
   const error = useSelector((state) => state.projects.error);
   const employeeList = useSelector((state) => state.employees.list);
@@ -60,12 +66,12 @@ const Form = () => {
           return 'noEmployee';
         });
         const newEmployeeList = employeeList.filter((employee) => employee !== 'noEmployee');
-        setProjectState({
+        reset({
           name: currentProject.name,
           clientName: currentProject.clientName,
           description: currentProject.description,
-          startDate: currentProject.startDate,
-          endDate: currentProject.endDate,
+          startDate: formatDate(currentProject.startDate),
+          endDate: formatDate(currentProject.endDate),
           employees: newEmployeeList
         });
         setIsEditing(true);
@@ -75,22 +81,15 @@ const Form = () => {
     }
   }, [currentProject]);
 
-  const deleteEmployees = (id) => {
-    setProjectState({
-      ...projectState,
-      employees: projectState.employees.filter((employee) => employee.employee !== id)
-    });
-  };
-
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     if (!isEditing) {
-      const response = await dispatch(postProject(projectState));
+      const response = await dispatch(postProject(data));
       if (response.type === POST_PROJECTS_SUCCESS) {
         history.push('/projects');
       }
     } else {
       const id = params.id;
-      const response = await dispatch(putProject(id, projectState));
+      const response = await dispatch(putProject(id, data));
       if (response.type === PUT_PROJECTS_SUCCESS) {
         history.push('/projects');
       }
@@ -104,7 +103,7 @@ const Form = () => {
   return (
     <div className={styles.container}>
       <div>{error && <h3>{error}</h3>}</div>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h2>Form</h2>
         <div className={styles.projectForm}>
           <div>
@@ -112,25 +111,15 @@ const Form = () => {
               label="Name"
               id="name"
               name="name"
-              value={projectState.name}
-              onChange={(e) => {
-                setProjectState({
-                  ...projectState,
-                  name: e.target.value
-                });
-              }}
+              register={register}
+              error={errors.name?.message}
             />
             <Input
               label="Client Name"
               id="clientName"
               name="clientName"
-              value={projectState.clientName}
-              onChange={(e) => {
-                setProjectState({
-                  ...projectState,
-                  clientName: e.target.value
-                });
-              }}
+              register={register}
+              error={errors.clientName?.message}
             />
           </div>
           <div>
@@ -138,13 +127,8 @@ const Form = () => {
               label="Description"
               id="description"
               name="description"
-              value={projectState.description}
-              onChange={(e) => {
-                setProjectState({
-                  ...projectState,
-                  description: e.target.value
-                });
-              }}
+              register={register}
+              error={errors.description?.message}
             />
           </div>
           <div>
@@ -152,125 +136,92 @@ const Form = () => {
               label="Start Date"
               id="startDate"
               name="startDate"
+              register={register}
+              error={errors.startDate?.message}
               type="date"
-              value={formatDate(projectState.startDate)}
-              onChange={(e) => {
-                let dateFormatted = new Date(e.target.value).toISOString();
-                setProjectState({
-                  ...projectState,
-                  startDate: dateFormatted
-                });
-              }}
             />
             <Input
               label="End Date"
               id="endDate"
               name="endDate"
+              register={register}
+              error={errors.endDate?.message}
               type="date"
-              value={formatDate(projectState.endDate)}
-              onChange={(e) => {
-                let dateFormatted = new Date(e.target.value).toISOString();
-                setProjectState({
-                  ...projectState,
-                  endDate: dateFormatted
-                });
-              }}
             />
           </div>
         </div>
         <h3>Employees</h3>
-        <div className={styles.employeeForm}>
-          <div>
-            <SelectInput
-              name="role"
-              label="Role"
-              value={employeeProject.role}
-              onChange={(e) => {
-                setEmployeeProject({
-                  ...employeeProject,
-                  role: e.target.value
-                });
-              }}
-              data={[
-                { id: 'DEV', value: 'DEV' },
-                { id: 'TL', value: 'TL' },
-                { id: 'PM', value: 'PM' },
-                { id: 'QA', value: 'QA' }
-              ]}
-            />
-            <label>Employees</label>
-            <SelectInput
-              name="employee"
-              label="Employee"
-              value={employeeProject.employee}
-              onChange={(e) => {
-                setEmployeeProject({
-                  ...employeeProject,
-                  employee: e.target.value
-                });
-              }}
-              data={employeeList.map((employee) =>
-                !employee
-                  ? ''
-                  : {
-                      id: employee._id,
-                      value: employee.name
-                    }
-              )}
-            />
-          </div>
-          <div>
-            <Input
-              label="Rate"
-              name="rate"
-              id="rate"
-              onChange={(e) => {
-                setEmployeeProject({
-                  ...employeeProject,
-                  rate: e.target.value
-                });
-              }}
-            />
-          </div>
-          <div>
-            <Button
-              onClick={() => {
-                setProjectState({
-                  ...projectState,
-                  employees: [...projectState.employees, employeeProject]
-                });
-              }}
-              variant="confirm"
-              name="Assign Employee"
-            />
-          </div>
-        </div>
-        <div className={styles.employees}>
-          {projectState.employees.map((employee) => {
-            const currentEmployee = employeeList.find((item) => item._id === employee.employee);
-            if (currentEmployee) {
-              return (
-                <tr key={employee.employee} className={styles.employeeList}>
-                  <td>{currentEmployee.name}</td>
-                  <td>{employee.role}</td>
-                  <td>{employee.rate}</td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        deleteEmployees(employee.employee);
-                      }}
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
-              );
-            }
-          })}
-        </div>
+        {fields.map((field, index) => {
+          return (
+            <section key={field.id}>
+              <label>
+                Role
+                <SelectInput
+                  name={`employees[${index}].role`}
+                  label="Role"
+                  register={register}
+                  error={errors.employees?.message}
+                  data={[
+                    { id: 'DEV', value: 'DEV' },
+                    { id: 'TL', value: 'TL' },
+                    { id: 'PM', value: 'PM' },
+                    { id: 'QA', value: 'QA' }
+                  ]}
+                />
+              </label>
+              <label>
+                Employee
+                <SelectInput
+                  name={`employees[${index}].employee`}
+                  label="Employee"
+                  register={register}
+                  error={errors.employees?.message}
+                  data={employeeList.map((employee) =>
+                    !employee
+                      ? ''
+                      : {
+                          id: employee._id,
+                          value: employee.name
+                        }
+                  )}
+                />
+              </label>
+              <label>
+                Rate
+                <Input
+                  name={`employees[${index}].rate`}
+                  id="rate"
+                  register={register}
+                  error={errors.employees?.message}
+                />
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  remove(index);
+                }}
+              >
+                X
+              </button>
+            </section>
+          );
+        })}
+        <Button
+          type="button"
+          variant="confirm"
+          name="Add Employee"
+          onClick={() => {
+            append({
+              employee: '',
+              role: 'QA',
+              rate: 0
+            });
+          }}
+        />
         <div className={styles.save}>
-          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+          <Button onClick={() => reset()} variant="cancel" name="Reset" />
         </div>
       </form>
     </div>

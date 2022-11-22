@@ -1,14 +1,9 @@
 import React from 'react';
 import styles from './select.module.css';
 
-const Select = ({ name, value, onChange, label, data }) => {
+const Select = ({ name, value, label, data, register }) => {
   return (
-    <select
-      name={name}
-      onChange={(event) => onChange(event)}
-      value={value}
-      className={styles.select}
-    >
+    <select name={name} {...register(name)} value={value} className={styles.select}>
       <option hidden value="">
         {label}
       </option>
