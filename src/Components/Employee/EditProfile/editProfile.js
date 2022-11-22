@@ -1,16 +1,15 @@
 // import React, { useEffect, useState } from 'react';
 import styles from './editProfile.module.css';
-import Input from '../../Shared/Input/Input';
-// import Button from '../../Shared/Button';
+import Input from 'Components/Shared/Input/Input';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployees, putEmployee } from '../../../redux/employees/thunks';
-import { PUT_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
+import { getEmployees, putEmployee } from 'redux/employees/thunks';
+import { PUT_EMPLOYEES_SUCCESS } from 'redux/employees/constants';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from './editProfileValidations';
-import Button from '../../Shared/Button';
+import Button from 'Components/Shared/Button';
 
 const EditEmployeeProfile = () => {
   const {
