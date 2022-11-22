@@ -1,43 +1,90 @@
-import React from 'react';
-import tableStyles from '../../Shared/Table/index.module.css';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import Button from '../../Shared/Button';
+import Input from '../../Shared/Input/Input';
+import SelectInput from '../../Shared/Select';
+import { getProjects } from '../../../redux/projects/thunks';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import { POST_TIMESHEETS_SUCCESS } from '../../../redux/timesheets/constants';
+import { createTimesheet } from '../../../redux/timesheets/thunks';
+import { getTask } from '../../../redux/tasks/thunks';
+import styles from './addtimesheet.module.css';
 
-const AddTimesheet = ({ data, headers, hours }) => {
+const NewTimesheet = () => {
+  const params = useParams();
+  const id = params.id;
+  const { register, handleSubmit } = useForm({ defaultValues: { employee: id } });
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { list: tasks } = useSelector((state) => state.tasks);
+  const currentProject = useSelector((state) =>
+    state.projects.list.filter(
+      (project) =>
+        project.employees.length !== 0 &&
+        project.employees[0].employee !== null &&
+        project.employees[0].employee._id === id
+    )
+  );
+
+  useEffect(() => {
+    dispatch(getTask());
+    dispatch(getProjects());
+  }, []);
+
+  const onSubmit = async (data, id) => {
+    const response = await dispatch(createTimesheet(data));
+    console.log(data, id);
+    if (response.type === POST_TIMESHEETS_SUCCESS) {
+      history.push('/employee/home');
+    }
+  };
+
   return (
     <div>
-      <table>
-        <thead>
-          <tr className={tableStyles.trHeader}>
-            {headers.map((header, index) => {
-              return <th key={index}>{header}</th>;
-            })}
-            <th />
-          </tr>
-        </thead>
-        <tbody className={tableStyles.tbody}>
-          {data.map((row) => {
-            return (
-              <>
-                <tr className={tableStyles.tr} key={row._id}>
-                  {headers.map((header, index) => {
-                    return (
-                      <>
-                        <td key={index}>{row[header]}</td>
-                      </>
-                    );
-                  })}
-                </tr>
-              </>
-            );
-          })}
-          <tr className={tableStyles.tr}>
-            <td>Total Hours</td>
-            <td></td>
-            <td>{hours}</td>
-          </tr>
-        </tbody>
-      </table>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+        <div>
+          <Input register={register} label="Description" name="description" type="text" required />
+          <Input register={register} label="Date" name="date" type="date" required />
+          <Input register={register} label="Hours" name="hours" type="number" required />
+          <div>
+            <SelectInput
+              register={register}
+              name="project"
+              label="Projects"
+              data={currentProject.map((project) =>
+                !project
+                  ? ''
+                  : {
+                      id: project._id,
+                      value: project.name
+                    }
+              )}
+            />
+          </div>
+          <div>
+            <SelectInput
+              register={register}
+              name="task"
+              label="Task"
+              data={tasks.map((task) =>
+                !task
+                  ? ''
+                  : {
+                      id: task._id,
+                      value: task.description
+                    }
+              )}
+            />
+          </div>
+        </div>
+        <div>
+          <Button type="submit" variant="confirm" name="Submit" />
+          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+        </div>
+      </form>
     </div>
   );
 };
 
-export default AddTimesheet;
+export default NewTimesheet;

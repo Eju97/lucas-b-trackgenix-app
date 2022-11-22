@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { getTimesheets } from '../../redux/timesheets/thunks';
+import { getTimesheets } from '../../../redux/timesheets/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import Table from '../Shared/Table';
-import { getProjects } from '../../redux/projects/thunks';
+import Table from '../../Shared/Table';
+import { getProjects } from '../../../redux/projects/thunks';
 import styles from './employ.module.css';
-import Button from '../Shared/Button';
-import AddTimesheet from './AddTimesheet/addTimesheet';
+import Button from '../../Shared/Button';
+import TimesheetsHours from './timesheetHours';
+import { useHistory } from 'react-router-dom';
 
 const EmployeeHome = () => {
+  const history = useHistory();
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState('projects');
   const [hours, setHours] = useState(null);
   const dispatch = useDispatch();
-  const idTest = '637aef7b511be17cb78c67b9';
+  const id = '637aef7b511be17cb78c67b9';
   const currentTimesheet = useSelector((state) =>
-    state.timesheets.list.filter((timesheet) => timesheet.employee?._id === idTest)
+    state.timesheets.list.filter((timesheet) => timesheet.employee?._id === id)
   );
   const currentProject = useSelector((state) =>
     state.projects.list.filter(
       (project) =>
         project.employees.length !== 0 &&
         project.employees[0].employee !== null &&
-        project.employees[0].employee._id === idTest
+        project.employees[0].employee._id === id
     )
   );
 
@@ -34,9 +36,13 @@ const EmployeeHome = () => {
     getHours();
   }, [currentTimesheet]);
 
-  const addTimesheet = () => {
+  const timesheetsHours = () => {
     return (
-      <AddTimesheet data={timeSheetData()} headers={['project', 'task', 'hours']} hours={hours} />
+      <TimesheetsHours
+        data={timeSheetData()}
+        headers={['description', 'project', 'task', 'hours']}
+        hours={hours}
+      />
     );
   };
 
@@ -77,7 +83,6 @@ const EmployeeHome = () => {
 
   const projectsData = () => {
     return currentProject.map((project) => {
-      console.log(project);
       return {
         ...project,
         startDate: dateFormatted(project.startDate),
@@ -87,7 +92,7 @@ const EmployeeHome = () => {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       {!visible && (
         <div className={styles.buttonsBox}>
           <div
@@ -113,7 +118,7 @@ const EmployeeHome = () => {
         </div>
       )}
       {visible ? (
-        addTimesheet()
+        timesheetsHours()
       ) : selected === 'projects' ? (
         <Table
           data={projectsData()}
@@ -133,10 +138,17 @@ const EmployeeHome = () => {
             setVisible(!visible);
           }}
           variant="cancel"
-          name={!visible ? 'mostrar timesheet' : 'ocultar timesheet'}
+          name={!visible ? 'Resumen horas' : 'Ocultar resumen'}
         />
       )}
-    </>
+      <div>
+        <Button
+          onClick={() => history.push(`/employee/home/newtimesheet/${id}`)}
+          variant="confirm"
+          name="Create timesheet"
+        />
+      </div>
+    </div>
   );
 };
 
