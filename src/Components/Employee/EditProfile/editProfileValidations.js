@@ -5,7 +5,7 @@ export const employeeValidation = Joi.object({
     .min(3)
     .trim()
     .max(30)
-    .regex(/[A-Za-z]{3}([A-Za-z]+ ?)*/)
+    .regex(/^([^0-9]*)$/i)
     .required()
     .messages({
       'any.required': 'Name is required',
@@ -13,14 +13,14 @@ export const employeeValidation = Joi.object({
       'string.empty': 'Name is not allowed to be empty',
       'string.min': 'Name must have a minimum of 3 letters',
       'string.max': 'Name can contain more than 30 letters',
-      'string.pattern.base': 'Name must have a minimum of 3 letters',
+      'string.pattern.base': 'Name can only contain letters',
       'string.required': 'Name field is required'
     }),
   lastName: Joi.string()
     .min(3)
     .trim()
     .max(30)
-    .regex(/[A-Za-z]{3}([A-Za-z]+ ?)*/)
+    .regex(/^([^0-9]*)$/i)
     .required()
     .messages({
       'any.required': 'Last Name is required',
@@ -28,7 +28,7 @@ export const employeeValidation = Joi.object({
       'string.base': 'Last Name must be a string',
       'string.min': 'Last Name must have a minimum of 3 letters',
       'string.max': 'Last Name can contain more than 30 letters',
-      'string.pattern.base': 'Last Name must have a minimum of 3 letters',
+      'string.pattern.base': 'Name can only contain letters',
       'string.required': 'Last Name field is required'
     }),
   phone: Joi.string()
@@ -39,6 +39,7 @@ export const employeeValidation = Joi.object({
       'any.required': 'Phone number is required',
       'string.empty': 'Phone number is not allowed to be empty',
       'string.base': 'Phone number can only contain numbers',
+      'string.length': 'Phone number must be 10 characters long',
       'string.pattern.base': 'Phone number can only contain numbers',
       'string.required': 'Phone number field is required'
     }),
