@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react';
-/* import { getProjectsById, getTimesheetsById } from '../../redux/employees/thunks'; */
 import { getTimesheets } from '../../redux/timesheets/thunks';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
 import Table from '../Shared/Table';
 import { getProjects } from '../../redux/projects/thunks';
 import styles from './employ.module.css';
+import Button from '../Shared/Button';
+import AddTimesheet from './AddTimesheet/addTimesheet';
 
-const EmployeesHome = () => {
+const EmployeeHome = () => {
+  const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState('projects');
+  const [hours, setHours] = useState(null);
   const dispatch = useDispatch();
-  const params = useParams();
-  console.log(params);
   const idTest = '637aef7b511be17cb78c67b9';
-  const history = useHistory();
-  console.log(history);
-
   const currentTimesheet = useSelector((state) =>
     state.timesheets.list.filter((timesheet) => timesheet.employee?._id === idTest)
   );
-
   const currentProject = useSelector((state) =>
     state.projects.list.filter(
       (project) =>
@@ -29,16 +25,30 @@ const EmployeesHome = () => {
     )
   );
 
-  console.log('current timesheet', currentTimesheet);
-  console.log('current project', currentProject);
-
   useEffect(() => {
     dispatch(getTimesheets());
     dispatch(getProjects());
   }, []);
 
+  useEffect(() => {
+    getHours();
+  }, [currentTimesheet]);
+
+  const addTimesheet = () => {
+    return (
+      <AddTimesheet data={timeSheetData()} headers={['project', 'task', 'hours']} hours={hours} />
+    );
+  };
+
   const dateFormatted = (date) => {
     return new Date(date).toISOString().split('T')[0];
+  };
+
+  const getHours = () => {
+    const hoursList = [];
+    currentTimesheet.map((timesheet) => hoursList.push(timesheet.hours));
+    const totalHours = hoursList.length !== 0 && hoursList.reduce((v1, v2) => v1 + v2);
+    setHours(totalHours);
   };
 
   const timeSheetData = () => {
@@ -67,6 +77,7 @@ const EmployeesHome = () => {
 
   const projectsData = () => {
     return currentProject.map((project) => {
+      console.log(project);
       return {
         ...project,
         startDate: dateFormatted(project.startDate),
@@ -77,41 +88,56 @@ const EmployeesHome = () => {
 
   return (
     <>
-      <div className={styles.buttonsBox}>
-        <div
-          onClick={() => {
-            setSelected('projects');
-          }}
-          className={
-            selected === 'projects' ? styles.projectsButtonSelected : styles.projectsButton
-          }
-        >
-          My Projects
+      {!visible && (
+        <div className={styles.buttonsBox}>
+          <div
+            onClick={() => {
+              setSelected('projects');
+            }}
+            className={
+              selected === 'projects' ? styles.projectsButtonSelected : styles.projectsButton
+            }
+          >
+            My Projects
+          </div>
+          <div
+            onClick={() => {
+              setSelected('timesheets');
+            }}
+            className={
+              selected === 'timesheets' ? styles.timesheetsButtonSelected : styles.timesheetsButton
+            }
+          >
+            My Timesheets
+          </div>
         </div>
-        <div
-          onClick={() => {
-            setSelected('timesheets');
-          }}
-          className={
-            selected === 'timesheets' ? styles.timesheetsButtonSelected : styles.timesheetsButton
-          }
-        >
-          My Timesheets
-        </div>
-      </div>
-      {selected === 'projects' ? (
+      )}
+      {visible ? (
+        addTimesheet()
+      ) : selected === 'projects' ? (
         <Table
           data={projectsData()}
           headers={['name', 'clientName', 'description', 'startDate', 'endDate']}
         />
       ) : (
-        <Table
-          data={timeSheetData()}
-          headers={['description', 'date', 'hours', 'project', 'employee', 'task']}
+        <div>
+          <Table
+            data={timeSheetData()}
+            headers={['description', 'date', 'hours', 'project', 'employee', 'task']}
+          />
+        </div>
+      )}
+      {selected !== 'projects' && (
+        <Button
+          onClick={() => {
+            setVisible(!visible);
+          }}
+          variant="cancel"
+          name={!visible ? 'mostrar timesheet' : 'ocultar timesheet'}
         />
       )}
     </>
   );
 };
 
-export default EmployeesHome;
+export default EmployeeHome;
