@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './input.module.css';
 
 const Input = ({ label, id, name, value, placeholder, onChange, type, register, error }) => {
-  console.log('error', error);
   return (
     <div className={styles.container}>
       <label>{label}</label>
