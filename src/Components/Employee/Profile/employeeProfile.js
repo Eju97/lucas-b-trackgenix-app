@@ -5,11 +5,13 @@ import { deleteEmployees, getEmployees } from 'redux/employees/thunks';
 import Button from 'Components/Shared/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'Components/Shared/Modal';
+import SideBar from '../employeeSideBar';
 
 const EmployeeProfile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const id = '637b87a63afa481d0759c6d0';
+  const { isLoading } = useSelector((state) => state.employees);
   const currentEmployee = useSelector((state) =>
     state.employees.list.find((employee) => employee._id === id)
   );
@@ -48,6 +50,11 @@ const EmployeeProfile = () => {
   const editProfile = (_id) => {
     history.push(`/employee/profile/editProfile/${_id}`);
   };
+
+  if (isLoading) {
+    return <h2 className={styles.position}>Loading Profile...</h2>;
+  }
+
   return (
     <div className={styles.container}>
       <Modal isOpen={showModal} handleClose={() => setShowModal(false)}>
@@ -59,31 +66,34 @@ const EmployeeProfile = () => {
           <Button onClick={confirmationDelete} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      <div>
-        <h2 className={styles.profile}>PROFILE</h2>
-        <Button onClick={openModal} name="Delete User" />
-      </div>
-      <div className={styles.profileContainer}>
-        <div className={styles.profileRow}>
-          <h2>Name</h2>
-          <h3>{employeeProfile.name}</h3>
+      <SideBar />
+      <div className={styles.bodyContainer}>
+        <div className={styles.subContainer}>
+          <h2 className={styles.profile}>PROFILE</h2>
+          <Button onClick={openModal} variant="cancel" name="Delete User" />
         </div>
-        <div className={styles.profileRow}>
-          <h2>Last Name</h2>
-          <h3>{employeeProfile.lastName}</h3>
+        <div className={styles.profileContainer}>
+          <div className={styles.profileRow}>
+            <h2 className={styles.header}>Name</h2>
+            <p className={styles.data}>{employeeProfile.name}</p>
+          </div>
+          <div className={styles.profileRow}>
+            <h2 className={styles.header}>Last Name</h2>
+            <p className={styles.data}>{employeeProfile.lastName}</p>
+          </div>
+          <div className={styles.profileRow}>
+            <h2 className={styles.header}>Email</h2>
+            <p className={styles.data}>{employeeProfile.email}</p>
+          </div>
+          <div className={styles.profileRow}>
+            <h2 className={styles.header}>Phone Number</h2>
+            <p className={styles.data}>{employeeProfile.phone}</p>
+          </div>
         </div>
-        <div className={styles.profileRow}>
-          <h2>Email</h2>
-          <h3>{employeeProfile.email}</h3>
+        <div className={styles.btnContainer}>
+          <Button onClick={() => history.goBack()} name="Go Back" variant="cancel" />
+          <Button onClick={() => editProfile(id)} name="Edit Profile" variant="confirm" />
         </div>
-        <div className={styles.profileRow}>
-          <h2>Phone Number</h2>
-          <h3>{employeeProfile.phone}</h3>
-        </div>
-      </div>
-      <div>
-        <Button onClick={() => history.goBack()} name="Go Back" variant="cancel" />
-        <Button onClick={() => editProfile(id)} name="Edit Profile" variant="confirm" />
       </div>
     </div>
   );
