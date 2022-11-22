@@ -37,13 +37,15 @@ const EditEmployeeProfile = () => {
   }, []);
 
   useEffect(async () => {
-    reset({
-      name: currentEmployee?.name,
-      lastName: currentEmployee?.lastName,
-      email: currentEmployee?.email,
-      phone: currentEmployee?.phone,
-      password: currentEmployee?.password
-    });
+    if (currentEmployee) {
+      reset({
+        name: currentEmployee.name,
+        lastName: currentEmployee.lastName,
+        email: currentEmployee.email,
+        phone: currentEmployee.phone,
+        password: currentEmployee.password
+      });
+    }
   }, [currentEmployee]);
 
   console.log(currentEmployee);
@@ -99,7 +101,10 @@ const EditEmployeeProfile = () => {
             type="password"
             error={errors.password?.message}
           />
-          <Button type="submit" name="Submit" variant="confirm" onClick={handleSubmit(onSubmit)} />
+          <div>
+            <Button variant="cancel" name="Cancel" onClick={() => history.goBack()} />
+            <Button type="submit" name="Submit" variant="confirm" />
+          </div>
         </form>
       </div>
     </div>
