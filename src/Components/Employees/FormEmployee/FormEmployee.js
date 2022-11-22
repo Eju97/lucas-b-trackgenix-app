@@ -62,7 +62,7 @@ const Form = () => {
     }
   };
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <h2 className={styles.position}>Loading form employee...</h2>;
   }
   return (
     <div className={styles.container}>

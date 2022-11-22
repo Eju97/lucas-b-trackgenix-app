@@ -8,3 +8,6 @@
 .container {
   margin-bottom: 5px;
 }
+.errorMessage {
+  color: red;
+}
