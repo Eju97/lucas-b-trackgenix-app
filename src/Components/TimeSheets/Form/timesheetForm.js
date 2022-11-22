@@ -174,6 +174,7 @@ const Form = () => {
         <div>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+          <Button onClick={() => reset()} type="button" variant="reset" name="Reset" />
         </div>
       </form>
     </div>
