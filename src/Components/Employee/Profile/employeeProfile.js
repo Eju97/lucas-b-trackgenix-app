@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './employeeProfile.module.css';
 import { useHistory } from 'react-router-dom';
-import { deleteEmployees, getEmployees } from '../../../redux/employees/thunks';
-import Button from '../../Shared/Button';
+import { deleteEmployees, getEmployees } from 'redux/employees/thunks';
+import Button from 'Components/Shared/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import Modal from '../../Shared/Modal';
+import Modal from 'Components/Shared/Modal';
 
 const EmployeeProfile = () => {
   const history = useHistory();
