@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import Table from '../Shared/Table';
-import Modal from '../Shared/Modal';
-import Button from '../Shared/Button';
+import Table from 'Components/Shared/Table';
+import Modal from 'Components/Shared/Modal';
+import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTimesheets, deleteTimesheet } from '../../redux/timesheets/thunks';
+import { getTimesheets, deleteTimesheet } from 'redux/timesheets/thunks';
 
 const TimeSheets = () => {
   const history = useHistory();
