@@ -1,5 +1,5 @@
 import React from 'react';
-import tableStyles from '../../Shared/Table/index.module.css';
+import tableStyles from 'Components/Shared/Table/index.module.css';
 
 const TimesheetsHours = ({ data, headers, hours }) => {
   return (

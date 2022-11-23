@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Table from '../../Shared/Table';
+import Table from 'Components/Shared/Table';
 import styles from './employ.module.css';
-import Button from '../../Shared/Button';
-import TimesheetsHours from './timesheetHours';
+import Button from 'Components/Shared/Button';
+import TimesheetsHours from './timesheet';
 import { useHistory } from 'react-router-dom';
-import { getProjects } from '../../../redux/projects/thunks';
-import { getTimesheets } from '../../../redux/timesheets/thunks';
+import { getProjects } from 'redux/projects/thunks';
+import { getTimesheets } from 'redux/timesheets/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 
 const EmployeeHome = () => {
