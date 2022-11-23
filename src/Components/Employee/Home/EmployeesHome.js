@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getTimesheets } from '../../../redux/timesheets/thunks';
-import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../Shared/Table';
-import { getProjects } from '../../../redux/projects/thunks';
 import styles from './employ.module.css';
 import Button from '../../Shared/Button';
 import TimesheetsHours from './timesheetHours';
 import { useHistory } from 'react-router-dom';
+import { getProjects } from '../../../redux/projects/thunks';
+import { getTimesheets } from '../../../redux/timesheets/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const EmployeeHome = () => {
   const history = useHistory();
