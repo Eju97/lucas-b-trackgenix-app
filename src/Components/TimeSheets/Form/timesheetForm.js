@@ -60,7 +60,6 @@ const Form = () => {
           ? selectedProject.employees.map((employee) => employee.employee)
           : [];
         setEmployees(projectEmployees);
-        console.log('consoleeeeeeeeee', projectEmployees);
         reset({
           description: currentTimesheet.description,
           date: currentTimesheet.date.substr(0, 10),
