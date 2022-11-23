@@ -17,13 +17,5 @@ export const schema = Joi.object({
   hours: Joi.number().positive().required().messages({
     'number.base': 'Hours  is required',
     'number.positive': 'Hours must be positive'
-  }),
-  task: Joi.string().length(24).required().messages({
-    'string.empty': 'Task is required',
-    'string.legth': 'Task does not exist'
-  }),
-  project: Joi.string().length(24).required().messages({
-    'string.empty': 'Project is required',
-    'string.legth': 'Project does not exist'
   })
 });

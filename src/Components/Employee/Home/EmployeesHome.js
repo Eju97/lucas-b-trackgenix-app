@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Table from '../../Shared/Table';
 import styles from './employ.module.css';
 import Button from '../../Shared/Button';
