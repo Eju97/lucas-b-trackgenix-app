@@ -10,11 +10,21 @@ import { POST_TIMESHEETS_SUCCESS } from '../../../redux/timesheets/constants';
 import { createTimesheet } from '../../../redux/timesheets/thunks';
 import { getTask } from '../../../redux/tasks/thunks';
 import styles from './addtimesheet.module.css';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { schema } from './timesheetValidation';
 
 const NewTimesheet = () => {
   const params = useParams();
   const id = params.id;
-  const { register, handleSubmit } = useForm({ defaultValues: { employee: id } });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    defaultValues: { employee: id },
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
   const history = useHistory();
   const dispatch = useDispatch();
   const { list: tasks } = useSelector((state) => state.tasks);
@@ -32,21 +42,40 @@ const NewTimesheet = () => {
     dispatch(getProjects());
   }, []);
 
-  const onSubmit = async (data, id) => {
+  const onSubmit = async (data) => {
     const response = await dispatch(createTimesheet(data));
-    console.log(data, id);
     if (response.type === POST_TIMESHEETS_SUCCESS) {
       history.push('/employee/home');
     }
   };
-
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <div>
-          <Input register={register} label="Description" name="description" type="text" required />
-          <Input register={register} label="Date" name="date" type="date" required />
-          <Input register={register} label="Hours" name="hours" type="number" required />
+          <div>
+            <Input
+              register={register}
+              label="Description"
+              name="description"
+              type="text"
+              error={errors.description?.message}
+            />
+          </div>
+          <Input
+            register={register}
+            label="Date"
+            name="date"
+            type="date"
+            error={errors.date?.message}
+          />
+          <Input
+            register={register}
+            label="Hours"
+            name="hours"
+            type="number"
+            required
+            error={errors.hours?.message}
+          />
           <div>
             <SelectInput
               register={register}
