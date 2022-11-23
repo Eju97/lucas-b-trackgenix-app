@@ -1,6 +1,7 @@
 import styles from './header.module.css';
+import { Link, withRouter } from 'react-router-dom';
 
-function Header() {
+function Header(props) {
   return (
     <header>
       <div className={styles.container}>
@@ -31,28 +32,15 @@ function Header() {
           Track<span>GENIX</span>
         </div>
         <ul className={styles.rutes}>
-          <li>
-            <a href="/admins">admins</a>
-          </li>
-          <li>
-            <a href="/super-admins">super admins</a>
-          </li>
-          <li>
-            <a href="/employees">employees</a>
-          </li>
-          <li>
-            <a href="/projects">projects</a>
-          </li>
-          <li>
-            <a href="/time-sheets">timesheets</a>
-          </li>
-          <li>
-            <a href="/tasks">tasks</a>
-          </li>
+          {props.routes.map((route) => (
+            <li key={route.name}>
+              <Link to={route.path}>{route.name}</Link>
+            </li>
+          ))}
         </ul>
       </nav>
     </header>
   );
 }
 
-export default Header;
+export default withRouter(Header);
