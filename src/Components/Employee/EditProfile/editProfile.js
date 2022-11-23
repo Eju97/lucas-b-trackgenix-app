@@ -1,5 +1,4 @@
 import styles from './editProfile.module.css';
-import Input from 'Components/Shared/Input/Input';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, putEmployee } from 'redux/employees/thunks';
@@ -8,9 +7,8 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from './editProfileValidations';
-import Button from 'Components/Shared/Button';
-import Modal from 'Components/Shared/Modal';
 import SideBar from 'Components/Employee/employeeSideBar';
+import { Button, Modal, Input } from 'Components/Shared/index';
 
 const EditEmployeeProfile = () => {
   const {

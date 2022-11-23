@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from './employeeProfile.module.css';
 import { useHistory } from 'react-router-dom';
 import { deleteEmployees, getEmployees } from 'redux/employees/thunks';
-import Button from 'Components/Shared/Button';
+import { Button, Modal } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
-import Modal from 'Components/Shared/Modal';
 import SideBar from '../employeeSideBar';
 
 const EmployeeProfile = () => {
