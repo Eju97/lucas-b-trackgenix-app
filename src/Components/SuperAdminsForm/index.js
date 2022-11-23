@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
-import Input from '../Shared/Input/Input';
+import Input from '../Shared/Input';
 import Button from '../Shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { postSuperAdmins, putSuperAdmins, getSuperAdmins } from '../../redux/superAdmins/thunks';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './FormEmployee.module.css';
-import Input from '../../Shared/Input/Input';
+import Input from '../../Shared/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
