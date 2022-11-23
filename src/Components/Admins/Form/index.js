@@ -1,5 +1,5 @@
 import styles from './form.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Button from 'Components/Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
 import Input from 'Components/Shared/Input/Input';
@@ -14,7 +14,6 @@ const Form = () => {
   const {
     handleSubmit,
     register,
-    setValue,
     formState: { errors },
     reset
   } = useForm({
@@ -30,20 +29,10 @@ const Form = () => {
   const currentAdmin = useSelector((state) =>
     state.admins.list.find((admin) => admin._id === params.id)
   );
-  const [inputForm, setInputForm] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
 
   useEffect(async () => {
     if (adminId && currentAdmin) {
-      setValue('name', currentAdmin.name);
-      setValue('lastName', currentAdmin.lastName);
-      setValue('email', currentAdmin.email);
-      setValue('password', currentAdmin.password);
-      setInputForm({
+      reset({
         name: currentAdmin.name,
         lastName: currentAdmin.lastName,
         email: currentAdmin.email,
@@ -53,12 +42,6 @@ const Form = () => {
   }, [currentAdmin]);
 
   const onSubmit = async (data) => {
-    setInputForm({
-      name: data.name,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password
-    });
     if (adminId) {
       const response = await dispatch(editAdmin(adminId, data));
       if (response.type === PUT_ADMINS_FULLFILLED) {
@@ -75,7 +58,7 @@ const Form = () => {
   };
 
   const resetImputs = () => {
-    reset(inputForm);
+    reset();
   };
 
   if (isLoading) {

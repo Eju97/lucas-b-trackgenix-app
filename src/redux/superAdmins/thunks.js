@@ -74,7 +74,6 @@ export const postSuperAdmins = (data) => {
 };
 
 export const putSuperAdmins = (id, data) => {
-  console.log(id, data);
   return (dispatch) => {
     dispatch(putSuperAdminsPending());
     return fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {

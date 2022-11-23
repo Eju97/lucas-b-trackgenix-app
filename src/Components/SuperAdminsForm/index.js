@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
 import Input from 'Components/Shared/Input/Input';
@@ -14,7 +14,6 @@ function SuperAdminsForm() {
   const {
     handleSubmit,
     register,
-    setValue,
     formState: { errors },
     reset
   } = useForm({
@@ -32,20 +31,9 @@ function SuperAdminsForm() {
     state.superAdmins.list.find((superAdmin) => superAdmin._id === params.id)
   );
 
-  const [inputForm, setInputForm] = useState({
-    name: '',
-    last_name: '',
-    email: '',
-    password: ''
-  });
-
   useEffect(() => {
     if (id && currentSuperAdmin) {
-      setValue('name', currentSuperAdmin.name);
-      setValue('last_name', currentSuperAdmin.last_name);
-      setValue('email', currentSuperAdmin.email);
-      setValue('password', currentSuperAdmin.password);
-      setInputForm({
+      reset({
         name: currentSuperAdmin.name,
         last_name: currentSuperAdmin.last_name,
         email: currentSuperAdmin.email,
@@ -55,12 +43,6 @@ function SuperAdminsForm() {
   }, [currentSuperAdmin]);
 
   const onSubmit = async (data) => {
-    setInputForm({
-      name: data.name,
-      last_name: data.last_name,
-      email: data.email,
-      password: data.password
-    });
     if (id) {
       const response = await dispatch(putSuperAdmins(id, data));
       if (response.type === PUT_SUPERADMINS_SUCCESS) {
@@ -77,7 +59,7 @@ function SuperAdminsForm() {
   };
 
   const resetImputs = () => {
-    reset(inputForm);
+    reset();
   };
 
   if (isLoading) {
