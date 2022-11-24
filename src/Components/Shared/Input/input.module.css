@@ -9,8 +9,8 @@
   margin-bottom: 5px;
 }
 
-.warning{
+.errorMessage {
   color: red;
-  font-size: 12px;
-  text-align: center;
+  margin: 0;
+  font-size: 15px;
 }

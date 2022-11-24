@@ -13,7 +13,7 @@ const Input = ({ label, id, name, placeholder, type, register, error }) => {
         name={name}
         placeholder={placeholder}
       />
-      {error && <p className={styles.warning}>{error}</p>}
+      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 };
