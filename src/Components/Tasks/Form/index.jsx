@@ -6,13 +6,23 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTask, updateTask, getTask } from '../../../redux/tasks/thunks';
 import { CREATE_TASK_SUCCESS, UPDATE_TASK_SUCCESS } from '../../../redux/tasks/constants';
+import { useForm } from 'react-hook-form';
+import { schema } from './validations.jsx';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 const TaskForm = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(schema)
+  });
+
   const history = useHistory();
   const params = useParams();
-  const [task, setTask] = useState({
-    description: ''
-  });
   const [isEditing, setIsEditing] = useState(false);
   const { isLoading } = useSelector((state) => state.tasks);
   const error = useSelector((state) => state.tasks.error);
@@ -21,26 +31,30 @@ const TaskForm = () => {
   const currentTask = useSelector((state) =>
     state.tasks.list.find((task) => task._id === params.id)
   );
+
   useEffect(() => {
     dispatch(getTask());
   }, []);
+
   useEffect(async () => {
     const id = params.id;
     if (id && currentTask) {
       setIsEditing(true);
-      setTask({ description: currentTask.description });
+      reset({
+        description: currentTask.description
+      });
     }
   }, [currentTask]);
 
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     if (!isEditing) {
-      const response = await dispatch(createTask(task));
+      const response = await dispatch(createTask(data));
       if (response.type === CREATE_TASK_SUCCESS) {
         history.push('/tasks');
       }
     } else {
       const id = params.id;
-      const response = await dispatch(updateTask(id, task));
+      const response = await dispatch(updateTask(id, data));
       if (response.type === UPDATE_TASK_SUCCESS) {
         history.push('/tasks');
       }
@@ -57,22 +71,20 @@ const TaskForm = () => {
       <div>
         <h2>{isEditing ? 'Edit Task' : 'Create New Task'}</h2>
       </div>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.form}>
           <Input
             label="Description"
-            value={task.description}
+            name="description"
             type="text"
-            onChange={(a) => {
-              setTask({
-                description: a.target.value
-              });
-            }}
+            register={register}
+            error={errors.description?.message}
           />
         </div>
         <div className={styles.input}>
-          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+          <Button onClick={() => reset()} variant="cancel" name="Reset" />
         </div>
       </form>
     </div>
