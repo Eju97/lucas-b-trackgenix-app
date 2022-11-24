@@ -21,19 +21,21 @@ const Form = () => {
     handleSubmit,
     register,
     formState: { errors },
-    reset
+    reset,
+    watch
   } = useForm({
     mode: 'onBlur',
     resolver: joiResolver(timesheetsSchema)
   });
 
+  const watchProject = watch('project');
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading: isLoadingTimesheets, error } = useSelector((state) => state.timesheets);
   const { list: tasks, isLoading: isLoadingTasks } = useSelector((state) => state.tasks);
   const { list: projects, isLoading: isLoadingProjects } = useSelector((state) => state.projects);
-  const [employees, setEmployees] = useState([]);
+  const currentProject = projects.find((project) => project._id === watchProject);
   const [isEditing, setIsEditing] = useState(false);
   const currentTimesheet = useSelector((state) =>
     state.timesheets.list.find((timesheet) => timesheet._id === params.id)
@@ -50,16 +52,6 @@ const Form = () => {
       const id = params.id;
       if (id && currentTimesheet) {
         setIsEditing(true);
-        const selectedProject = projects.find((project) => {
-          if (currentTimesheet.project) {
-            return project._id === currentTimesheet.project._id;
-          }
-          return false;
-        });
-        const projectEmployees = selectedProject
-          ? selectedProject.employees.map((employee) => employee.employee)
-          : [];
-        setEmployees(projectEmployees);
         reset({
           description: currentTimesheet.description,
           date: currentTimesheet.date.substr(0, 10),
@@ -143,14 +135,16 @@ const Form = () => {
               name="employee"
               label="Employee"
               error={errors.employee?.message}
-              data={employees.map((employee) =>
-                !employee
-                  ? ''
-                  : {
-                      id: employee._id,
-                      value: employee.name
-                    }
-              )}
+              data={
+                currentProject?.employees
+                  ? currentProject?.employees.map((employee) => {
+                      return {
+                        id: employee?.employee?._id,
+                        value: employee?.employee?.name
+                      };
+                    })
+                  : ['']
+              }
             />
           </div>
           <div>
