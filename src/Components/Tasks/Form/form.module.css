@@ -12,6 +12,11 @@
     justify-content: center;
     margin-top: 20px;
 }
+
+.input Button {
+    margin: 10px;
+}
+
 .submitBtn{
     background-color: #4CAF50;
     border: none;
