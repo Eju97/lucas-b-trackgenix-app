@@ -37,7 +37,7 @@ const Employees = () => {
   };
 
   if (isLoading) {
-    return <h2>loading...</h2>;
+    return <h2 className={styles.position}>Loading list employees...</h2>;
   }
   if (error) {
     return <h2>Employees not found</h2>;

@@ -9,3 +9,6 @@
 .none {
     color: crimson;
 }
+.errorMessage {
+    color: red;
+  }

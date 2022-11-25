@@ -15,6 +15,8 @@ import TimeSheetsForm from '../TimeSheets/Form/timesheetForm';
 import Tasks from '../Tasks/index';
 import TaskForm from '../Tasks/Form';
 import EmployeeSignUp from '../Employee/EmployeeSignUp/signUp';
+import EmployeeProfile from '../Employee/Profile/employeeProfile';
+import EditEmployeeProfile from '../Employee/EditProfile/editProfile';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
@@ -44,6 +46,8 @@ function Layout() {
           <Route exact path="/tasks/form" component={TaskForm} />
           <Route path="/tasks/form/:id" component={TaskForm} />
           <Route exact path="/employee/signup" component={EmployeeSignUp} />
+          <Route exact path="/employee/profile" component={EmployeeProfile} />
+          <Route path="/employee/profile/editProfile/:id" component={EditEmployeeProfile} />
           <Redirect to="/" />
         </Switch>
       </Router>
