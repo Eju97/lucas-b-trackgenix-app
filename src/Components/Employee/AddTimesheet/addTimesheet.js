@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from 'Components/Shared/Button';
-import Input from 'Components/Shared/Input/Input';
+import { Input } from 'Components/Shared';
 import SelectInput from 'Components/Shared/Select';
 import { getProjects } from 'redux/projects/thunks';
 import { useDispatch, useSelector } from 'react-redux';

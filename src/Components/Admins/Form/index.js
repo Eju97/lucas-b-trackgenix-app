@@ -2,7 +2,7 @@ import styles from './form.module.css';
 import { useState, useEffect } from 'react';
 import Button from '../../Shared/Button';
 import { useParams, useHistory } from 'react-router-dom';
-import Input from '../../Shared/Input/Input';
+import Input from '../../Shared/Input';
 import { useSelector, useDispatch } from 'react-redux';
 import { createAdmin, editAdmin, getAdmins } from '../../../redux/admins/thunks';
 import { POST_ADMINS_FULLFILLED, PUT_ADMINS_FULLFILLED } from '../../../redux/admins/constants';

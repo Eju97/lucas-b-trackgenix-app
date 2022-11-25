@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './FormEmployee.module.css';
-import Input from '../../Shared/Input/Input';
+import Input from '../../Shared/Input';
 import Button from '../../Shared/Button';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, postEmployee, putEmployee } from '../../../redux/employees/thunks';
 import { POST_EMPLOYEES_SUCCESS, PUT_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { employeeSchema } from '../validations/validations';
 
-function Form() {
+const Form = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(employeeSchema)
+  });
   const history = useHistory();
   const params = useParams();
-  const [employee, setEmployee] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    password: ''
-  });
-
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.employees);
   const currentEmployee = useSelector((state) =>
@@ -31,7 +35,7 @@ function Form() {
   useEffect(async () => {
     const id = params.id;
     if (id && currentEmployee) {
-      setEmployee({
+      reset({
         name: currentEmployee.name,
         lastName: currentEmployee.lastName,
         email: currentEmployee.email,
@@ -40,20 +44,17 @@ function Form() {
       });
     }
   }, [currentEmployee]);
-  const onChange = (event) => {
-    setEmployee({ ...employee, [event.target.name]: event.target.value });
-  };
-  const onSubmit = async (event) => {
-    event.preventDefault();
+
+  const onSubmit = async (data) => {
     const id = params.id;
     if (id) {
-      const response = await dispatch(putEmployee(id, employee));
+      const response = await dispatch(putEmployee(id, data));
       if (response.type === PUT_EMPLOYEES_SUCCESS) {
         history.push('/employees');
         alert('Edited succefully');
       }
     } else {
-      const response = await dispatch(postEmployee(employee));
+      const response = await dispatch(postEmployee(data));
       if (response.type === POST_EMPLOYEES_SUCCESS) {
         history.push('/employees');
         alert('Employee created succefully');
@@ -61,60 +62,61 @@ function Form() {
     }
   };
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <h2 className={styles.position}>Loading form employee...</h2>;
   }
   return (
     <div className={styles.container}>
       {error && <h3>{error}</h3>}
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h2>Form</h2>
         <Input
+          register={register}
           label="Name"
           id="employeeName"
           name="name"
           required
-          value={employee.name}
-          onChange={onChange}
+          error={errors.name?.message}
         />
         <Input
+          register={register}
           label="LastName"
           id="lastName"
           name="lastName"
           required
-          value={employee.lastName}
-          onChange={onChange}
+          error={errors.lastName?.message}
         />
         <Input
+          register={register}
           label="Email"
           id="email"
           name="email"
           required
-          value={employee.email}
-          onChange={onChange}
+          error={errors.email?.message}
         />
         <Input
+          register={register}
           label="Phone"
           id="phone"
           name="phone"
           required
-          value={employee.phone}
-          onChange={onChange}
+          error={errors.phone?.message}
         />
         <Input
+          register={register}
           label="Password"
           id="password"
           name="password"
           required
           type={'password'}
-          value={employee.password}
-          onChange={onChange}
+          error={errors.password?.message}
         />
         <div>
-          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+          <Button onClick={() => reset()} type="button" variant="reset" name="Reset" />
         </div>
       </form>
     </div>
   );
-}
+};
 export default Form;
