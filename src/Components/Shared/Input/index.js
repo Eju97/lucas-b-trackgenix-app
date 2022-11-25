@@ -6,6 +6,7 @@ const Input = ({ label, id, name, placeholder, required, type, register, error }
     <div className={styles.container}>
       <label>{label}</label>
       <input
+        {...register(name)}
         className={styles.input}
         type={type}
         id={id}

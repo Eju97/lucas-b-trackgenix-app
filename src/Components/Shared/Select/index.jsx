@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './select.module.css';
 
-const Select = ({ name, label, data, register, error }) => {
+const Select = ({ name, label, data, register, value, error }) => {
   return (
     <div>
-      <select {...register(name)} name={name} className={styles.select}>
+      <select {...register(name)} name={name} value={value} className={styles.select}>
         <option hidden value="">
           {label}
         </option>
