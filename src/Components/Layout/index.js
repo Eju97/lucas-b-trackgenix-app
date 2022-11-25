@@ -16,8 +16,9 @@ import Tasks from '../Tasks/index';
 import TaskForm from '../Tasks/Form';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import EmployeeHome from '../Employee/Home/EmployeesHome';
-import NewTimesheet from '../Employee/AddTimesheet/addtimesheet';
+import EmployeeHome from 'Components/Employee/Home/EmployeesHome';
+import NewTimesheet from 'Components/Employee/AddTimesheet/addtimesheet';
+import ProjectTable from 'Components/Employee/Home/projectTable';
 
 function Layout() {
   return (
@@ -45,6 +46,7 @@ function Layout() {
           <Route exact path="/tasks/form" component={TaskForm} />
           <Route path="/tasks/form/:id" component={TaskForm} />
           <Route exact path="/employee/home" component={EmployeeHome} />
+          <Route exact path="/employee/home/projects" component={ProjectTable} />
           <Route path="/employee/home/newtimesheet/:id" component={NewTimesheet} />
           <Redirect to="/" />
         </Switch>
