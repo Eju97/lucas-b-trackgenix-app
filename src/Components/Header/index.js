@@ -32,6 +32,9 @@ function Header() {
         </div>
         <ul className={styles.rutes}>
           <li>
+            <a href="/employee/profile">Employee Profile</a>
+          </li>
+          <li>
             <a href="/admins">admins</a>
           </li>
           <li>
