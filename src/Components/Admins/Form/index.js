@@ -1,8 +1,7 @@
 import styles from './form.module.css';
 import { useEffect } from 'react';
-import Button from 'Components/Shared/Button';
+import { Button, Input } from 'Components/Shared/index';
 import { useParams, useHistory } from 'react-router-dom';
-import Input from 'Components/Shared/Input/Input';
 import { useSelector, useDispatch } from 'react-redux';
 import { createAdmin, editAdmin } from 'redux/admins/thunks';
 import { useForm } from 'react-hook-form';
