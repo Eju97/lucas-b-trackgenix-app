@@ -29,12 +29,16 @@ const NewTimesheet = () => {
   const dispatch = useDispatch();
   const { list: tasks } = useSelector((state) => state.tasks);
   const currentProject = useSelector((state) =>
-    state.projects.list.filter(
-      (project) =>
-        project.employees.length !== 0 &&
-        project.employees[0].employee !== null &&
-        project.employees[0].employee._id === id
-    )
+    state.projects.list.reduce((acc, project) => {
+      const hasEmployee = project.employees.some(
+        (employee) =>
+          employee.length !== 0 && employee.employee !== null && employee.employee._id === id
+      );
+      if (hasEmployee) {
+        return [...acc, project];
+      }
+      return acc;
+    }, [])
   );
 
   useEffect(() => {
@@ -52,15 +56,13 @@ const NewTimesheet = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <div>
-          <div>
-            <Input
-              register={register}
-              label="Description"
-              name="description"
-              type="text"
-              error={errors.description?.message}
-            />
-          </div>
+          <Input
+            register={register}
+            label="Description"
+            name="description"
+            type="text"
+            error={errors.description?.message}
+          />
           <Input
             register={register}
             label="Date"
@@ -78,6 +80,7 @@ const NewTimesheet = () => {
           />
           <div>
             <SelectInput
+              error={errors.project?.message}
               register={register}
               name="project"
               label="Projects"
@@ -93,6 +96,7 @@ const NewTimesheet = () => {
           </div>
           <div>
             <SelectInput
+              error={errors.task?.message}
               register={register}
               name="task"
               label="Task"
