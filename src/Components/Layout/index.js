@@ -19,6 +19,9 @@ import EmployeeProfile from '../Employee/Profile/employeeProfile';
 import EditEmployeeProfile from '../Employee/EditProfile/editProfile';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import EmployeeHome from 'Components/Employee/Home/EmployeesHome';
+import NewTimesheet from 'Components/Employee/AddTimesheet/addTimesheet';
+import ProjectTable from 'Components/Employee/Home/projectTable';
 
 function Layout() {
   return (
@@ -45,6 +48,9 @@ function Layout() {
           <Route exact path="/tasks" component={Tasks} />
           <Route exact path="/tasks/form" component={TaskForm} />
           <Route path="/tasks/form/:id" component={TaskForm} />
+          <Route exact path="/employee/home" component={EmployeeHome} />
+          <Route exact path="/employee/home/projects" component={ProjectTable} />
+          <Route path="/employee/home/newtimesheet/:id" component={NewTimesheet} />
           <Route exact path="/employee/signup" component={EmployeeSignUp} />
           <Route exact path="/employee/profile" component={EmployeeProfile} />
           <Route path="/employee/profile/editProfile/:id" component={EditEmployeeProfile} />
