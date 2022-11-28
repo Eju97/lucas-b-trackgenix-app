@@ -8,9 +8,9 @@ const EmployeeProfile = lazy(() => import('Components/Employee/Profile/employeeP
 const ProjectTable = lazy(() => import('Components/Employee/Home/projectTable'));
 const EditEmployeeProfile = lazy(() => import('Components/Employee/EditProfile/editProfile'));
 const routes = [
-  { name: 'home', path: '/employee/home' },
-  { name: 'profile', path: '/employee/profile' },
-  { name: 'projects', path: '/employee/home/projects' },
+  { name: 'Home', path: '/employee/home' },
+  { name: 'Profile', path: '/employee/profile' },
+  { name: 'Projects', path: '/employee/home/projects' },
   { name: 'LogOut', path: '/' }
 ];
 
