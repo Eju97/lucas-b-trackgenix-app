@@ -5,12 +5,14 @@ const HomeRoute = lazy(() => import('./home'));
 const Admins = lazy(() => import('./admins'));
 const Employee = lazy(() => import('./employee'));
 const Timesheets = lazy(() => import('./timesheets'));
+const SuperAdmin = lazy(() => import('./superAdmins'));
 
 const Routes = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Loading..</div>}>
         <Switch>
+          <Route path="/super-admins" component={SuperAdmin} />
           <Route path="/admins" component={Admins} />
           <Route path="/employee" component={Employee} />
           <Route path="/time-sheets" component={Timesheets} />
