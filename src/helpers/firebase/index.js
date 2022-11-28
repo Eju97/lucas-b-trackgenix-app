@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, onIdTokeChanged } from 'firebase/auth';
+import { getAuth, onIdTokenChanged } from 'firebase/auth';
 import store from 'redux/store';
 import { setLoggedIn, setLoggedOut } from 'redux/auth/actions';
 
@@ -17,7 +17,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);
 
 export const tokenListener = () => {
-  onIdTokeChanged(auth, async (user) => {
+  onIdTokenChanged(auth, async (user) => {
     if (user) {
       try {
         const {
