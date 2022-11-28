@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 
 const TimeSheets = lazy(() => import('Components/TimeSheets'));
 const TimeSheetForm = lazy(() => import('Components/TimeSheets/Form/timesheetForm'));
-const routes = [{ name: 'timeSheets', path: '/time-sheets' }];
+const routes = [{ name: 'Timesheets', path: '/time-sheets' }];
 
 const TimeSheetsRoutes = () => {
   const { url } = useRouteMatch();
