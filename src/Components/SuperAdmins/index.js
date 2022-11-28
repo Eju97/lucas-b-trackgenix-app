@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import Modal from '../Shared/Modal';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button';
+import { Modal, Button, Table } from 'Components/Shared/index';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSuperAdmins, deleteSuperAdmins } from '../../redux/superAdmins/thunks';
+import { getSuperAdmins, deleteSuperAdmins } from 'redux/superAdmins/thunks';
 
 const SuperAdmins = () => {
   const history = useHistory();

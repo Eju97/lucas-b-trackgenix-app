@@ -49,7 +49,7 @@ export const deleteSuperAdmins = (id) => {
   };
 };
 
-export const postSuperAdmins = (inputData) => {
+export const postSuperAdmins = (data) => {
   return (dispatch) => {
     dispatch(postSuperAdminsPending());
     return fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
@@ -57,7 +57,7 @@ export const postSuperAdmins = (inputData) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(inputData)
+      body: JSON.stringify(data)
     })
       .then((response) => response.json())
       .then((response) => {
@@ -73,8 +73,7 @@ export const postSuperAdmins = (inputData) => {
   };
 };
 
-export const putSuperAdmins = (id, superAdmin) => {
-  console.log(id, superAdmin);
+export const putSuperAdmins = (id, data) => {
   return (dispatch) => {
     dispatch(putSuperAdminsPending());
     return fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
@@ -82,7 +81,7 @@ export const putSuperAdmins = (id, superAdmin) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(superAdmin)
+      body: JSON.stringify(data)
     })
       .then((response) => response.json())
       .then((response) => {
