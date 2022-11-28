@@ -1,0 +1,24 @@
+.buttonsBox {
+    display: flex;
+}
+.projectsButton {
+    border-bottom: 2px solid red;
+}
+.timesheetsButton {
+    border-bottom: 2px solid black;
+}
+.projectsButtonSelected {
+    background-color: red;
+    color: white;
+}
+.timesheetsButtonSelected {
+    background-color: black;
+    color: white;
+}
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

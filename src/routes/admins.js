@@ -5,7 +5,14 @@ import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 
 const Admins = lazy(() => import('Components/Admins'));
 const AdminsForm = lazy(() => import('Components/Admins/Form'));
-const routes = [{ name: 'home', path: '/admins' }];
+
+const routes = [
+  { name: 'home', path: '/admins' },
+  { name: 'timesheets', path: '/timesheets' },
+  { name: 'projects', path: '/projects' },
+  { name: 'tasks', path: '/tasks' }
+];
+
 const AdminRoutes = () => {
   const { url } = useRouteMatch();
   return (

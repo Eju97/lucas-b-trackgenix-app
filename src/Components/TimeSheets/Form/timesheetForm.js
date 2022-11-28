@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import Input from '../../Shared/Input/Input';
+import Input from '../../Shared/Input';
 import Button from '../../Shared/Button';
+import SelectInput from '../../Shared/Select';
 import { useParams, useHistory } from 'react-router-dom';
 import {
   POST_TIMESHEETS_SUCCESS,
@@ -10,33 +11,36 @@ import {
 import { createTimesheet, editTimesheet, getTimesheets } from '../../../redux/timesheets/thunks';
 import { getProjects } from '../../../redux/projects/thunks';
 import { getTask } from '../../../redux/tasks/thunks';
-import SelectInput from '../../Shared/Select';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { timesheetsSchema } from '../validations/validations';
 
 const Form = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset,
+    watch
+  } = useForm({
+    mode: 'onBlur',
+    resolver: joiResolver(timesheetsSchema)
+  });
+
+  const watchProject = watch('project');
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading: isLoadingTimesheets, error } = useSelector((state) => state.timesheets);
   const { list: tasks, isLoading: isLoadingTasks } = useSelector((state) => state.tasks);
   const { list: projects, isLoading: isLoadingProjects } = useSelector((state) => state.projects);
-  const [employees, setEmployees] = useState([]);
+  const currentProject = projects.find((project) => project._id === watchProject);
   const [isEditing, setIsEditing] = useState(false);
   const currentTimesheet = useSelector((state) =>
     state.timesheets.list.find((timesheet) => timesheet._id === params.id)
   );
-  const [timesheetAdded, setTimesheetAdded] = useState({
-    description: '',
-    date: '',
-    hours: '',
-    task: '',
-    project: '',
-    employee: ''
-  });
-  const formDate = (date) => {
-    const dateIso = date.substr(0, 10);
-    return dateIso;
-  };
+
   useEffect(() => {
     dispatch(getTimesheets());
     dispatch(getTask());
@@ -48,19 +52,9 @@ const Form = () => {
       const id = params.id;
       if (id && currentTimesheet) {
         setIsEditing(true);
-        const selectedProject = projects.find((project) => {
-          if (currentTimesheet.project) {
-            return project._id === currentTimesheet.project._id;
-          }
-          return false;
-        });
-        const projectEmployees = selectedProject
-          ? selectedProject.employees.map((employee) => employee.employee)
-          : [];
-        setEmployees(projectEmployees);
-        setTimesheetAdded({
+        reset({
           description: currentTimesheet.description,
-          date: currentTimesheet.date,
+          date: currentTimesheet.date.substr(0, 10),
           hours: currentTimesheet.hours,
           project: !currentTimesheet.project ? '' : currentTimesheet.project._id,
           employee: !currentTimesheet.employee ? '' : currentTimesheet.employee._id,
@@ -72,25 +66,15 @@ const Form = () => {
     }
   }, [currentTimesheet]);
 
-  const onChange = (event) => {
-    setTimesheetAdded({ ...timesheetAdded, [event.target.name]: event.target.value });
-    if (event.target.name === 'project') {
-      const selectedProject = projects.find((project) => project._id === event.target.value);
-      const projectEmployees = selectedProject.employees.map((employee) => employee.employee);
-      setEmployees(projectEmployees);
-    }
-  };
-
-  const onSubmit = async (event) => {
+  const onSubmit = async (data) => {
     if (!isEditing) {
-      const response = await dispatch(createTimesheet(timesheetAdded));
+      const response = await dispatch(createTimesheet(data));
       if (response.type === POST_TIMESHEETS_SUCCESS) {
         history.push('/time-sheets');
       }
     } else {
       const id = params.id;
-      event.preventDefault();
-      const response = await dispatch(editTimesheet(id, timesheetAdded));
+      const response = await dispatch(editTimesheet(id, data));
       if (response.type === PUT_TIMESHEET_SUCCESS) {
         history.push('/time-sheets');
       }
@@ -103,40 +87,40 @@ const Form = () => {
 
   return (
     <div>
-      <form onSubmit={onSubmit} className={styles.container}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
         {error && <h3>{error.message}</h3>}
         <div>
           <Input
+            register={register}
             label="Description"
+            error={errors.description?.message}
             name="description"
             type="text"
             required
-            value={timesheetAdded.description}
-            onChange={onChange}
           />
           <Input
+            register={register}
             label="Date"
+            error={errors.date?.message}
             name="date"
             type="date"
             required
-            value={formDate(timesheetAdded.date)}
-            onChange={onChange}
           />
           <Input
+            register={register}
             label="Hours"
+            error={errors.hours?.message}
             name="hours"
             type="number"
             required
-            value={timesheetAdded.hours}
-            onChange={onChange}
           />
           <div>
             <SelectInput
+              register={register}
               name="project"
               label="Projects"
-              value={timesheetAdded.project}
-              onChange={onChange}
+              error={errors.project?.message}
               data={projects.map((project) =>
                 !project
                   ? ''
@@ -147,26 +131,28 @@ const Form = () => {
               )}
             />
             <SelectInput
+              register={register}
               name="employee"
               label="Employee"
-              value={timesheetAdded.employee}
-              onChange={onChange}
-              data={employees.map((employee) =>
-                !employee
-                  ? ''
-                  : {
-                      id: employee._id,
-                      value: employee.name
-                    }
-              )}
+              error={errors.employee?.message}
+              data={
+                currentProject?.employees
+                  ? currentProject?.employees.map((employee) => {
+                      return {
+                        id: employee?.employee?._id,
+                        value: employee?.employee?.name
+                      };
+                    })
+                  : ['']
+              }
             />
           </div>
           <div>
             <SelectInput
+              register={register}
               name="task"
               label="Task"
-              value={timesheetAdded.task}
-              onChange={onChange}
+              error={errors.task?.message}
               data={tasks.map((task) =>
                 !task
                   ? ''
@@ -179,8 +165,9 @@ const Form = () => {
           </div>
         </div>
         <div>
-          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+          <Button onClick={() => reset()} type="button" variant="reset" name="Reset" />
         </div>
       </form>
     </div>

@@ -1,40 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
-import Input from '../Shared/Input/Input';
-import Button from '../Shared/Button';
+import { Input, Button } from 'Components/Shared/index';
 import { useDispatch, useSelector } from 'react-redux';
-import { postSuperAdmins, putSuperAdmins, getSuperAdmins } from '../../redux/superAdmins/thunks';
-import {
-  POST_SUPERADMINS_SUCCESS,
-  PUT_SUPERADMINS_SUCCESS
-} from '../../redux/superAdmins/constants';
+import { postSuperAdmins, putSuperAdmins } from 'redux/superAdmins/thunks';
+import { useForm } from 'react-hook-form';
+import { Schema } from 'Components/SuperAdminsForm/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { PUT_SUPERADMINS_SUCCESS, POST_SUPERADMINS_SUCCESS } from 'redux/superAdmins/constants';
 
 function SuperAdminsForm() {
-  const { isLoading, error } = useSelector((state) => state.superAdmins);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(Schema)
+  });
+
+  const { isLoading } = useSelector((state) => state.superAdmins);
   const dispatch = useDispatch();
   const history = useHistory();
   const params = useParams();
   const id = params.id;
-  const formMode = id ? 'edit' : 'create';
-  const [inputData, setInputData] = useState({
-    name: '',
-    last_name: '',
-    email: '',
-    password: ''
-  });
 
   const currentSuperAdmin = useSelector((state) =>
     state.superAdmins.list.find((superAdmin) => superAdmin._id === params.id)
   );
 
   useEffect(() => {
-    dispatch(getSuperAdmins());
-  }, []);
-
-  useEffect(() => {
     if (id && currentSuperAdmin) {
-      setInputData({
+      reset({
         name: currentSuperAdmin.name,
         last_name: currentSuperAdmin.last_name,
         email: currentSuperAdmin.email,
@@ -43,18 +41,24 @@ function SuperAdminsForm() {
     }
   }, [currentSuperAdmin]);
 
-  const onSubmit = async () => {
-    if (formMode === 'edit') {
-      const response = await dispatch(putSuperAdmins(id, inputData));
+  const onSubmit = async (data) => {
+    if (id) {
+      const response = await dispatch(putSuperAdmins(id, data));
       if (response.type === PUT_SUPERADMINS_SUCCESS) {
+        alert('Super Admin Updated');
         history.push('/super-admins');
       }
     } else {
-      const response = await dispatch(postSuperAdmins(inputData));
+      const response = await dispatch(postSuperAdmins(data));
       if (response.type === POST_SUPERADMINS_SUCCESS) {
+        alert('Super Admin Created');
         history.push('/super-admins');
       }
     }
+  };
+
+  const resetImputs = () => {
+    reset();
   };
 
   if (isLoading) {
@@ -63,51 +67,52 @@ function SuperAdminsForm() {
 
   return (
     <section className={styles.container}>
-      <form>
-        {error && <h3 className={styles.position}>{error.message}</h3>}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h2>{id ? 'Edit SuperAdmin' : 'Create SuperAdmin'}</h2>
         <div className={styles.inputs}>
           <Input
+            register={register}
             label="Name"
-            onChange={(e) => {
-              setInputData({ ...inputData, name: e.target.value });
-            }}
+            name="name"
             type="text"
-            value={inputData.name}
+            placeholder="add First Name"
+            error={errors.name?.message}
           />
         </div>
         <div className={styles.inputs}>
           <Input
+            register={register}
             label="Last Name"
-            onChange={(e) => {
-              setInputData({ ...inputData, last_name: e.target.value });
-            }}
+            name="last_name"
             type="text"
-            value={inputData.last_name}
+            placeholder="add Last Name"
+            error={errors.last_name?.message}
           />
         </div>
         <div className={styles.inputs}>
           <Input
+            register={register}
             label="Email"
-            onChange={(e) => {
-              setInputData({ ...inputData, email: e.target.value });
-            }}
+            name="email"
             type="email"
-            value={inputData.email}
+            placeholder="add Email"
+            error={errors.email?.message}
           />
         </div>
         <div className={styles.inputs}>
           <Input
+            register={register}
             label="Password"
-            onChange={(e) => {
-              setInputData({ ...inputData, password: e.target.value });
-            }}
-            type={'password'}
-            value={inputData.password}
+            name="password"
+            type="password"
+            placeholder="add Password"
+            error={errors.password?.message}
           />
         </div>
         <div className={styles.buttonContainer}>
-          <Button onClick={onSubmit} variant="confirm" name="Submit" />
+          <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+          <Button onClick={() => resetImputs()} type="button" variant="confirm" name="Reset" />
         </div>
       </form>
     </section>

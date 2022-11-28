@@ -2,25 +2,28 @@ import Layout from 'Components/Layout';
 import React, { lazy } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
-const EmployeeHome = lazy(() => import('Components/Employee/Home'));
-const EmployeeForm = lazy(() => import('Components/Employee/Form'));
-const NewTimesheet = lazy(() => import('Components/Employee/AddTimesheet'));
-const EmployeeProfile = lazy(() => import('Components/Employee/Profile'));
-
+const EmployeeHome = lazy(() => import('Components/Employee/Home/EmployeesHome'));
+const NewTimesheet = lazy(() => import('Components/Employee/AddTimesheet/addTimesheet'));
+const EmployeeProfile = lazy(() => import('Components/Employee/Profile/employeeProfile'));
+const ProjectTable = lazy(() => import('Components/Employee/Home/projectTable'));
+const EditEmployeeProfile = lazy(() => import('Components/Employee/EditProfile/editProfile'));
 const routes = [
   { name: 'home', path: '/employee/home' },
-  { name: 'timesheets', path: '/employees/timesheets/:id' }
+  { name: 'profile', path: '/employee/profile' },
+  { name: 'projects', path: '/employee/home/projects' },
+  { name: 'LogOut', path: '/' }
 ];
+
 const EmployeesRouter = () => {
   const { url } = useRouteMatch();
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={EmployeeHome} />
-        <Route exact path={`${url}/form`} component={EmployeeForm} />
-        <Route path={`${url}/form/:id`} component={EmployeeForm} />
-        <Route path={`${url}/newtimesheet/:id`} component={NewTimesheet} />
-        <Route path={`${url}/profile`} component={EmployeeProfile} />
+        <Route exact path={`${url}/home/projects`} component={ProjectTable} />
+        <Route exact path={`${url}/home`} component={EmployeeHome} />
+        <Route path={`${url}/home/newtimesheet/:id`} component={NewTimesheet} />
+        <Route exact path={`${url}/profile`} component={EmployeeProfile} />
+        <Route path={`${url}/profile/editProfile/:id`} component={EditEmployeeProfile} />
       </Switch>
     </Layout>
   );

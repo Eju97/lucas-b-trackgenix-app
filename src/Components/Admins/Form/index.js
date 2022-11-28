@@ -1,128 +1,109 @@
 import styles from './form.module.css';
-import { useState, useEffect } from 'react';
-import Button from '../../Shared/Button';
+import { useEffect } from 'react';
+import { Button, Input } from 'Components/Shared/index';
 import { useParams, useHistory } from 'react-router-dom';
-import Input from '../../Shared/Input/Input';
 import { useSelector, useDispatch } from 'react-redux';
-import { createAdmin, editAdmin, getAdmins } from '../../../redux/admins/thunks';
-import { POST_ADMINS_FULLFILLED, PUT_ADMINS_FULLFILLED } from '../../../redux/admins/constants';
+import { createAdmin, editAdmin } from 'redux/admins/thunks';
+import { useForm } from 'react-hook-form';
+import { Schema } from 'Components/Admins/Form/validations';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { POST_ADMINS_FULLFILLED, PUT_ADMINS_FULLFILLED } from 'redux/admins/constants';
 
 const Form = () => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    reset
+  } = useForm({
+    mode: 'onChange',
+    resolver: joiResolver(Schema)
+  });
+
   const dispatch = useDispatch();
-  const { error, isLoading } = useSelector((state) => state.admins);
+  const { isLoading } = useSelector((state) => state.admins);
   const history = useHistory();
   const params = useParams();
   const adminId = params.id;
-  const [formValues, setFormValues] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    password: ''
-  });
   const currentAdmin = useSelector((state) =>
     state.admins.list.find((admin) => admin._id === params.id)
   );
 
-  useEffect(() => {
-    dispatch(getAdmins());
-  }, []);
-
   useEffect(async () => {
     if (adminId && currentAdmin) {
-      try {
-        setFormValues({
-          name: currentAdmin.name,
-          lastName: currentAdmin.lastName,
-          email: currentAdmin.email,
-          password: currentAdmin.password
-        });
-      } catch (error) {
-        alert(error);
-      }
+      reset({
+        name: currentAdmin.name,
+        lastName: currentAdmin.lastName,
+        email: currentAdmin.email,
+        password: currentAdmin.password
+      });
     }
   }, [currentAdmin]);
 
-  const onCreateAdmin = async () => {
-    const response = await dispatch(createAdmin(formValues));
-    if (response.type === POST_ADMINS_FULLFILLED) {
-      history.push('/admins');
+  const onSubmit = async (data) => {
+    if (adminId) {
+      const response = await dispatch(editAdmin(adminId, data));
+      if (response.type === PUT_ADMINS_FULLFILLED) {
+        alert('Admin Updated');
+        history.push('/admins');
+      }
+    } else {
+      const response = await dispatch(createAdmin(data));
+      if (response.type === POST_ADMINS_FULLFILLED) {
+        alert('Admin Created');
+        history.push('/admins');
+      }
     }
   };
 
-  const onEditAdmin = async () => {
-    const response = await dispatch(editAdmin(adminId, formValues));
-    if (response.type === PUT_ADMINS_FULLFILLED) {
-      history.push('/admins');
-    }
+  const resetImputs = () => {
+    reset();
   };
 
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
 
-  if (error) {
-    return <h2>{error}</h2>;
-  }
-
   return (
     <>
       <div className={styles.container}>
         <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
+            register={register}
             label="Name"
+            name="name"
             type="text"
             placeholder="add First Name"
-            value={formValues.name}
-            onChange={(e) => {
-              setFormValues({
-                ...formValues,
-                name: e.target.value
-              });
-            }}
+            error={errors.name?.message}
           />
           <Input
+            register={register}
             label="Last Name"
+            name="lastName"
             type="text"
             placeholder="add Last Name"
-            value={formValues.lastName}
-            onChange={(e) => {
-              setFormValues({
-                ...formValues,
-                lastName: e.target.value
-              });
-            }}
+            error={errors.lastName?.message}
           />
           <Input
+            register={register}
             label="Email"
+            name="email"
             type="email"
             placeholder="add Email"
-            value={formValues.email}
-            onChange={(e) => {
-              setFormValues({
-                ...formValues,
-                email: e.target.value
-              });
-            }}
+            error={errors.email?.message}
           />
           <Input
+            register={register}
             label="Password"
+            name="password"
             type="password"
             placeholder="add Password"
-            value={formValues.password}
-            onChange={(e) => {
-              setFormValues({
-                ...formValues,
-                password: e.target.value
-              });
-            }}
+            error={errors.password?.message}
           />
-          <Button
-            onClick={adminId ? () => onEditAdmin() : () => onCreateAdmin()}
-            variant="confirm"
-            name="Submit"
-          />
+          <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+          <Button onClick={() => resetImputs()} type="button" variant="confirm" name="Reset" />
         </form>
       </div>
     </>
