@@ -5,7 +5,11 @@ import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 
 const SuperAdmin = lazy(() => import('Components/SuperAdmins'));
 const SuperAdminForm = lazy(() => import('Components/SuperAdminsForm'));
-const routes = [{ name: 'Superadmins', path: '/super-admin' }];
+const routes = [
+  { name: 'Superadmins', path: '/super-admins' },
+  { name: 'Admins', path: '/admins' },
+  { name: 'Timesheets', path: '/time-sheets' }
+];
 
 const SuperAdminRoutes = () => {
   const { url } = useRouteMatch();

@@ -7,10 +7,8 @@ const Admins = lazy(() => import('Components/Admins'));
 const AdminsForm = lazy(() => import('Components/Admins/Form'));
 
 const routes = [
-  { name: 'Home', path: '/admins' },
-  { name: 'Timesheets', path: '/timesheets' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'Tasks', path: '/tasks' }
+  { name: 'Admins', path: '/admins' },
+  { name: 'Timesheets', path: '/time-sheets' }
 ];
 
 const AdminRoutes = () => {
