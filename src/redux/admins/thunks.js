@@ -16,7 +16,8 @@ import {
 export const getAdmins = () => {
   return (dispatch) => {
     dispatch(getAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/admins`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/admins`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -32,8 +33,10 @@ export const getAdmins = () => {
 export const deleteAdmin = (id) => {
   return (dispatch) => {
     dispatch(deleteAdminsPending());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => response.json())
       .then((response) => {
@@ -50,6 +53,8 @@ export const deleteAdmin = (id) => {
 export const createAdmin = (data) => {
   return (dispatch) => {
     dispatch(createAdminsPending());
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/admins`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
       method: 'POST',
       headers: {
@@ -72,6 +77,8 @@ export const createAdmin = (data) => {
 export const editAdmin = (id, data) => {
   return (dispatch) => {
     dispatch(editAdminsPending());
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/admins`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'PUT',
       headers: {

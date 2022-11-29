@@ -3,20 +3,20 @@ import styles from '../Login/login.module.css';
 import { useForm } from 'react-hook-form';
 import { Button, Input } from 'Components/Shared';
 // import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from 'redux/auth/thunks';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const error = useSelector((state) => state.auth.error);
+  //const error = useSelector((state) => state.auth.error);
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm({
-    // mode: 'onBlur'
+    //mode: 'onBlur'
   });
 
   const onSubmit = async (inputData) => {
@@ -32,10 +32,10 @@ const Login = () => {
             history.push('/admins');
             break;
           case 'EMPLOYEE':
-            history.push('/employee/home');
+            history.push('/employee');
             break;
           default:
-            history.push('/login');
+            history.push('/auth/login');
         }
       }
     }
@@ -43,14 +43,14 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      {error && <div>{error}</div>}
+      {/* //{error && <div>{error}</div>} */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Email"
           id="email"
           name="email"
           register={register}
-          error={errors.email}
+          error={errors.email?.message}
           type="text"
         />
         <Input
@@ -58,7 +58,7 @@ const Login = () => {
           id="password"
           name="password"
           register={register}
-          error={errors.password}
+          error={errors.password?.message}
           type="password"
         />
         <Button type="submit" variant="confirm" name="Sign In" />

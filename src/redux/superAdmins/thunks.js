@@ -16,7 +16,8 @@ import {
 export const getSuperAdmins = () => {
   return (dispatch) => {
     dispatch(getSuperAdminsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/super-admins`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/super-admins`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -33,6 +34,8 @@ export const getSuperAdmins = () => {
 export const deleteSuperAdmins = (id) => {
   return (dispatch) => {
     dispatch(deleteSuperAdminsPending());
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/super-admins`, { headers: { token } });
     fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
       method: 'DELETE'
     })
@@ -52,6 +55,8 @@ export const deleteSuperAdmins = (id) => {
 export const postSuperAdmins = (data) => {
   return (dispatch) => {
     dispatch(postSuperAdminsPending());
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/super-admins`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/super-admins/`, {
       method: 'POST',
       headers: {
@@ -76,6 +81,8 @@ export const postSuperAdmins = (data) => {
 export const putSuperAdmins = (id, data) => {
   return (dispatch) => {
     dispatch(putSuperAdminsPending());
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/super-admins`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/super-admins/${id}`, {
       method: 'PUT',
       headers: {

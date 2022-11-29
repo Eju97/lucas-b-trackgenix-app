@@ -16,7 +16,8 @@ import {
 export const getEmployees = () => {
   return (dispatch) => {
     dispatch(getEmployeesPending());
-    fetch(`${process.env.REACT_APP_API_URL}/employees`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/employees`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         dispatch(getEmployeesSuccess(response.data));
@@ -30,6 +31,8 @@ export const getEmployees = () => {
 export const deleteEmployees = (id) => {
   return (dispatch) => {
     dispatch(deleteEmployeesPending());
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/employees`, { headers: { token } });
     fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
       method: 'DELETE'
     })
@@ -48,6 +51,8 @@ export const deleteEmployees = (id) => {
 export const postEmployee = (newEmployee) => {
   return (dispatch) => {
     dispatch(postEmployeesPending());
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/employees`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/employees`, {
       method: 'POST',
       headers: {
@@ -72,6 +77,8 @@ export const postEmployee = (newEmployee) => {
 export const putEmployee = (id, data) => {
   return (dispatch) => {
     dispatch(putEmployeesPending());
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/employees`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
       method: 'PUT',
       headers: {

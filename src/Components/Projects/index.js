@@ -58,6 +58,7 @@ const Projects = () => {
     setShowModal(false);
   };
 
+  const url = window.location.href.slice(21);
   return (
     <section className={styles.container}>
       <Modal isOpen={showModal} handleClose={closeModal}>
@@ -80,7 +81,7 @@ const Projects = () => {
         <button
           className={styles.buttonAdd}
           type="button"
-          onClick={() => history.push('/projects/form')}
+          onClick={() => history.push(`${url}/form`)}
         >
           Create
         </button>
