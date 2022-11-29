@@ -3,14 +3,14 @@ import styles from '../Login/login.module.css';
 import { useForm } from 'react-hook-form';
 import { Button, Input } from 'Components/Shared';
 // import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from 'redux/auth/thunks';
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  //const error = useSelector((state) => state.auth.error);
+  const error = useSelector((state) => state.auth.error);
   const {
     register,
     handleSubmit,
@@ -43,7 +43,7 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      {/* //{error && <div>{error}</div>} */}
+      {error && <div>{error}</div>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Email"

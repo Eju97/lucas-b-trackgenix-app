@@ -14,9 +14,11 @@ const Tasks = lazy(() => import('Components/Tasks/index'));
 const TasksForm = lazy(() => import('Components/Tasks/Form'));
 const TimeSheets = lazy(() => import('Components/TimeSheets'));
 const TimeSheetsForm = lazy(() => import('Components/TimeSheets/Form/timesheetForm'));
+const Home = lazy(() => import('Components/Home'));
 
 const routes = [
-  { name: 'Home', path: '/super-admins' },
+  { name: 'Home', path: '/super-admins/home' },
+  { name: 'Super-Admins', path: '/super-admins' },
   { name: 'Employees', path: '/super-admins/employees' },
   { name: 'Projects', path: '/super-admins/projects' },
   { name: 'Tasks', path: '/super-admins/tasks' },
@@ -30,6 +32,7 @@ const SuperAdminRoutes = () => {
     <Layout routes={routes}>
       <Switch>
         <Route exact path={`${url}/`} component={SuperAdmin} />
+        <Route exact path={`${url}/home`} component={Home} />
         <Route exact path={`${url}/form`} component={SuperAdminForm} />
         <Route exact path={`${url}/admins/form`} component={AdminsForm} />
         <Route exact path={`${url}/admins`} component={Admins} />
