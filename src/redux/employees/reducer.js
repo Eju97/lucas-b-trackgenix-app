@@ -76,7 +76,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: false,
         error: action.payload,
-        list: [...state.list]
+        list: []
       };
     case PUT_EMPLOYEES_PENDING:
       return {

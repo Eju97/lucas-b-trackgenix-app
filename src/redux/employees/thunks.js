@@ -51,8 +51,6 @@ export const deleteEmployees = (id) => {
 export const postEmployee = (newEmployee) => {
   return (dispatch) => {
     dispatch(postEmployeesPending());
-    const token = sessionStorage.getItem('token');
-    fetch(`${process.env.REACT_APP_API_URL}/employees`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/employees`, {
       method: 'POST',
       headers: {

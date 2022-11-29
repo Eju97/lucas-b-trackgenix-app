@@ -2,10 +2,11 @@ import React from 'react';
 import styles from '../Login/login.module.css';
 import { useForm } from 'react-hook-form';
 import { Button, Input } from 'Components/Shared';
-// import { joiResolver } from '@hookform/resolvers/joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from 'redux/auth/thunks';
+import { loginValidation } from 'Components/Auth/Login/validations';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,8 @@ const Login = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    //mode: 'onBlur'
+    mode: 'onBlur',
+    resolver: joiResolver(loginValidation)
   });
 
   const onSubmit = async (inputData) => {
