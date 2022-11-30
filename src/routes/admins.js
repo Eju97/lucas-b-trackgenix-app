@@ -2,9 +2,6 @@ import Layout from 'Components/Layout';
 import React, { lazy } from 'react';
 import { useRouteMatch, Redirect, Route, Switch } from 'react-router-dom';
 
-//const AdminsForm = lazy(() => import('Components/Admins/Form'));
-
-/* const Admins = lazy(() => import('Components/Admins')); */
 const AdminProfile = lazy(() => import('Components/Admins/Profile'));
 const Employees = lazy(() => import('Components/Employees'));
 const EmployeeForm = lazy(() => import('Components/Employees/FormEmployee/FormEmployee'));
