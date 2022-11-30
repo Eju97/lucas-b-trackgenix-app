@@ -4,7 +4,8 @@ import { useRouteMatch, Redirect, Route, Switch } from 'react-router-dom';
 
 //const AdminsForm = lazy(() => import('Components/Admins/Form'));
 
-const Admins = lazy(() => import('Components/Admins'));
+/* const Admins = lazy(() => import('Components/Admins')); */
+const AdminProfile = lazy(() => import('Components/Admins/Profile'));
 const Employees = lazy(() => import('Components/Employees'));
 const EmployeeForm = lazy(() => import('Components/Employees/FormEmployee/FormEmployee'));
 const Projects = lazy(() => import('Components/Projects/index'));
@@ -17,7 +18,7 @@ const Home = lazy(() => import('Components/Home'));
 
 const routes = [
   { name: 'Home', path: '/admins/home' },
-  { name: 'Admins', path: '/admins' },
+  { name: 'Profile', path: '/admins/profile' },
   { name: 'Employees', path: '/admins/employees' },
   { name: 'Projects', path: '/admins/projects' },
   { name: 'Tasks', path: '/admins/tasks' },
@@ -29,10 +30,11 @@ const AdminRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={Admins} />
         <Route exact path={`${url}/home`} component={Home} />
+        <Route exact path={`${url}/profile`} component={AdminProfile} />
         <Route exact path={`${url}/employees`} component={Employees} />
         <Route path={`${url}/employees/form/:id`} component={EmployeeForm} />
+        <Route path={`${url}/employees/form`} component={EmployeeForm} />
         <Route exact path={`${url}/projects`} component={Projects} />
         <Route exact path={`${url}/projects/form`} component={ProjectsForm} />
         <Route path={`${url}/projects/form/:id`} component={ProjectsForm} />
@@ -42,7 +44,7 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/time-sheets`} component={TimeSheets} />
         <Route exact path={`${url}/time-sheets/form`} component={TimeSheetsForm} />
         <Route path={`${url}/time-sheets/form/:id`} component={TimeSheetsForm} />
-        <Redirect to={`${url}/`} />
+        <Redirect to={`${url}/profile`} />
       </Switch>
     </Layout>
   );

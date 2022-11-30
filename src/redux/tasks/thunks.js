@@ -16,7 +16,8 @@ import {
 export const getTask = () => {
   return (dispatch) => {
     dispatch(getTaskPending());
-    return fetch(`${process.env.REACT_APP_API_URL}/tasks`)
+    const token = sessionStorage.getItem('token');
+    return fetch(`${process.env.REACT_APP_API_URL}/tasks`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         dispatch(getTaskSuccess(response.data));
@@ -31,8 +32,10 @@ export const getTask = () => {
 export const deleteTask = (id) => {
   return (dispatch) => {
     dispatch(deleteTaskPendig());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => response.json())
       .then((response) => {
@@ -49,10 +52,12 @@ export const deleteTask = (id) => {
 export const createTask = (newTask) => {
   return (dispatch) => {
     dispatch(createTaskPendig());
+    const token = sessionStorage.getItem('token');
     return fetch(`${process.env.REACT_APP_API_URL}/tasks`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token
       },
       body: JSON.stringify(newTask)
     })
@@ -72,10 +77,12 @@ export const createTask = (newTask) => {
 export const updateTask = (id, task) => {
   return (dispatch) => {
     dispatch(updateTaskPendig());
+    const token = sessionStorage.getItem('token');
     return fetch(`${process.env.REACT_APP_API_URL}/tasks/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify(task)
     })

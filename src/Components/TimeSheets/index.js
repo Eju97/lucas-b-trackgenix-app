@@ -6,6 +6,7 @@ import Button from 'Components/Shared/Button';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimesheets, deleteTimesheet } from 'redux/timesheets/thunks';
+import { useRouteMatch } from 'react-router-dom';
 
 const TimeSheets = () => {
   const history = useHistory();
@@ -68,8 +69,10 @@ const TimeSheets = () => {
   };
 
   const onRowClick = (_id) => {
-    history.push(`/time-sheets/form/${_id}`);
+    history.push(`${url}/form/${_id}`);
   };
+
+  const { url } = useRouteMatch();
 
   return (
     <section className={styles.container}>
@@ -93,7 +96,7 @@ const TimeSheets = () => {
         <button
           className={styles.buttonAdd}
           type="button"
-          onClick={() => history.push('/time-sheets/form')}
+          onClick={() => history.push(`${url}/form`)}
         >
           Create
         </button>

@@ -32,9 +32,9 @@ export const deleteEmployees = (id) => {
   return (dispatch) => {
     dispatch(deleteEmployeesPending());
     const token = sessionStorage.getItem('token');
-    fetch(`${process.env.REACT_APP_API_URL}/employees`, { headers: { token } });
     fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => response.json())
       .then((response) => {
@@ -76,11 +76,11 @@ export const putEmployee = (id, data) => {
   return (dispatch) => {
     dispatch(putEmployeesPending());
     const token = sessionStorage.getItem('token');
-    fetch(`${process.env.REACT_APP_API_URL}/employees`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/employees/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token
       },
       body: JSON.stringify(data)
     })

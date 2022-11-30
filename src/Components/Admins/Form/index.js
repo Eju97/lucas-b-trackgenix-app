@@ -26,7 +26,7 @@ const Form = () => {
   const params = useParams();
   const adminId = params.id;
   const currentAdmin = useSelector((state) =>
-    state.admins.list.find((admin) => admin._id === params.id)
+    state.admins.list.find((admin) => admin?._id === params.id)
   );
 
   useEffect(async () => {

@@ -1,13 +1,12 @@
 import styles from './editProfile.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmployees, putEmployee } from 'redux/employees/thunks';
+import { putEmployee } from 'redux/employees/thunks';
 import { PUT_EMPLOYEES_SUCCESS } from 'redux/employees/constants';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from './editProfileValidations';
-import SideBar from 'Components/Employee/employeeSideBar';
 import { Button, Modal, Input } from 'Components/Shared/index';
 
 const EditEmployeeProfile = () => {
@@ -25,26 +24,20 @@ const EditEmployeeProfile = () => {
   const history = useHistory();
   const params = useParams();
   const id = params.id;
-  const { isLoading } = useSelector((state) => state.employees);
-  const currentEmployee = useSelector((state) =>
-    state.employees.list.find((employee) => employee._id === params.id)
-  );
+  const { isLoading } = useSelector((state) => state.auth);
+  const userData = useSelector((state) => state.auth.user);
 
   useEffect(async () => {
-    dispatch(getEmployees());
-  }, []);
-
-  useEffect(async () => {
-    if (currentEmployee) {
+    if (userData) {
       reset({
-        name: currentEmployee.name,
-        lastName: currentEmployee.lastName,
-        email: currentEmployee.email,
-        phone: currentEmployee.phone,
-        password: currentEmployee.password
+        name: userData.name,
+        lastName: userData.lastName,
+        email: userData.email,
+        phone: userData.phone,
+        password: userData.password
       });
     }
-  }, [currentEmployee]);
+  }, [userData]);
 
   const onSubmit = async (employeeData) => {
     const response = await dispatch(putEmployee(id, employeeData));
@@ -71,7 +64,6 @@ const EditEmployeeProfile = () => {
           <Button onClick={acceptButton} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      <SideBar />
       <div className={styles.bodyContainer}>
         <h2 className={styles.editProfile}>Edit Profile</h2>
         <div className={styles.formContainer}>

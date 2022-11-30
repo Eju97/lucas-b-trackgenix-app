@@ -54,11 +54,11 @@ export const createAdmin = (data) => {
   return (dispatch) => {
     dispatch(createAdminsPending());
     const token = sessionStorage.getItem('token');
-    fetch(`${process.env.REACT_APP_API_URL}/admins`, { headers: { token } });
-    return fetch(`${process.env.REACT_APP_API_URL}/admins/`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/admins`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token
       },
       body: JSON.stringify(data)
     })
@@ -78,11 +78,11 @@ export const editAdmin = (id, data) => {
   return (dispatch) => {
     dispatch(editAdminsPending());
     const token = sessionStorage.getItem('token');
-    fetch(`${process.env.REACT_APP_API_URL}/admins`, { headers: { token } });
     return fetch(`${process.env.REACT_APP_API_URL}/admins/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token
       },
       body: JSON.stringify(data)
     })

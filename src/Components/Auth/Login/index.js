@@ -24,7 +24,6 @@ const Login = () => {
   const onSubmit = async (inputData) => {
     if (Object.values(errors).length === 0) {
       const role = await dispatch(login(inputData));
-      console.log(role);
       if (role) {
         switch (role) {
           case 'SUPER_ADMIN':

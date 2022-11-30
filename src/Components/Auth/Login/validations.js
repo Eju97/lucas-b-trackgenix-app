@@ -11,13 +11,13 @@ export const loginValidation = Joi.object({
       'string.required': 'email field is required'
     }),
   password: Joi.string()
-    .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
+    .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/)
     .required()
     .messages({
       'any.required': 'Password is required',
       'string.empty': 'Password field is not allowed to be empty',
       'string.pattern.base':
-        'Password must contain at least 8 characters, "one" capital letter, "one" lower case and "one" number.',
+        'Password must contain at least 5 characters, "one" capital letter, "one" lower case and "one" number.',
       'string.required': 'Password field is required'
     })
 });

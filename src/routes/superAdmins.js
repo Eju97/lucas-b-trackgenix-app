@@ -3,6 +3,7 @@ import React, { lazy } from 'react';
 import { useRouteMatch, Redirect, Route, Switch } from 'react-router-dom';
 
 const SuperAdmin = lazy(() => import('Components/SuperAdmins'));
+const SuperAdminProfile = lazy(() => import('Components/SuperAdmins/Profile'));
 const SuperAdminForm = lazy(() => import('Components/SuperAdminsForm'));
 const AdminsForm = lazy(() => import('Components/Admins/Form'));
 const Admins = lazy(() => import('Components/Admins'));
@@ -18,6 +19,7 @@ const Home = lazy(() => import('Components/Home'));
 
 const routes = [
   { name: 'Home', path: '/super-admins/home' },
+  { name: 'Profile', path: '/super-admins/profile' },
   { name: 'Super-Admins', path: '/super-admins' },
   { name: 'Employees', path: '/super-admins/employees' },
   { name: 'Projects', path: '/super-admins/projects' },
@@ -34,10 +36,14 @@ const SuperAdminRoutes = () => {
         <Route exact path={`${url}/`} component={SuperAdmin} />
         <Route exact path={`${url}/home`} component={Home} />
         <Route exact path={`${url}/form`} component={SuperAdminForm} />
+        <Route exact path={`${url}/form/:id`} component={SuperAdminForm} />
         <Route exact path={`${url}/admins/form`} component={AdminsForm} />
+        <Route exact path={`${url}/admins/form/:id`} component={AdminsForm} />
+        <Route exact path={`${url}/profile`} component={SuperAdminProfile} />
         <Route exact path={`${url}/admins`} component={Admins} />
         <Route exact path={`${url}/employees`} component={Employees} />
         <Route path={`${url}/employees/form/:id`} component={EmployeeForm} />
+        <Route path={`${url}/employees/form`} component={EmployeeForm} />
         <Route exact path={`${url}/projects`} component={Projects} />
         <Route exact path={`${url}/projects/form`} component={ProjectsForm} />
         <Route path={`${url}/projects/form/:id`} component={ProjectsForm} />
@@ -47,7 +53,7 @@ const SuperAdminRoutes = () => {
         <Route exact path={`${url}/time-sheets`} component={TimeSheets} />
         <Route exact path={`${url}/time-sheets/form`} component={TimeSheetsForm} />
         <Route path={`${url}/time-sheets/form/:id`} component={TimeSheetsForm} />
-        <Redirect to={`${url}/`} />
+        <Redirect to={`${url}/profile`} />
       </Switch>
     </Layout>
   );
