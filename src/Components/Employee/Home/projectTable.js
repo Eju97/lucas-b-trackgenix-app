@@ -2,12 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProjects } from 'redux/projects/thunks';
 import { useEffect } from 'react';
 import Table from 'Components/Shared/Table';
-import Button from 'Components/Shared/Button';
-import { useHistory } from 'react-router-dom';
 import styles from './employ.module.css';
 
 const ProjectTable = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const id = '637aef7b511be17cb78c67b9';
   const currentProject = useSelector((state) =>
@@ -48,18 +45,6 @@ const ProjectTable = () => {
         data={projectsData()}
         headers={['name', 'clientName', 'description', 'startDate', 'endDate']}
       />
-      <div>
-        <Button
-          onClick={() => history.push(`/employee/home/newtimesheet/${id}`)}
-          variant="confirm"
-          name="Create timesheet"
-        />
-        <Button
-          onClick={() => history.push(`/employee/home/`)}
-          variant="confirm"
-          name="My timesheets"
-        />
-      </div>
     </div>
   );
 };

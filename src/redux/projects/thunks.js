@@ -16,7 +16,8 @@ import {
 export const getProjects = () => {
   return (dispatch) => {
     dispatch(getProjectsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/projects`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/projects`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -32,8 +33,10 @@ export const getProjects = () => {
 export const deleteProject = (id) => {
   return (dispatch) => {
     dispatch(deleteProjectsPending());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => response.json())
       .then((response) => {
@@ -50,16 +53,17 @@ export const deleteProject = (id) => {
 export const postProject = (project) => {
   return (dispatch) => {
     dispatch(postProjectsPending());
+    const token = sessionStorage.getItem('token');
     return fetch(`${process.env.REACT_APP_API_URL}/projects/`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify(project)
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         if (response.error) {
           throw new Error(response.message);
         }
@@ -74,10 +78,12 @@ export const postProject = (project) => {
 export const putProject = (id, project) => {
   return (dispatch) => {
     dispatch(putProjectsPending());
+    const token = sessionStorage.getItem('token');
     return fetch(`${process.env.REACT_APP_API_URL}/projects/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        token
       },
       body: JSON.stringify(project)
     })

@@ -1,19 +1,15 @@
 import { useEffect, useState } from 'react';
 import styles from './employeeProfile.module.css';
 import { useHistory } from 'react-router-dom';
-import { deleteEmployees, getEmployees } from 'redux/employees/thunks';
+import { deleteEmployees } from 'redux/employees/thunks';
 import { Button, Modal } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
-import SideBar from '../employeeSideBar';
 
 const EmployeeProfile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const id = '637b87a63afa481d0759c6d0';
-  const { isLoading } = useSelector((state) => state.employees);
-  const currentEmployee = useSelector((state) =>
-    state.employees.list.find((employee) => employee._id === id)
-  );
+  const { isLoading } = useSelector((state) => state.auth);
+  const userData = useSelector((state) => state.auth.user);
   const [showModal, setShowModal] = useState(false);
   const [employeeProfile, setEmployeeProfile] = useState({
     name: '',
@@ -21,21 +17,18 @@ const EmployeeProfile = () => {
     email: '',
     phone: ''
   });
+  const id = userData._id;
 
   useEffect(() => {
-    dispatch(getEmployees());
-  }, []);
-
-  useEffect(() => {
-    if (id && currentEmployee) {
+    if (id && userData) {
       setEmployeeProfile({
-        name: currentEmployee.name,
-        lastName: currentEmployee.lastName,
-        email: currentEmployee.email,
-        phone: currentEmployee.phone
+        name: userData.name,
+        lastName: userData.lastName,
+        email: userData.email,
+        phone: userData.phone
       });
     }
-  }, [currentEmployee]);
+  }, [userData]);
 
   const confirmationDelete = () => {
     dispatch(deleteEmployees(id));
@@ -65,7 +58,6 @@ const EmployeeProfile = () => {
           <Button onClick={confirmationDelete} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      <SideBar />
       <div className={styles.bodyContainer}>
         <div className={styles.subContainer}>
           <h2 className={styles.profile}>PROFILE</h2>

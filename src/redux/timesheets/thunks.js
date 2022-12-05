@@ -16,7 +16,8 @@ import {
 export const getTimesheets = () => {
   return (dispatch) => {
     dispatch(getTimesheetsPending());
-    fetch(`${process.env.REACT_APP_API_URL}/time-sheets`)
+    const token = sessionStorage.getItem('token');
+    fetch(`${process.env.REACT_APP_API_URL}/time-sheets`, { headers: { token } })
       .then((response) => response.json())
       .then((response) => {
         if (response.error) {
@@ -33,8 +34,10 @@ export const getTimesheets = () => {
 export const deleteTimesheet = (id) => {
   return (dispatch) => {
     dispatch(deleteTimesheetsPending());
+    const token = sessionStorage.getItem('token');
     fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: { token }
     })
       .then((response) => response.json())
       .then((response) => {
@@ -52,9 +55,10 @@ export const deleteTimesheet = (id) => {
 export const createTimesheet = (newTimesheet) => {
   return (dispatch) => {
     dispatch(createTimesheetPending());
+    const token = sessionStorage.getItem('token');
     return fetch(`${process.env.REACT_APP_API_URL}/time-sheets`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', token },
       body: JSON.stringify({
         description: newTimesheet.description,
         date: newTimesheet.date,
@@ -80,9 +84,10 @@ export const createTimesheet = (newTimesheet) => {
 export const editTimesheet = (id, timesheet) => {
   return (dispatch) => {
     dispatch(editTimesheetPending());
+    const token = sessionStorage.getItem('token');
     return fetch(`${process.env.REACT_APP_API_URL}/time-sheets/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', token },
       body: JSON.stringify({
         description: timesheet.description,
         date: timesheet.date,

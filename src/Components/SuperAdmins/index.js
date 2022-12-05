@@ -4,8 +4,10 @@ import { Modal, Button, Table } from 'Components/Shared/index';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmins } from 'redux/superAdmins/thunks';
+import { useRouteMatch } from 'react-router-dom';
 
 const SuperAdmins = () => {
+  const { url } = useRouteMatch();
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -37,7 +39,7 @@ const SuperAdmins = () => {
   };
 
   const onRowClick = (_id) => {
-    history.push(`/super-admins/form/${_id}`);
+    history.push(`${url}/form/${_id}`);
   };
 
   return (
@@ -53,7 +55,7 @@ const SuperAdmins = () => {
           <button
             className={styles.buttonAdd}
             type="button"
-            onClick={() => history.push('/super-admins/form')}
+            onClick={() => history.push(`${url}/form`)}
           >
             Create
           </button>

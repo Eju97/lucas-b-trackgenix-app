@@ -11,7 +11,7 @@ const EmployeeHome = () => {
   const dispatch = useDispatch();
   const id = '637aef7b511be17cb78c67b9';
   const currentTimesheet = useSelector((state) =>
-    state.timesheets.list.filter((timesheet) => timesheet.employee?._id === id)
+    state.timesheets.list.filter((timesheet) => timesheet?.employee?._id === id)
   );
 
   useEffect(() => {
@@ -62,11 +62,6 @@ const EmployeeHome = () => {
           onClick={() => history.push(`/employee/home/newtimesheet/${id}`)}
           variant="confirm"
           name="Create timesheet"
-        />
-        <Button
-          onClick={() => history.push(`/employee/home/projects`)}
-          variant="confirm"
-          name="My projects"
         />
       </div>
     </div>
