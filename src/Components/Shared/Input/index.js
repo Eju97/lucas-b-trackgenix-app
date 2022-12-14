@@ -14,7 +14,7 @@ const Input = ({ register, label, id, name, placeholder, required, type, error }
         placeholder={placeholder}
         required={required}
       />
-      {error && <p>{error}</p>}
+      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 };
