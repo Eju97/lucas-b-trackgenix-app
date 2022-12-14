@@ -48,6 +48,7 @@ function Tasks() {
 
   return (
     <div className={styles.container}>
+      <h2>Tasks</h2>
       <div>
         <Table
           data={taskList}

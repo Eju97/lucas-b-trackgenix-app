@@ -44,10 +44,11 @@ const SuperAdmins = () => {
 
   return (
     <div className={styles.container}>
+      <h2>Super Admins</h2>
       <div>
         <Table
           data={superAdminList}
-          headers={['name', 'last_name', 'email', 'password']}
+          headers={['name', 'last_name', 'email']}
           onDelete={onDelete}
           onRowClick={onRowClick}
         />

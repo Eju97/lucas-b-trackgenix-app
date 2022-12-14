@@ -50,7 +50,7 @@ const Admins = () => {
         <h2>Admins</h2>
         <Table
           data={adminList}
-          headers={['name', 'lastName', 'email', 'password']}
+          headers={['name', 'lastName', 'email']}
           onDelete={onDelete}
           onRowClick={onRowClick}
         />

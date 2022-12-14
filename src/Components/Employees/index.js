@@ -59,7 +59,7 @@ const Employees = () => {
       <div>
         <Table
           data={employeesList}
-          headers={['name', 'lastName', 'email', 'password', 'phone']}
+          headers={['name', 'lastName', 'email', 'phone']}
           onDelete={onDelete}
           onRowClick={onRowClick}
         />
