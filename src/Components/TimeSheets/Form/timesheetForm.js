@@ -70,13 +70,13 @@ const Form = () => {
     if (!isEditing) {
       const response = await dispatch(createTimesheet(data));
       if (response.type === POST_TIMESHEETS_SUCCESS) {
-        history.push('/time-sheets');
+        history.goBack();
       }
     } else {
       const id = params.id;
       const response = await dispatch(editTimesheet(id, data));
       if (response.type === PUT_TIMESHEET_SUCCESS) {
-        history.push('/time-sheets');
+        history.goBack();
       }
     }
   };

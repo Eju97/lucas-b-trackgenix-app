@@ -46,13 +46,13 @@ function SuperAdminsForm() {
       const response = await dispatch(putSuperAdmins(id, data));
       if (response.type === PUT_SUPERADMINS_SUCCESS) {
         alert('Super Admin Updated');
-        history.push('/super-admins');
+        history.goBack();
       }
     } else {
       const response = await dispatch(postSuperAdmins(data));
       if (response.type === POST_SUPERADMINS_SUCCESS) {
         alert('Super Admin Created');
-        history.push('/super-admins');
+        history.goBack();
       }
     }
   };

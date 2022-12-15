@@ -6,10 +6,8 @@ import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTask, deleteTask } from '../../redux/tasks/thunks';
-import { useRouteMatch } from 'react-router-dom';
 
 function Tasks() {
-  const { url } = useRouteMatch();
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [selectedId, setSelectedId] = useState();
@@ -43,7 +41,7 @@ function Tasks() {
   };
 
   const onRowClick = (_id) => {
-    history.push(`${url}/form/${_id}`);
+    history.push(`tasks/form/${_id}`);
   };
 
   return (
@@ -59,7 +57,7 @@ function Tasks() {
           <button
             className={styles.buttonAdd}
             type="button"
-            onClick={() => history.push(`${url}/form`)}
+            onClick={() => history.push(`tasks/form`)}
           >
             Create
           </button>
