@@ -104,7 +104,7 @@ const Form = () => {
     <div className={styles.container}>
       <div>{error && <h3>{error}</h3>}</div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>Form</h2>
+        <h2>{isEditing ? 'Edit Project' : 'Create New Project'}</h2>
         <div className={styles.projectForm}>
           <div>
             <Input
@@ -221,7 +221,7 @@ const Form = () => {
         <div className={styles.save}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
-          <Button onClick={() => reset()} variant="cancel" name="Reset" />
+          <Button onClick={() => reset()} variant="reset" name="Reset" />
         </div>
       </form>
     </div>
