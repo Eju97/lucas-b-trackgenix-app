@@ -55,13 +55,12 @@ const Admins = () => {
           onRowClick={onRowClick}
         />
         <div className={styles.containerButton}>
-          <button
-            className={styles.buttonAdd}
-            type="button"
+          <Button
+            type="submit"
+            variant="confirm"
             onClick={() => history.push(`${url}/form`)}
-          >
-            Create
-          </button>
+            name="Create +"
+          />
         </div>
       </section>
       <Modal isOpen={modalDisplay} handleClose={closeModal}>
