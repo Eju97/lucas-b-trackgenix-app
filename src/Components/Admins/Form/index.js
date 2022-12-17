@@ -45,13 +45,13 @@ const Form = () => {
       const response = await dispatch(editAdmin(adminId, data));
       if (response.type === PUT_ADMINS_FULLFILLED) {
         alert('Admin Updated');
-        history.push('/admins');
+        history.goBack();
       }
     } else {
       const response = await dispatch(createAdmin(data));
       if (response.type === POST_ADMINS_FULLFILLED) {
         alert('Admin Created');
-        history.push('/admins');
+        history.goBack();
       }
     }
   };

@@ -50,13 +50,13 @@ const Form = () => {
     if (id) {
       const response = await dispatch(putEmployee(id, data));
       if (response.type === PUT_EMPLOYEES_SUCCESS) {
-        history.push('/employees');
+        history.goBack();
         alert('Edited succefully');
       }
     } else {
       const response = await dispatch(postEmployee(data));
       if (response.type === POST_EMPLOYEES_SUCCESS) {
-        history.push('/employees');
+        history.goBack();
         alert('Employee created succefully');
       }
     }
