@@ -36,13 +36,12 @@ export const deleteEmployees = (id) => {
       method: 'DELETE',
       headers: { token }
     })
-      .then((response) => response.json())
       .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else dispatch(deleteEmployeesSuccess(id));
+        if (response.status === 204) {
+          dispatch(deleteEmployeesSuccess(id));
+        } else throw new Error(response.message);
       })
-      .catch((error) => {
+      .catc.catch((error) => {
         dispatch(deleteEmployeesError(error.toString()));
       });
   };

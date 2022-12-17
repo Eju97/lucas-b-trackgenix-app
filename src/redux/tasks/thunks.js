@@ -37,11 +37,10 @@ export const deleteTask = (id) => {
       method: 'DELETE',
       headers: { token }
     })
-      .then((response) => response.json())
       .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else dispatch(deleteTaskSuccess(id));
+        if (response.status === 204) {
+          dispatch(deleteTaskSuccess(id));
+        } else throw new Error(response.message);
       })
       .catch((error) => {
         dispatch(deleteTaskError(error.toString()));

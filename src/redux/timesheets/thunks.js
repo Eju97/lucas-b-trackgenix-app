@@ -39,14 +39,12 @@ export const deleteTimesheet = (id) => {
       method: 'DELETE',
       headers: { token }
     })
-      .then((response) => response.json())
       .then((response) => {
-        if (response.error) {
-          throw new Error('Could not delete the timesheet');
-        }
-        dispatch(deleteTimesheetsSuccess(id));
+        if (response.status === 204) {
+          dispatch(deleteTimesheetsSuccess(id));
+        } else throw new Error(response.message);
       })
-      .catch((error) => {
+      .catc.catch((error) => {
         dispatch(deleteTimesheetsError(error));
       });
   };

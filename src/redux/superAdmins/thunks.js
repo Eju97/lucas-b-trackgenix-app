@@ -39,14 +39,12 @@ export const deleteSuperAdmins = (id) => {
       method: 'DELETE',
       headers: { token }
     })
-      .then((response) => response.json())
       .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else dispatch(deleteSuperAdminsSuccess(id));
-        return response.data;
+        if (response.status === 204) {
+          dispatch(deleteSuperAdminsSuccess(id));
+        } else throw new Error(response.message);
       })
-      .catch((error) => {
+      .catc.catch((error) => {
         dispatch(deleteSuperAdminsError(error.toString()));
       });
   };

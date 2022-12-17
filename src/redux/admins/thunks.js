@@ -38,13 +38,12 @@ export const deleteAdmin = (id) => {
       method: 'DELETE',
       headers: { token }
     })
-      .then((response) => response.json())
       .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else dispatch(deleteAdminsSuccess(id));
+        if (response.status === 204) {
+          dispatch(deleteAdminsSuccess(id));
+        } else throw new Error(response.message);
       })
-      .catch((err) => {
+      .catc.catch((err) => {
         dispatch(deleteAdminsError(err.toString()));
       });
   };
