@@ -6,6 +6,7 @@ const EmployeeHome = lazy(() => import('Components/Employee/Home/EmployeesHome')
 const NewTimesheet = lazy(() => import('Components/Employee/AddTimesheet/addTimesheet'));
 const EmployeeProfile = lazy(() => import('Components/Employee/Profile/employeeProfile'));
 const ProjectTable = lazy(() => import('Components/Employee/Home/projectTable'));
+const ProjectsForm = lazy(() => import('Components/Projects/Form'));
 const EditEmployeeProfile = lazy(() => import('Components/Employee/EditProfile/editProfile'));
 const Home = lazy(() => import('Components/Home'));
 const routes = [
@@ -23,6 +24,7 @@ const EmployeesRouter = () => {
         <Route exact path={`${url}/home/projects`} component={ProjectTable} />
         <Route exact path={`${url}/timesheets`} component={EmployeeHome} />
         <Route exact path={`${url}/home/home`} component={Home} />
+        <Route path={`${url}/home/projects/form/:id`} component={ProjectsForm} />
         <Route path={`${url}/home/newtimesheet/:id`} component={NewTimesheet} />
         <Route exact path={`${url}/profile`} component={EmployeeProfile} />
         <Route path={`${url}/profile/editProfile/:id`} component={EditEmployeeProfile} />
