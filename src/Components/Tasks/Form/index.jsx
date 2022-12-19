@@ -50,13 +50,13 @@ const TaskForm = () => {
     if (!isEditing) {
       const response = await dispatch(createTask(data));
       if (response.type === CREATE_TASK_SUCCESS) {
-        history.push('/tasks');
+        history.goBack();
       }
     } else {
       const id = params.id;
       const response = await dispatch(updateTask(id, data));
       if (response.type === UPDATE_TASK_SUCCESS) {
-        history.push('/tasks');
+        history.goBack();
       }
     }
   };

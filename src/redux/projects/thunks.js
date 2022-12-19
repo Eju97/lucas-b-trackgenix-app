@@ -38,11 +38,10 @@ export const deleteProject = (id) => {
       method: 'DELETE',
       headers: { token }
     })
-      .then((response) => response.json())
       .then((response) => {
-        if (response.error) {
-          throw new Error(response.message);
-        } else dispatch(deleteProjectsSuccess(id));
+        if (response.status === 204) {
+          dispatch(deleteProjectsSuccess(id));
+        } else throw new Error(response.message);
       })
       .catch((err) => {
         dispatch(deleteProjectsError(err.toString()));

@@ -6,7 +6,6 @@ import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteProject, getProjects } from '../../redux/projects/thunks';
-import { useRouteMatch } from 'react-router-dom';
 
 const Projects = () => {
   const history = useHistory();
@@ -47,7 +46,7 @@ const Projects = () => {
   };
 
   const onRowClick = (_id) => {
-    history.push(`${url}/form/${_id}`);
+    history.push(`projects/form/${_id}`);
   };
 
   const closeModal = () => {
@@ -59,7 +58,6 @@ const Projects = () => {
     setShowModal(false);
   };
 
-  const { url } = useRouteMatch();
   return (
     <section className={styles.container}>
       <Modal isOpen={showModal} handleClose={closeModal}>
@@ -83,7 +81,7 @@ const Projects = () => {
           type="submit"
           variant="confirm"
           name="Create +"
-          onClick={() => history.push(`${url}/form`)}
+          onClick={() => history.push(`projects/form`)}
         />
       </div>
     </section>

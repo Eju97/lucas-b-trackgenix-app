@@ -85,13 +85,13 @@ const Form = () => {
     if (!isEditing) {
       const response = await dispatch(postProject(data));
       if (response.type === POST_PROJECTS_SUCCESS) {
-        history.push('/projects');
+        history.goBack();
       }
     } else {
       const id = params.id;
       const response = await dispatch(putProject(id, data));
       if (response.type === PUT_PROJECTS_SUCCESS) {
-        history.push('/projects');
+        history.goBack();
       }
     }
   };

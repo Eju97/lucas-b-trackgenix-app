@@ -4,11 +4,9 @@ import { Table, Modal, Button } from 'Components/Shared/index';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteAdmin, getAdmins } from 'redux/admins/thunks';
-import { useRouteMatch } from 'react-router-dom';
 
 const Admins = () => {
   const history = useHistory();
-  const { url } = useRouteMatch();
   const [adminsList, setListAdmin] = useState([]);
   const { list: adminList, isLoading, error } = useSelector((state) => state.admins);
   const dispatch = useDispatch();
@@ -32,7 +30,7 @@ const Admins = () => {
   };
 
   const onRowClick = (_id) => {
-    history.push(`${url}/form/${_id}`);
+    history.push(`admins/form/${_id}`);
   };
 
   const closeModal = () => {
@@ -58,7 +56,7 @@ const Admins = () => {
           <Button
             type="submit"
             variant="confirm"
-            onClick={() => history.push(`${url}/form`)}
+            onClick={() => history.push(`admins/form`)}
             name="Create +"
           />
         </div>

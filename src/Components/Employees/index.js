@@ -6,10 +6,8 @@ import Button from '../Shared/Button';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees, deleteEmployees } from '../../redux/employees/thunks';
-import { useRouteMatch } from 'react-router-dom';
 
 const Employees = () => {
-  const { url } = useRouteMatch();
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState();
@@ -26,7 +24,7 @@ const Employees = () => {
   };
 
   const onRowClick = (_id) => {
-    history.push(`${url}/form/${_id}`);
+    history.push(`employees/form/${_id}`);
   };
 
   const closeModal = () => {
@@ -68,7 +66,7 @@ const Employees = () => {
             type="submit"
             variant="confirm"
             name="Create + "
-            onClick={() => history.push(`${url}/form`)}
+            onClick={() => history.push(`employees/form`)}
           />
         </div>
       </div>
