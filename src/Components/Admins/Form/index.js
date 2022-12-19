@@ -16,7 +16,7 @@ const Form = () => {
     formState: { errors },
     reset
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(Schema)
   });
 
@@ -73,8 +73,7 @@ const Form = () => {
             register={register}
             label="Name"
             name="name"
-            type="text"
-            placeholder="add First Name"
+            required
             error={errors.name?.message}
           />
           <Input
@@ -82,15 +81,14 @@ const Form = () => {
             label="Last Name"
             name="lastName"
             type="text"
-            placeholder="add Last Name"
+            required
             error={errors.lastName?.message}
           />
           <Input
             register={register}
             label="Email"
             name="email"
-            type="email"
-            placeholder="add Email"
+            required
             error={errors.email?.message}
           />
           <Input
@@ -98,7 +96,7 @@ const Form = () => {
             label="Password"
             name="password"
             type="password"
-            placeholder="add Password"
+            required
             error={errors.password?.message}
           />
           <Button type="submit" variant="confirm" name="Submit" />

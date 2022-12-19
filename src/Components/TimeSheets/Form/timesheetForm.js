@@ -105,7 +105,6 @@ const Form = () => {
             error={errors.date?.message}
             name="date"
             type="date"
-            required
           />
           <Input
             register={register}
