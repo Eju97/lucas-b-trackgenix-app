@@ -49,7 +49,7 @@ const NewTimesheet = () => {
   const onSubmit = async (data) => {
     const response = await dispatch(createTimesheet(data));
     if (response.type === POST_TIMESHEETS_SUCCESS) {
-      history.push('/employee/home');
+      history.goBack();
     }
   };
   return (

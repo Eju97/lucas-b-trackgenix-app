@@ -113,7 +113,7 @@ const EmployeeHome = () => {
       </div>
       <div>
         <Button
-          onClick={() => history.push(`/employee/home/newtimesheet/${id}`)}
+          onClick={() => history.push(`timesheets/newtimesheet/${id}`)}
           variant="confirm"
           name="Create timesheet"
         />

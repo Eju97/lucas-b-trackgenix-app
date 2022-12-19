@@ -21,11 +21,11 @@ const routes = [
   { name: 'Home', path: '/super-admins/home' },
   { name: 'Profile', path: '/super-admins/profile' },
   { name: 'Super-Admins', path: '/super-admins' },
+  { name: 'Admins', path: '/super-admins/admins' },
   { name: 'Employees', path: '/super-admins/employees' },
   { name: 'Projects', path: '/super-admins/projects' },
   { name: 'Tasks', path: '/super-admins/tasks' },
-  { name: 'Timesheets', path: '/super-admins/time-sheets' },
-  { name: 'Admins', path: '/super-admins/admins' }
+  { name: 'Timesheets', path: '/super-admins/time-sheets' }
 ];
 
 const SuperAdminRoutes = () => {
