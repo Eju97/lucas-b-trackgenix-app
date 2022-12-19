@@ -30,12 +30,15 @@ export const Schema = Joi.object({
       'string.pattern.base': 'Last Name can only contain letters',
       'string.required': 'Last Name field is required'
     }),
-  email: Joi.string().email().required().messages({
-    'any.required': 'An email is required',
-    'string.email': 'Insert a valid email',
-    'string.empty': 'Email is not allowed to be empty',
-    'string.required': 'Email field is required'
-  }),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      'any.required': 'An email is required',
+      'string.email': 'Insert a valid email',
+      'string.empty': 'Email is not allowed to be empty',
+      'string.required': 'Email field is required'
+    }),
   password: Joi.string()
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/)
     .required()

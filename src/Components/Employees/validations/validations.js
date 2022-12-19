@@ -43,12 +43,15 @@ export const employeeSchema = Joi.object({
       'string.pattern.base': 'Phone number can only contain numbers',
       'string.required': 'Phone number field is required'
     }),
-  email: Joi.string().email().required().messages({
-    'any.required': 'An email is required',
-    'string.email': 'Insert a valid email',
-    'string.empty': 'Email field is not allowed to be empty',
-    'string.required': 'Email field is required'
-  }),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required()
+    .messages({
+      'any.required': 'An email is required',
+      'string.email': 'Insert a valid email',
+      'string.empty': 'Email field is not allowed to be empty',
+      'string.required': 'Email field is required'
+    }),
   password: Joi.string()
     .min(8)
     .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
