@@ -62,13 +62,13 @@ const Form = () => {
     }
   };
   if (isLoading) {
-    return <h2 className={styles.position}>Loading form employee...</h2>;
+    return <h2 className={styles.position}>Loading...</h2>;
   }
   return (
     <div className={styles.container}>
       {error && <h3>{error}</h3>}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>Form</h2>
+        <h2>{params.id ? 'Edit Employee' : 'Create New Employee'}</h2>
         <Input
           register={register}
           label="Name"

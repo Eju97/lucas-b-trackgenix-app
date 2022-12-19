@@ -42,21 +42,21 @@ const SuperAdmins = () => {
 
   return (
     <div className={styles.container}>
+      <h2>Super Admins</h2>
       <div>
         <Table
           data={superAdminList}
-          headers={['name', 'last_name', 'email', 'password']}
+          headers={['name', 'last_name', 'email']}
           onDelete={onDelete}
           onRowClick={onRowClick}
         />
         <div className={styles.containerButton}>
-          <button
-            className={styles.buttonAdd}
-            type="button"
+          <Button
+            type="submit"
+            variant="confirm"
+            name="Create +"
             onClick={() => history.push(`super-admins/form`)}
-          >
-            Create
-          </button>
+          />
         </div>
       </div>
       <Modal handleClose={closeModal} isOpen={showModal}>

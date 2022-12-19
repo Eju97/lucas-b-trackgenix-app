@@ -48,18 +48,17 @@ const Admins = () => {
         <h2>Admins</h2>
         <Table
           data={adminList}
-          headers={['name', 'lastName', 'email', 'password']}
+          headers={['name', 'lastName', 'email']}
           onDelete={onDelete}
           onRowClick={onRowClick}
         />
         <div className={styles.containerButton}>
-          <button
-            className={styles.buttonAdd}
-            type="button"
+          <Button
+            type="submit"
+            variant="confirm"
             onClick={() => history.push(`admins/form`)}
-          >
-            Create
-          </button>
+            name="Create +"
+          />
         </div>
       </section>
       <Modal isOpen={modalDisplay} handleClose={closeModal}>

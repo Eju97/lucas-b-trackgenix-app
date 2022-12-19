@@ -84,7 +84,7 @@ const TaskForm = () => {
         <div className={styles.input}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
-          <Button onClick={() => reset()} variant="cancel" name="Reset" />
+          <Button onClick={() => reset()} variant="reset" name="Reset" />
         </div>
       </form>
     </div>

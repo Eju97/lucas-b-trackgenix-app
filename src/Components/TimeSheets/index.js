@@ -90,13 +90,12 @@ const TimeSheets = () => {
         onRowClick={onRowClick}
       />
       <div className={styles.containerButton}>
-        <button
-          className={styles.buttonAdd}
-          type="button"
+        <Button
+          type="submit"
+          variant="confirm"
+          name="Create +"
           onClick={() => history.push(`time-sheets/form`)}
-        >
-          Create
-        </button>
+        />
       </div>
     </section>
   );

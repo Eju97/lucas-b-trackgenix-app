@@ -46,6 +46,7 @@ function Tasks() {
 
   return (
     <div className={styles.container}>
+      <h2>Tasks</h2>
       <div>
         <Table
           data={taskList}
@@ -54,13 +55,12 @@ function Tasks() {
           onRowClick={onRowClick}
         />
         <div className={styles.containerButton}>
-          <button
-            className={styles.buttonAdd}
-            type="button"
+          <Button
+            type="submit"
+            variant="confirm"
+            name="Create +"
             onClick={() => history.push(`tasks/form`)}
-          >
-            Create
-          </button>
+          />
         </div>
       </div>
       <Modal handleClose={closeModal} isOpen={showModal}>

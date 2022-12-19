@@ -44,6 +44,7 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
+      <h2>Welcome</h2>
       {error && <div>{error}</div>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
@@ -62,7 +63,9 @@ const Login = () => {
           error={errors.password?.message}
           type="password"
         />
-        <Button type="submit" variant="confirm" name="Sign In" />
+        <div className={styles.btnContainer}>
+          <Button type="submit" variant="confirm" name="Sign In" />
+        </div>
       </form>
     </div>
   );

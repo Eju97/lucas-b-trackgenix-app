@@ -48,47 +48,49 @@ const EmployeeSignUp = () => {
           <Button variant="confirm" name="Accept" onClick={closeModal} />
         </div>
       </Modal>
-      <h2>Sign Up Employee</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          register={register}
-          label="Name"
-          name="name"
-          type="text"
-          error={errors.name?.message}
-        ></Input>
-        <Input
-          register={register}
-          label="Last Name"
-          name="lastName"
-          type="text"
-          error={errors.lastName?.message}
-        ></Input>
-        <Input
-          register={register}
-          label="Phone"
-          name="phone"
-          type="text"
-          error={errors.phone?.message}
-        ></Input>
-        <Input
-          register={register}
-          label="Email"
-          name="email"
-          type="text"
-          error={errors.email?.message}
-        ></Input>
-        <Input
-          register={register}
-          label="Password"
-          name="password"
-          type="password"
-          error={errors.password?.message}
-        ></Input>
-        <div className={styles.buttonContainer}>
-          <Button type="submit" variant="confirm" name="Submit"></Button>
-        </div>
-      </form>
+      <h2>Sign Up</h2>
+      <div className={styles.formContainer}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            register={register}
+            label="Name"
+            name="name"
+            type="text"
+            error={errors.name?.message}
+          ></Input>
+          <Input
+            register={register}
+            label="Last Name"
+            name="lastName"
+            type="text"
+            error={errors.lastName?.message}
+          ></Input>
+          <Input
+            register={register}
+            label="Phone"
+            name="phone"
+            type="text"
+            error={errors.phone?.message}
+          ></Input>
+          <Input
+            register={register}
+            label="Email"
+            name="email"
+            type="text"
+            error={errors.email?.message}
+          ></Input>
+          <Input
+            register={register}
+            label="Password"
+            name="password"
+            type="password"
+            error={errors.password?.message}
+          ></Input>
+          <div className={styles.buttonContainer}>
+            <Button type="submit" variant="confirm" name="Submit"></Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

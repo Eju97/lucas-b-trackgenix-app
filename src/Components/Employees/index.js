@@ -57,18 +57,17 @@ const Employees = () => {
       <div>
         <Table
           data={employeesList}
-          headers={['name', 'lastName', 'email', 'password', 'phone']}
+          headers={['name', 'lastName', 'email', 'phone']}
           onDelete={onDelete}
           onRowClick={onRowClick}
         />
         <div className={styles.containerButton}>
-          <button
-            className={styles.buttonAdd}
-            type="button"
+          <Button
+            type="submit"
+            variant="confirm"
+            name="Create + "
             onClick={() => history.push(`employees/form`)}
-          >
-            Create
-          </button>
+          />
         </div>
       </div>
     </section>

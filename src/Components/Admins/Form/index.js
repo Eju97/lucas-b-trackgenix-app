@@ -103,7 +103,7 @@ const Form = () => {
           />
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
-          <Button onClick={() => resetImputs()} type="button" variant="confirm" name="Reset" />
+          <Button onClick={() => resetImputs()} type="button" variant="reset" name="Reset" />
         </form>
       </div>
     </>

@@ -75,7 +75,6 @@ function SuperAdminsForm() {
             label="Name"
             name="name"
             type="text"
-            placeholder="add First Name"
             error={errors.name?.message}
           />
         </div>
@@ -85,7 +84,6 @@ function SuperAdminsForm() {
             label="Last Name"
             name="last_name"
             type="text"
-            placeholder="add Last Name"
             error={errors.last_name?.message}
           />
         </div>
@@ -95,7 +93,6 @@ function SuperAdminsForm() {
             label="Email"
             name="email"
             type="email"
-            placeholder="add Email"
             error={errors.email?.message}
           />
         </div>
@@ -105,14 +102,13 @@ function SuperAdminsForm() {
             label="Password"
             name="password"
             type="password"
-            placeholder="add Password"
             error={errors.password?.message}
           />
         </div>
         <div className={styles.buttonContainer}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
-          <Button onClick={() => resetImputs()} type="button" variant="confirm" name="Reset" />
+          <Button onClick={() => resetImputs()} type="button" variant="reset" name="Reset" />
         </div>
       </form>
     </section>
