@@ -30,9 +30,14 @@ const EmployeeProfile = () => {
     }
   }, [userData]);
 
+  const goBack = () => {
+    history.push('/auth/login');
+  };
+
   const confirmationDelete = () => {
     dispatch(deleteEmployees(id));
     setShowModal(false);
+    goBack();
   };
 
   const openModal = () => {
