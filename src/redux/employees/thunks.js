@@ -41,7 +41,7 @@ export const deleteEmployees = (id) => {
           dispatch(deleteEmployeesSuccess(id));
         } else throw new Error(response.message);
       })
-      .catc.catch((error) => {
+      .catch((error) => {
         dispatch(deleteEmployeesError(error.toString()));
       });
   };
