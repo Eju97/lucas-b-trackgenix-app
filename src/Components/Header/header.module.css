@@ -24,8 +24,8 @@
   align-items: center;
   padding: 0 5%;
   min-height: 100px;
-  color: #373867;
-  background-color: #F0F4F9;
+  color: #F0F4F9;
+  background-color: #373867;;
 }
 
 .appName {
@@ -46,7 +46,11 @@
   font-weight: 600;
   text-decoration: none;
   text-transform: capitalize;
-  color: #373867;
+  color: #F0F4F9;
+}
+
+.rutes > li > a:hover{
+  color: #AACE9B;
 }
 
 @media screen and (min-width: 750px) {

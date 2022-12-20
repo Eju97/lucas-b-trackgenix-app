@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 function Header(props) {
   return (
     <header>
-      <div className={styles.container}>
+      {/* <div className={styles.container}>
         <div className={styles.brand}>Radium Rocket</div>
         <div>
           <a href={'https://www.facebook.com/radiumrocket'} target={'_blank'} rel="noreferrer">
@@ -26,7 +26,7 @@ function Header(props) {
             />
           </a>
         </div>
-      </div>
+      </div> */}
       <nav className={styles.navbar}>
         <div className={styles.appName}>
           Track<span>GENIX</span>
@@ -34,7 +34,9 @@ function Header(props) {
         <ul className={styles.rutes}>
           {props.routes.map((route) => (
             <li key={route.name}>
-              <Link to={route.path}>{route.name}</Link>
+              <Link className={styles.link} to={route.path}>
+                {route.name}
+              </Link>
             </li>
           ))}
         </ul>
