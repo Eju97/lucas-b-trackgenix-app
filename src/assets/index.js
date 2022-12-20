@@ -1,0 +1,10 @@
+export { default as functionClockImg } from 'assets/functionClockImg.png';
+export { default as functionManagementImg } from 'assets/functionManagementImg.png';
+export { default as functionReportImg } from 'assets/functionReportImg.png';
+export { default as functionRolesImg } from 'assets/functionRolesImg.png';
+export { default as welcomeImg } from 'assets/welcomeImg.png';
+export { default as rocket } from 'assets/rocket.png';
+export { default as reasonsClockImg } from 'assets/reasonsClockImg.png';
+export { default as reasonsDecisionImg } from 'assets/reasonsDecisionImg.png';
+export { default as reasonsGraphicImg } from 'assets/reasonsGraphicImg.png';
+export { default as reasonsManagementImg } from 'assets/reasonsManagementImg.png';
