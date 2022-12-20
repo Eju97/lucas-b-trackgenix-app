@@ -68,49 +68,61 @@ const Form = () => {
     <div className={styles.container}>
       {error && <h3>{error}</h3>}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>{params.id ? 'Edit Employee' : 'Create New Employee'}</h2>
-        <Input
-          register={register}
-          label="Name"
-          id="employeeName"
-          name="name"
-          required
-          error={errors.name?.message}
-        />
-        <Input
-          register={register}
-          label="LastName"
-          id="lastName"
-          name="lastName"
-          required
-          error={errors.lastName?.message}
-        />
-        <Input
-          register={register}
-          label="Email"
-          id="email"
-          name="email"
-          required
-          error={errors.email?.message}
-        />
-        <Input
-          register={register}
-          label="Phone"
-          id="phone"
-          name="phone"
-          required
-          error={errors.phone?.message}
-        />
-        <Input
-          register={register}
-          label="Password"
-          id="password"
-          name="password"
-          required
-          type={'password'}
-          error={errors.password?.message}
-        />
-        <div>
+        <div className={styles.inputsBox}>
+          <h2>{params.id ? 'Edit Employee' : 'Create New Employee'}</h2>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Name"
+              id="employeeName"
+              name="name"
+              required
+              error={errors.name?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="LastName"
+              id="lastName"
+              name="lastName"
+              required
+              error={errors.lastName?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Email"
+              id="email"
+              name="email"
+              required
+              error={errors.email?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Phone"
+              id="phone"
+              name="phone"
+              required
+              error={errors.phone?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Password"
+              id="password"
+              name="password"
+              required
+              type={'password'}
+              error={errors.password?.message}
+            />
+          </div>
+        </div>
+        <div className={styles.buttonContainer}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
           <Button onClick={() => reset()} type="button" variant="reset" name="Reset" />
