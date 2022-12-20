@@ -4,27 +4,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postEmployee } from 'redux/employees/thunks';
 import { POST_EMPLOYEES_SUCCESS } from 'redux/employees/constants';
 import { Input, Button, Modal } from 'Components/Shared';
+import { useHistory } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from 'Components/Employee/EmployeeSignUp/validations';
 import styles from './signup.module.css';
 
 const EmployeeSignUp = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { isLoading } = useSelector((state) => state.employees);
   const [showModal, setShowModal] = useState(false);
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
     resolver: joiResolver(employeeValidation)
   });
 
+  const goBack = () => {
+    history.push('/auth/login');
+  };
+
   const closeModal = () => {
     setShowModal(false);
-    reset();
+    goBack();
   };
 
   const onSubmit = async (Data) => {

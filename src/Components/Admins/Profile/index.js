@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
+import { Button } from 'Components/Shared';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { logout } from 'redux/auth/thunks';
 import styles from './admin.module.css';
 import { useSelector } from 'react-redux';
 
 const AdminProfile = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { isLoading } = useSelector((state) => state.auth);
   const userData = useSelector((state) => state.auth.user);
   const [adminProfile, setAdminProfile] = useState({
@@ -44,6 +50,16 @@ const AdminProfile = () => {
             <h2 className={styles.header}>Email</h2>
             <p className={styles.data}>{adminProfile.email}</p>
           </div>
+        </div>
+        <div>
+          <Button
+            onClick={() => {
+              dispatch(logout());
+              history.push('/auth/login');
+            }}
+            variant="cancel"
+            name="Logout"
+          />
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './employeeProfile.module.css';
 import { useHistory } from 'react-router-dom';
 import { deleteEmployees } from 'redux/employees/thunks';
+import { logout } from 'redux/auth/thunks';
 import { Button, Modal } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -30,9 +31,14 @@ const EmployeeProfile = () => {
     }
   }, [userData]);
 
+  const goBack = () => {
+    history.push('/auth/login');
+  };
+
   const confirmationDelete = () => {
     dispatch(deleteEmployees(id));
     setShowModal(false);
+    goBack();
   };
 
   const openModal = () => {
@@ -59,9 +65,10 @@ const EmployeeProfile = () => {
         </div>
       </Modal>
       <div className={styles.bodyContainer}>
-        <div className={styles.subContainer}>
-          <h2 className={styles.profile}>PROFILE</h2>
+        <h2 className={styles.profile}>PROFILE</h2>
+        <div className={styles.btnContainer}>
           <Button onClick={openModal} variant="cancel" name="Delete User" />
+          <Button onClick={() => editProfile(id)} name="Edit Profile" variant="confirm" />
         </div>
         <div className={styles.profileContainer}>
           <div className={styles.profileRow}>
@@ -82,8 +89,14 @@ const EmployeeProfile = () => {
           </div>
         </div>
         <div className={styles.btnContainer}>
-          <Button onClick={() => history.goBack()} name="Go Back" variant="cancel" />
-          <Button onClick={() => editProfile(id)} name="Edit Profile" variant="confirm" />
+          <Button
+            onClick={() => {
+              dispatch(logout());
+              history.push('/auth/login');
+            }}
+            variant="cancel"
+            name="Logout"
+          />
         </div>
       </div>
     </div>
