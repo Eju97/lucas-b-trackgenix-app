@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Button } from 'Components/Shared';
+import { logout } from 'redux/auth/thunks';
 import styles from './superAdmin.module.css';
 import { useSelector } from 'react-redux';
 
 const SuperAdminProfile = () => {
-  const id = '637b87a63afa481d0759c6d0';
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { isLoading } = useSelector((state) => state.auth);
   const userData = useSelector((state) => state.auth.user);
   const [superAdminProfile, setSuperAdminProfile] = useState({
@@ -13,7 +18,7 @@ const SuperAdminProfile = () => {
   });
 
   useEffect(() => {
-    if (id && userData) {
+    if (userData) {
       setSuperAdminProfile({
         name: userData.name,
         lastName: userData.last_name,
@@ -46,6 +51,14 @@ const SuperAdminProfile = () => {
             <p className={styles.data}>{superAdminProfile.email}</p>
           </div>
         </div>
+        <Button
+          onClick={() => {
+            dispatch(logout());
+            history.push('/auth/login');
+          }}
+          variant="cancel"
+          name="Logout"
+        />
       </div>
     </div>
   );

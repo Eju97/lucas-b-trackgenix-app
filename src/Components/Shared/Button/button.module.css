@@ -1,56 +1,266 @@
-.confirm{
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    transition-duration: 0.4s;
-    margin: 10px 15px;
-  }
-
-.confirm:hover {
-    background-color: #144b16;
-    color: white;
-  }
-
-.cancel{
-    background-color: #f44336;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    transition-duration: 0.4s;
-    margin: 10px 15px;
-}
-
-.cancel:hover {
-  background-color: #7a0e0e;
-  color: white;
-}
-
-.reset{
-  background-color: #4936f4;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+.confirm {
+  margin: 20px;
+  outline: none;
+  width: 130px;
+  height: 40px;
+  padding: 10px 25px;
+  border: 2px solid #AACE9B;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
   cursor: pointer;
-  transition-duration: 0.4s;
-  margin: 10px 15px;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
 }
 
-.reset:hover {
-background-color: #021999;
-color: white;
+.confirm {
+  line-height: 39px;
+  padding: 0;
+}
+
+.confirm:hover{
+  background: transparent;
+  color: #AACE9B;
+}
+
+.confirm span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.confirm:before,
+.confirm:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: #AACE9B;
+  transition: all 0.3s ease;
+}
+
+.confirm:before {
+  height: 0%;
+  width: 2px;
+}
+
+.confirm:after {
+  width: 0%;
+  height: 2px;
+}
+
+.confirm:hover:before {
+  height: 100%;
+}
+
+.confirm:hover:after {
+  width: 100%;
+}
+
+.confirm span:before,
+.confirm span:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: #AACE9B;
+  transition: all 0.3s ease;
+}
+
+.confirm span:before {
+  width: 2px;
+  height: 0%;
+}
+
+.confirm span:after {
+  width: 0%;
+  height: 2px;
+}
+
+.confirm span:hover:before {
+  height: 100%;
+}
+
+.confirm span:hover:after {
+  width: 100%;
+}
+
+.cancel {
+  margin: 20px;
+  outline: none;
+  width: 130px;
+  height: 40px;
+  padding: 10px 25px;
+  border: 2px solid #f59791;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.cancel {
+  line-height: 39px;
+  padding: 0;
+}
+
+.cancel:hover{
+  background: transparent;
+  color: #f59791;
+}
+
+.cancel span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cancel:before,
+.cancel:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: #f59791;
+  transition: all 0.3s ease;
+}
+
+.cancel:before {
+  height: 0%;
+  width: 2px;
+}
+
+.cancel:after {
+  width: 0%;
+  height: 2px;
+}
+
+.cancel:hover:before {
+  height: 100%;
+}
+
+.cancel:hover:after {
+  width: 100%;
+}
+
+.cancel span:before,
+.cancel span:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: #f59791;
+  transition: all 0.3s ease;
+}
+
+.cancel span:before {
+  width: 2px;
+  height: 0%;
+}
+
+.cancel span:after {
+  width: 0%;
+  height: 2px;
+}
+
+.cancel span:hover:before {
+  height: 100%;
+}
+
+.cancel span:hover:after {
+  width: 100%;
+}
+
+.reset {
+  margin: 20px;
+  outline: none;
+  width: 130px;
+  height: 40px;
+  padding: 10px 25px;
+  border: 2px solid #897df3;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.reset {
+  line-height: 39px;
+  padding: 0;
+}
+
+.reset:hover{
+  background: transparent;
+  color: #897df3;
+}
+
+.reset span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.reset:before,
+.reset:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: #897df3;
+  transition: all 0.3s ease;
+}
+
+.reset:before {
+  height: 0%;
+  width: 2px;
+}
+
+.reset:after {
+  width: 0%;
+  height: 2px;
+}
+
+.reset:hover:before {
+  height: 100%;
+}
+
+.reset:hover:after {
+  width: 100%;
+}
+
+.reset span:before,
+.reset span:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: #897df3;
+  transition: all 0.3s ease;
+}
+
+.reset span:before {
+  width: 2px;
+  height: 0%;
+}
+
+.reset span:after {
+  width: 0%;
+  height: 2px;
+}
+
+.reset span:hover:before {
+  height: 100%;
+}
+
+.reset span:hover:after {
+  width: 100%;
 }

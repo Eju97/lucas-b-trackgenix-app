@@ -16,7 +16,7 @@ const Form = () => {
     formState: { errors },
     reset
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(Schema)
   });
 
@@ -67,43 +67,53 @@ const Form = () => {
   return (
     <>
       <div className={styles.container}>
-        <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            register={register}
-            label="Name"
-            name="name"
-            type="text"
-            placeholder="add First Name"
-            error={errors.name?.message}
-          />
-          <Input
-            register={register}
-            label="Last Name"
-            name="lastName"
-            type="text"
-            placeholder="add Last Name"
-            error={errors.lastName?.message}
-          />
-          <Input
-            register={register}
-            label="Email"
-            name="email"
-            type="email"
-            placeholder="add Email"
-            error={errors.email?.message}
-          />
-          <Input
-            register={register}
-            label="Password"
-            name="password"
-            type="password"
-            placeholder="add Password"
-            error={errors.password?.message}
-          />
-          <Button type="submit" variant="confirm" name="Submit" />
-          <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
-          <Button onClick={() => resetImputs()} type="button" variant="reset" name="Reset" />
+          <div className={styles.inputsBox}>
+            <h2>{adminId ? 'Edit Admin' : 'Create Admin'}</h2>
+            <div className={styles.inputs}>
+              <Input
+                register={register}
+                label="Name"
+                name="name"
+                required
+                error={errors.name?.message}
+              />
+            </div>
+            <div className={styles.inputs}>
+              <Input
+                register={register}
+                label="Last Name"
+                name="lastName"
+                type="text"
+                required
+                error={errors.lastName?.message}
+              />
+            </div>
+            <div className={styles.inputs}>
+              <Input
+                register={register}
+                label="Email"
+                name="email"
+                required
+                error={errors.email?.message}
+              />
+            </div>
+            <div className={styles.inputs}>
+              <Input
+                register={register}
+                label="Password"
+                name="password"
+                type="password"
+                required
+                error={errors.password?.message}
+              />
+            </div>
+          </div>
+          <div className={styles.buttonContainer}>
+            <Button type="submit" variant="confirm" name="Submit" />
+            <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
+            <Button onClick={() => resetImputs()} type="button" variant="reset" name="Reset" />
+          </div>
         </form>
       </div>
     </>
