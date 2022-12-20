@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import Input from '../../Shared/Input';
-import Button from '../../Shared/Button';
+import { Input, Button, Select, Spinner } from 'Components/Shared/index';
 import { useHistory, useParams } from 'react-router-dom';
-import SelectInput from '../../Shared/Select';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProjects, postProject, putProject } from '../../../redux/projects/thunks';
 import { POST_PROJECTS_SUCCESS, PUT_PROJECTS_SUCCESS } from '../../../redux/projects/constants';
@@ -97,7 +95,7 @@ const Form = () => {
   };
 
   if (isLoadingEmployees || isLoadingProjects) {
-    return <h2>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (
@@ -156,7 +154,7 @@ const Form = () => {
             <section key={field.id}>
               <label>
                 Role
-                <SelectInput
+                <Select
                   name={`employees[${index}].role`}
                   label="Role"
                   register={register}
@@ -171,7 +169,7 @@ const Form = () => {
               </label>
               <label>
                 Employee
-                <SelectInput
+                <Select
                   name={`employees[${index}].employee`}
                   label="Employee"
                   register={register}

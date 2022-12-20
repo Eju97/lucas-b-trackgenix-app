@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from './editProfileValidations';
-import { Button, Modal, Input } from 'Components/Shared/index';
+import { Button, Modal, Input, Spinner } from 'Components/Shared/index';
 
 const EditEmployeeProfile = () => {
   const {
@@ -52,7 +52,7 @@ const EditEmployeeProfile = () => {
   };
 
   if (isLoading) {
-    return <h2 className={styles.position}>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
   return (
     <div className={styles.container}>

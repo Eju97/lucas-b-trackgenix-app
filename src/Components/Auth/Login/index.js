@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../Login/login.module.css';
 import { useForm } from 'react-hook-form';
-import { Button, Input } from 'Components/Shared';
+import { Button, Input, Spinner } from 'Components/Shared';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -12,6 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const error = useSelector((state) => state.auth.error);
+  const { isLoading } = useSelector((state) => state.employees);
   const {
     register,
     handleSubmit,
@@ -41,6 +42,10 @@ const Login = () => {
       }
     }
   };
+
+  if (isLoading) {
+    return <Spinner></Spinner>;
+  }
 
   return (
     <div className={styles.container}>

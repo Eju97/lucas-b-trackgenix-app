@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from './FormEmployee.module.css';
-import Input from '../../Shared/Input';
-import Button from '../../Shared/Button';
+import { Input, Button, Spinner } from 'Components/Shared/index';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, postEmployee, putEmployee } from '../../../redux/employees/thunks';
@@ -62,7 +61,7 @@ const Form = () => {
     }
   };
   if (isLoading) {
-    return <h2 className={styles.position}>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
   return (
     <div className={styles.container}>

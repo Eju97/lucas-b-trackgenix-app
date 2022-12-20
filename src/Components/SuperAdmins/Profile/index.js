@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './superAdmin.module.css';
 import { useSelector } from 'react-redux';
+import { Spinner } from 'Components/Shared';
 
 const SuperAdminProfile = () => {
   const id = '637b87a63afa481d0759c6d0';
@@ -23,7 +24,7 @@ const SuperAdminProfile = () => {
   }, [userData]);
 
   if (isLoading) {
-    return <h2 className={styles.position}>Loading Profile...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './time-sheets.module.css';
-import Table from 'Components/Shared/Table';
-import Modal from 'Components/Shared/Modal';
-import Button from 'Components/Shared/Button';
+import { Table, Modal, Button, Spinner } from 'Components/Shared/index';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTimesheets, deleteTimesheet } from 'redux/timesheets/thunks';
@@ -23,7 +21,7 @@ const TimeSheets = () => {
   }, []);
 
   if (isLoading) {
-    return <h3 className={styles.position}>Loading Timesheets...</h3>;
+    return <Spinner></Spinner>;
   }
   if (error) {
     return <h3 className={styles.position}>Error: Could not load timesheets</h3>;

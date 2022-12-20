@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { postEmployee } from 'redux/employees/thunks';
 import { POST_EMPLOYEES_SUCCESS } from 'redux/employees/constants';
-import { Input, Button, Modal } from 'Components/Shared';
+import { Input, Button, Modal, Spinner } from 'Components/Shared';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from 'Components/Employee/EmployeeSignUp/validations';
 import styles from './signup.module.css';
@@ -35,7 +35,7 @@ const EmployeeSignUp = () => {
   };
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (
