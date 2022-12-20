@@ -68,46 +68,48 @@ function SuperAdminsForm() {
   return (
     <section className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>{id ? 'Edit SuperAdmin' : 'Create SuperAdmin'}</h2>
-        <div className={styles.inputs}>
-          <Input
-            register={register}
-            label="Name"
-            required
-            name="name"
-            type="text"
-            error={errors.name?.message}
-          />
-        </div>
-        <div className={styles.inputs}>
-          <Input
-            register={register}
-            label="Last Name"
-            name="last_name"
-            required
-            type="text"
-            error={errors.last_name?.message}
-          />
-        </div>
-        <div className={styles.inputs}>
-          <Input
-            register={register}
-            label="Email"
-            required
-            name="email"
-            type="email"
-            error={errors.email?.message}
-          />
-        </div>
-        <div className={styles.inputs}>
-          <Input
-            register={register}
-            label="Password"
-            name="password"
-            required
-            type="password"
-            error={errors.password?.message}
-          />
+        <div className={styles.inputsBox}>
+          <h2>{id ? 'Edit SuperAdmin' : 'Create SuperAdmin'}</h2>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Name"
+              required
+              name="name"
+              type="text"
+              error={errors.name?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Last Name"
+              name="last_name"
+              required
+              type="text"
+              error={errors.last_name?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Email"
+              required
+              name="email"
+              type="email"
+              error={errors.email?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Password"
+              name="password"
+              required
+              type="password"
+              error={errors.password?.message}
+            />
+          </div>
         </div>
         <div className={styles.buttonContainer}>
           <Button type="submit" variant="confirm" name="Submit" />

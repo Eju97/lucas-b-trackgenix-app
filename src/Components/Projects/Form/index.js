@@ -104,9 +104,9 @@ const Form = () => {
     <div className={styles.container}>
       <div>{error && <h3>{error}</h3>}</div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>{isEditing ? 'Edit Project' : 'Create New Project'}</h2>
-        <div className={styles.projectForm}>
-          <div>
+        <div className={styles.inputsBox}>
+          <h2>{isEditing ? 'Edit Project' : 'Create New Project'}</h2>
+          <div className={styles.inputs}>
             <Input
               label="Name"
               id="name"
@@ -115,6 +115,8 @@ const Form = () => {
               register={register}
               error={errors.name?.message}
             />
+          </div>
+          <div className={styles.inputs}>
             <Input
               label="Client Name"
               id="clientName"
@@ -124,7 +126,7 @@ const Form = () => {
               error={errors.clientName?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputs}>
             <Input
               label="Description"
               id="description"
@@ -134,7 +136,7 @@ const Form = () => {
               error={errors.description?.message}
             />
           </div>
-          <div>
+          <div className={styles.inputs}>
             <Input
               label="Start Date"
               id="startDate"
@@ -143,6 +145,8 @@ const Form = () => {
               error={errors.startDate?.message}
               type="date"
             />
+          </div>
+          <div className={styles.inputs}>
             <Input
               label="End Date"
               id="endDate"
@@ -152,86 +156,88 @@ const Form = () => {
               type="date"
             />
           </div>
+          <div>
+            <h3>Employees</h3>
+            {fields.map((field, index) => {
+              return (
+                <div key={field.id} className={styles.employeeForm}>
+                  <div>
+                    <section>
+                      <label>
+                        Role
+                        <SelectInput
+                          name={`employees[${index}].role`}
+                          label="Role"
+                          register={register}
+                          error={errors.employees?.message}
+                          data={[
+                            { id: 'DEV', value: 'DEV' },
+                            { id: 'TL', value: 'TL' },
+                            { id: 'PM', value: 'PM' },
+                            { id: 'QA', value: 'QA' }
+                          ]}
+                        />
+                      </label>
+                      <label>
+                        Employee
+                        <SelectInput
+                          name={`employees[${index}].employee`}
+                          label="Employee"
+                          register={register}
+                          error={errors.employees?.message}
+                          data={employeeList.map((employee) =>
+                            !employee
+                              ? ''
+                              : {
+                                  id: employee._id,
+                                  value: employee.name
+                                }
+                          )}
+                        />
+                      </label>
+                      <label>
+                        Rate
+                        <Input
+                          name={`employees[${index}].rate`}
+                          id="rate"
+                          required
+                          register={register}
+                          error={errors.employees?.message}
+                        />
+                      </label>
+                    </section>
+                  </div>
+                  <div className={styles.buttonBox}>
+                    <button
+                      className={styles.removeBtn}
+                      type="button"
+                      onClick={() => {
+                        remove(index);
+                      }}
+                    >
+                      <div className={styles.btnTxt}>Remove</div>
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+            <button
+              className={styles.addBtn}
+              type="button"
+              onClick={() => {
+                append({
+                  employee: '',
+                  role: 'QA',
+                  rate: 0
+                });
+              }}
+            >
+              <div className={styles.addIcon}></div>
+              <div className={styles.btnTxt}>Add</div>
+            </button>
+          </div>
         </div>
-        <h3>Employees</h3>
-        {fields.map((field, index) => {
-          return (
-            <div key={field.id} className={styles.employeeForm}>
-              <div>
-                <section>
-                  <label>
-                    Role
-                    <SelectInput
-                      name={`employees[${index}].role`}
-                      label="Role"
-                      register={register}
-                      error={errors.employees?.message}
-                      data={[
-                        { id: 'DEV', value: 'DEV' },
-                        { id: 'TL', value: 'TL' },
-                        { id: 'PM', value: 'PM' },
-                        { id: 'QA', value: 'QA' }
-                      ]}
-                    />
-                  </label>
-                  <label>
-                    Employee
-                    <SelectInput
-                      name={`employees[${index}].employee`}
-                      label="Employee"
-                      register={register}
-                      error={errors.employees?.message}
-                      data={employeeList.map((employee) =>
-                        !employee
-                          ? ''
-                          : {
-                              id: employee._id,
-                              value: employee.name
-                            }
-                      )}
-                    />
-                  </label>
-                  <label>
-                    Rate
-                    <Input
-                      name={`employees[${index}].rate`}
-                      id="rate"
-                      required
-                      register={register}
-                      error={errors.employees?.message}
-                    />
-                  </label>
-                </section>
-              </div>
-              <div className={styles.buttonBox}>
-                <button
-                  className={styles.removeBtn}
-                  type="button"
-                  onClick={() => {
-                    remove(index);
-                  }}
-                >
-                  <div className={styles.btnTxt}>Remove</div>
-                </button>
-              </div>
-            </div>
-          );
-        })}
-        <button
-          className={styles.addBtn}
-          type="button"
-          onClick={() => {
-            append({
-              employee: '',
-              role: 'QA',
-              rate: 0
-            });
-          }}
-        >
-          <div className={styles.addIcon}></div>
-          <div className={styles.btnTxt}>Add</div>
-        </button>
-        <div className={styles.save}>
+        <div className={styles.buttonContainer}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
           <Button onClick={() => reset()} variant="reset" name="Reset" />
