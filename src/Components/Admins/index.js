@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './admins.module.css';
-import { Table, Modal, Button } from 'Components/Shared/index';
+import { Table, Modal, Button, Spinner } from 'Components/Shared/index';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteAdmin, getAdmins } from 'redux/admins/thunks';
@@ -17,7 +17,7 @@ const Admins = () => {
   }, []);
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
 
   if (error) {

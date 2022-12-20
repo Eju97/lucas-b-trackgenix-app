@@ -41,7 +41,7 @@ const AdminRoutes = () => {
         <Route exact path={`${url}/time-sheets`} component={TimeSheets} />
         <Route exact path={`${url}/time-sheets/form`} component={TimeSheetsForm} />
         <Route path={`${url}/time-sheets/form/:id`} component={TimeSheetsForm} />
-        <Redirect to={`${url}/profile`} />
+        <Redirect to={`${url}/home`} />
       </Switch>
     </Layout>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './super-admins.module.css';
-import { Modal, Button, Table } from 'Components/Shared/index';
+import { Modal, Button, Table, Spinner } from 'Components/Shared/index';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSuperAdmins, deleteSuperAdmins } from 'redux/superAdmins/thunks';
@@ -16,7 +16,7 @@ const SuperAdmins = () => {
     dispatch(getSuperAdmins());
   }, []);
   if (isLoading) {
-    return <h2 className={styles.position}>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
   if (error) {
     return <h2 className={styles.position}>{error}</h2>;

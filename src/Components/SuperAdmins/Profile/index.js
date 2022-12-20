@@ -5,6 +5,7 @@ import { Button } from 'Components/Shared';
 import { logout } from 'redux/auth/thunks';
 import styles from './superAdmin.module.css';
 import { useSelector } from 'react-redux';
+import { Spinner } from 'Components/Shared';
 
 const SuperAdminProfile = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const SuperAdminProfile = () => {
   }, [userData]);
 
   if (isLoading) {
-    return <h2 className={styles.position}>Loading Profile...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (

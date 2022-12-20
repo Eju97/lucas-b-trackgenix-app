@@ -1,6 +1,6 @@
 import Layout from 'Components/Layout';
 import React, { lazy } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, Redirect } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 const EmployeeHome = lazy(() => import('Components/Employee/Home/EmployeesHome'));
 const NewTimesheet = lazy(() => import('Components/Employee/AddTimesheet/addTimesheet'));
@@ -28,6 +28,7 @@ const EmployeesRouter = () => {
         <Route path={`${url}/timesheets/newtimesheet/:id`} component={NewTimesheet} />
         <Route exact path={`${url}/profile`} component={EmployeeProfile} />
         <Route path={`${url}/profile/editProfile/:id`} component={EditEmployeeProfile} />
+        <Redirect to={`${url}/home`} />
       </Switch>
     </Layout>
   );

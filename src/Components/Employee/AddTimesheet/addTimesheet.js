@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from 'Components/Shared/Button';
 import { Input } from 'Components/Shared';
-import SelectInput from 'Components/Shared/Select';
+import Select from 'Components/Shared/Select';
 import { getProjects } from 'redux/projects/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -79,7 +79,7 @@ const NewTimesheet = () => {
             error={errors.hours?.message}
           />
           <div>
-            <SelectInput
+            <Select
               error={errors.project?.message}
               register={register}
               name="project"
@@ -95,7 +95,7 @@ const NewTimesheet = () => {
             />
           </div>
           <div>
-            <SelectInput
+            <Select
               error={errors.task?.message}
               register={register}
               name="task"

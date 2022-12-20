@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import styles from './super-admins-form.module.css';
-import { Input, Button } from 'Components/Shared/index';
+import { Input, Button, Spinner } from 'Components/Shared/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { postSuperAdmins, putSuperAdmins } from 'redux/superAdmins/thunks';
 import { useForm } from 'react-hook-form';
@@ -62,7 +62,7 @@ function SuperAdminsForm() {
   };
 
   if (isLoading) {
-    return <h2 className={styles.position}>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (

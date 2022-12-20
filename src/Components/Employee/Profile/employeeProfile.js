@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from './employeeProfile.module.css';
 import { useHistory } from 'react-router-dom';
 import { deleteEmployees } from 'redux/employees/thunks';
+import { Button, Modal, Spinner } from 'Components/Shared';
 import { logout } from 'redux/auth/thunks';
-import { Button, Modal } from 'Components/Shared';
 import { useSelector, useDispatch } from 'react-redux';
 
 const EmployeeProfile = () => {
@@ -50,7 +50,7 @@ const EmployeeProfile = () => {
   };
 
   if (isLoading) {
-    return <h2 className={styles.position}>Loading Profile...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (

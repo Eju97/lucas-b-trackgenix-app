@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button } from 'Components/Shared';
+import { Button, Spinner } from 'Components/Shared';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { logout } from 'redux/auth/thunks';
@@ -28,7 +28,7 @@ const AdminProfile = () => {
   }, [userData]);
 
   if (isLoading) {
-    return <h2 className={styles.position}>Loading Profile...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (

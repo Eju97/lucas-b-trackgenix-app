@@ -1,6 +1,6 @@
 import styles from './form.module.css';
 import { useEffect } from 'react';
-import { Button, Input } from 'Components/Shared/index';
+import { Button, Input, Spinner } from 'Components/Shared/index';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { createAdmin, editAdmin } from 'redux/admins/thunks';
@@ -61,7 +61,7 @@ const Form = () => {
   };
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (

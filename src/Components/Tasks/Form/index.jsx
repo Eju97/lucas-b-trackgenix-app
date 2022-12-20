@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './form.module.css';
-import Input from '../../Shared/Input';
-import Button from '../../Shared/Button';
+import { Input, Button, Spinner } from 'Components/Shared/index';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTask, updateTask, getTask } from '../../../redux/tasks/thunks';
@@ -62,7 +61,7 @@ const TaskForm = () => {
   };
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
 
   return (

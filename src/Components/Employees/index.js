@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './employees.module.css';
-import Table from '../Shared/Table';
-import Modal from '../Shared/Modal';
-import Button from '../Shared/Button';
+import { Table, Modal, Button, Spinner } from 'Components/Shared/index';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEmployees, deleteEmployees } from '../../redux/employees/thunks';
@@ -37,7 +35,7 @@ const Employees = () => {
   };
 
   if (isLoading) {
-    return <h2 className={styles.position}>Loading list employees...</h2>;
+    return <Spinner></Spinner>;
   }
   if (error) {
     return <h2>Employees not found</h2>;

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './tasks.module.css';
-import Modal from '../Shared/Modal';
-import Table from '../Shared/Table';
-import Button from '../Shared/Button';
+import { Modal, Table, Button, Spinner } from 'Components/Shared/index';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTask, deleteTask } from '../../redux/tasks/thunks';
@@ -23,7 +21,7 @@ function Tasks() {
   };
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <Spinner></Spinner>;
   }
 
   if (error) {
