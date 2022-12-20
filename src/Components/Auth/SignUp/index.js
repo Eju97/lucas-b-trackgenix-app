@@ -4,27 +4,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postEmployee } from 'redux/employees/thunks';
 import { POST_EMPLOYEES_SUCCESS } from 'redux/employees/constants';
 import { Input, Button, Modal, Spinner } from 'Components/Shared';
+import { useHistory } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { employeeValidation } from 'Components/Employee/EmployeeSignUp/validations';
 import styles from './signup.module.css';
 
 const EmployeeSignUp = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { isLoading } = useSelector((state) => state.employees);
   const [showModal, setShowModal] = useState(false);
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
     resolver: joiResolver(employeeValidation)
   });
 
+  const goBack = () => {
+    history.push('/auth/login');
+  };
+
   const closeModal = () => {
     setShowModal(false);
-    reset();
+    goBack();
   };
 
   const onSubmit = async (Data) => {
@@ -55,6 +60,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Name"
             name="name"
+            required
             type="text"
             error={errors.name?.message}
           ></Input>
@@ -62,6 +68,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Last Name"
             name="lastName"
+            required
             type="text"
             error={errors.lastName?.message}
           ></Input>
@@ -69,6 +76,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Phone"
             name="phone"
+            required
             type="text"
             error={errors.phone?.message}
           ></Input>
@@ -76,6 +84,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Email"
             name="email"
+            required
             type="text"
             error={errors.email?.message}
           ></Input>
@@ -83,6 +92,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Password"
             name="password"
+            required
             type="password"
             error={errors.password?.message}
           ></Input>

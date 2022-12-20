@@ -2,13 +2,12 @@ import Joi from 'joi';
 
 export const timesheetsSchema = Joi.object({
   description: Joi.string().min(3).trim().max(300).required().messages({
+    'any.required': 'Description is required',
+    'string.empty': 'Description is not allowed to be empty',
+    'string.min': 'Description must have a minimum of 3 characters',
+    'string.max': 'Description can not be longer than 300 characters',
     'string.base': 'Description must be a string',
-    'string.empty': 'Description field is required',
-    'string.trim': 'Description is not allowed to be empty',
-    'string.min': 'Description must have at least 3 characters',
-    'string.max': 'Description can not bet longer than 300 characters',
-    'string.required': 'Description is required',
-    'any.required': 'Description is required'
+    'string.required': 'Description field is required'
   }),
   date: Joi.date().iso().less('now').required().messages({
     'any.required': 'Date is required',
@@ -28,15 +27,15 @@ export const timesheetsSchema = Joi.object({
     'number.required': 'Hours are required'
   }),
   task: Joi.string().length(24).required().messages({
-    'any.required': 'Tasks are required',
+    'any.required': 'A task is required',
     'string.required': 'Please insert a task'
   }),
   employee: Joi.string().length(24).required().messages({
-    'any.required': 'Employee is required',
-    'string.required': 'Please insert a employee'
+    'any.required': 'An employee is required',
+    'string.required': 'Please insert an employee'
   }),
   project: Joi.string().length(24).required().messages({
-    'any.required': 'Project is required',
+    'any.required': 'A project is required',
     'string.required': 'Please insert a project'
   })
 });
