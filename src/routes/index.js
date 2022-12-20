@@ -4,6 +4,7 @@ import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import PrivateRoute from './PrivateRoutes';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser } from 'redux/auth/thunks';
+import { Spinner } from 'Components/Shared';
 
 const HomeRoute = lazy(() => import('./home'));
 const Admins = lazy(() => import('./admins'));
@@ -26,7 +27,7 @@ const Routes = () => {
   }, []);
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading..</div>}>
+      <Suspense fallback={<Spinner />}>
         <Switch>
           <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdmin} />
           <PrivateRoute path="/admins" role="ADMIN" component={Admins} />

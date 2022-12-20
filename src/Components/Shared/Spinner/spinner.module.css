@@ -1,13 +1,14 @@
 .ldsspinner {
     color: official;
     display: block;
+    position: relative;
     margin: auto;
-    width: 30px;
-    height: 30px;
+    width: 80px;
+    height: 80px;
   }
   .ldsspinner div {
-    transform-origin: 40px 40px;
-    animation: lds-spinner 1.2s linear infinite;
+    transform-origin: 30px 30px;
+    animation: ldsspinner 1.2s linear infinite;
   }
   .ldsspinner div:after {
     content: " ";
