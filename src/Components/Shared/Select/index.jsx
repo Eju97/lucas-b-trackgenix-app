@@ -3,7 +3,7 @@ import styles from './select.module.css';
 
 const Select = ({ name, label, data, register, value, error }) => {
   return (
-    <div>
+    <div className={styles.selectBox}>
       <select {...register(name)} name={name} value={value} className={styles.select}>
         <option hidden value="">
           {label}
