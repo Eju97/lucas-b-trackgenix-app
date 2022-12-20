@@ -8,7 +8,7 @@ const EmployeeProfile = lazy(() => import('Components/Employee/Profile/employeeP
 const ProjectTable = lazy(() => import('Components/Employee/Home/projectTable'));
 const ProjectsForm = lazy(() => import('Components/Projects/Form'));
 const EditEmployeeProfile = lazy(() => import('Components/Employee/EditProfile/editProfile'));
-const Home = lazy(() => import('Components/Home'));
+const Home = lazy(() => import('Components/Landing'));
 const routes = [
   { name: 'Home', path: '/employee/home' },
   { name: 'Profile', path: '/employee/profile' },
