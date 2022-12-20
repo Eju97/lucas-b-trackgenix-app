@@ -3,7 +3,6 @@ import styles from './admin.module.css';
 import { useSelector } from 'react-redux';
 
 const AdminProfile = () => {
-  const id = '637b87a63afa481d0759c6d0';
   const { isLoading } = useSelector((state) => state.auth);
   const userData = useSelector((state) => state.auth.user);
   const [adminProfile, setAdminProfile] = useState({
@@ -13,7 +12,7 @@ const AdminProfile = () => {
   });
 
   useEffect(() => {
-    if (id && userData) {
+    if (userData) {
       setAdminProfile({
         name: userData.name,
         lastName: userData.lastName,
