@@ -2,16 +2,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #000000;
+  justify-content: space-between;
+  background-image: url('../../assets/backgroundStars.jpg');
 }
 
 .main {
   display: flex;
+  align-self: center;
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
   width: 90%;
-  height: 250px;
+  /* height: 250px; */
 }
 
 .appName {
@@ -60,6 +62,7 @@
 @media screen and (min-width: 750px) {
   .main {
     padding: 0 20%;
+    padding-left: 40%;
     width: unset;
   }
 
@@ -71,4 +74,9 @@
   .socialIcon {
     margin-left: 15px;
   }
+}
+
+.rocketImg{
+  width: 10%;
+  align-self: flex-end;
 }
