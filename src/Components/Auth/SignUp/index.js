@@ -60,6 +60,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Name"
             name="name"
+            required
             type="text"
             error={errors.name?.message}
           ></Input>
@@ -67,6 +68,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Last Name"
             name="lastName"
+            required
             type="text"
             error={errors.lastName?.message}
           ></Input>
@@ -74,6 +76,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Phone"
             name="phone"
+            required
             type="text"
             error={errors.phone?.message}
           ></Input>
@@ -81,6 +84,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Email"
             name="email"
+            required
             type="text"
             error={errors.email?.message}
           ></Input>
@@ -88,6 +92,7 @@ const EmployeeSignUp = () => {
             register={register}
             label="Password"
             name="password"
+            required
             type="password"
             error={errors.password?.message}
           ></Input>

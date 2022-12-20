@@ -7,7 +7,6 @@ import styles from './superAdmin.module.css';
 import { useSelector } from 'react-redux';
 
 const SuperAdminProfile = () => {
-  const id = '637b87a63afa481d0759c6d0';
   const dispatch = useDispatch();
   const history = useHistory();
   const { isLoading } = useSelector((state) => state.auth);
@@ -19,7 +18,7 @@ const SuperAdminProfile = () => {
   });
 
   useEffect(() => {
-    if (id && userData) {
+    if (userData) {
       setSuperAdminProfile({
         name: userData.name,
         lastName: userData.last_name,

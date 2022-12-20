@@ -156,64 +156,70 @@ const Form = () => {
         <h3>Employees</h3>
         {fields.map((field, index) => {
           return (
-            <section key={field.id}>
-              <label>
-                Role
-                <SelectInput
-                  name={`employees[${index}].role`}
-                  label="Role"
-                  register={register}
-                  error={errors.employees?.message}
-                  data={[
-                    { id: 'DEV', value: 'DEV' },
-                    { id: 'TL', value: 'TL' },
-                    { id: 'PM', value: 'PM' },
-                    { id: 'QA', value: 'QA' }
-                  ]}
-                />
-              </label>
-              <label>
-                Employee
-                <SelectInput
-                  name={`employees[${index}].employee`}
-                  label="Employee"
-                  register={register}
-                  error={errors.employees?.message}
-                  data={employeeList.map((employee) =>
-                    !employee
-                      ? ''
-                      : {
-                          id: employee._id,
-                          value: employee.name
-                        }
-                  )}
-                />
-              </label>
-              <label>
-                Rate
-                <Input
-                  name={`employees[${index}].rate`}
-                  id="rate"
-                  required
-                  register={register}
-                  error={errors.employees?.message}
-                />
-              </label>
-              <button
-                type="button"
-                onClick={() => {
-                  remove(index);
-                }}
-              >
-                X
-              </button>
-            </section>
+            <div key={field.id} className={styles.employeeForm}>
+              <div>
+                <section>
+                  <label>
+                    Role
+                    <SelectInput
+                      name={`employees[${index}].role`}
+                      label="Role"
+                      register={register}
+                      error={errors.employees?.message}
+                      data={[
+                        { id: 'DEV', value: 'DEV' },
+                        { id: 'TL', value: 'TL' },
+                        { id: 'PM', value: 'PM' },
+                        { id: 'QA', value: 'QA' }
+                      ]}
+                    />
+                  </label>
+                  <label>
+                    Employee
+                    <SelectInput
+                      name={`employees[${index}].employee`}
+                      label="Employee"
+                      register={register}
+                      error={errors.employees?.message}
+                      data={employeeList.map((employee) =>
+                        !employee
+                          ? ''
+                          : {
+                              id: employee._id,
+                              value: employee.name
+                            }
+                      )}
+                    />
+                  </label>
+                  <label>
+                    Rate
+                    <Input
+                      name={`employees[${index}].rate`}
+                      id="rate"
+                      required
+                      register={register}
+                      error={errors.employees?.message}
+                    />
+                  </label>
+                </section>
+              </div>
+              <div className={styles.buttonBox}>
+                <button
+                  className={styles.removeBtn}
+                  type="button"
+                  onClick={() => {
+                    remove(index);
+                  }}
+                >
+                  <div className={styles.btnTxt}>Remove</div>
+                </button>
+              </div>
+            </div>
           );
         })}
-        <Button
+        <button
+          className={styles.addBtn}
           type="button"
-          variant="confirm"
-          name="Add Employee"
           onClick={() => {
             append({
               employee: '',
@@ -221,7 +227,10 @@ const Form = () => {
               rate: 0
             });
           }}
-        />
+        >
+          <div className={styles.addIcon}></div>
+          <div className={styles.btnTxt}>Add</div>
+        </button>
         <div className={styles.save}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />

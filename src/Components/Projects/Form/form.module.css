@@ -9,6 +9,7 @@
 
 .container Button {
     margin: 10px;
+    cursor: pointer;
 }
 
 .projectForm {
@@ -25,13 +26,12 @@
 
 .employeeForm {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    padding: 2%;
 }
 
-.employeeForm label {
-    padding: 2%;
+.employeeForm div {
+    margin-right: 5%;
 }
 
 .save {
@@ -45,4 +45,173 @@
     justify-content: center;
     align-items: center;
     flex-direction: wrap;
+}
+
+.buttonBox {
+    text-align: center;
+}
+
+.removeBtn {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #cdcdcd;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+}
+
+.removeBtn:hover {
+    width: 120px;
+}
+
+.removeBtn::before,
+.removeBtn::after {
+    transition: width 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 4px;
+    width: 10px;
+    top: calc(50% - 2px);
+    background: #f59791;
+}
+
+.removeBtn::after {
+    right: 14px;
+    overflow: hidden;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.removeBtn::before {
+    left: 14px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.removeBtn:focus {
+    outline: none;
+}
+
+.removeBtn:hover::before,
+.removeBtn:hover::after {
+    width: 4px;
+    border-radius: 2px;
+}
+
+.removeBtn:hover .btn-txt {
+    opacity: 1;
+}
+
+
+.removeBtn:hover .add-icon::before {
+    left: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+}
+
+.removeBtn:hover .add-icon::after {
+    right: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+}
+
+.btnTxt {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.btnTxt:hover {
+    opacity: 1;
+}
+
+.addIcon::after,
+.addIcon::before {
+    transition: all 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 2px;
+    top: calc(50% - 10px);
+    background: #AACE9B;
+    overflow: hidden;
+}
+
+.addIcon::before {
+    left: 22px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.addIcon::after {
+    right: 22px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.addBtn {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #cdcdcd;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+}
+
+.addBtn:hover {
+    width: 120px;
+}
+
+.addBtn::before,
+.addBtn::after {
+    transition: width 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 4px;
+    width: 10px;
+    top: calc(50% - 2px);
+    background: #AACE9B;
+}
+
+.addBtn::after {
+    right: 14px;
+    overflow: hidden;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.addBtn::before {
+    left: 14px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.addBtn:focus {
+    outline: none;
+}
+
+.addBtn:hover::before,
+.addBtn:hover::after {
+    width: 4px;
+    border-radius: 2px;
+}
+
+.addBtn:hover .btn-txt {
+    opacity: 1;
+}
+
+
+.addBtn:hover .add-icon::before {
+    left: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+}
+
+.addBtn:hover .add-icon::after {
+    right: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
 }

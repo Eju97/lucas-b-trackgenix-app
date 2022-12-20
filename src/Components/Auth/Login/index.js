@@ -53,6 +53,7 @@ const Login = () => {
           name="email"
           register={register}
           error={errors.email?.message}
+          required
           type="text"
         />
         <Input
@@ -60,6 +61,7 @@ const Login = () => {
           id="password"
           name="password"
           register={register}
+          required
           error={errors.password?.message}
           type="password"
         />
