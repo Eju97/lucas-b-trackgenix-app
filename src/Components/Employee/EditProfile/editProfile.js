@@ -64,10 +64,10 @@ const EditEmployeeProfile = () => {
           <Button onClick={acceptButton} variant="confirm" name="Accept" />
         </div>
       </Modal>
-      <div className={styles.bodyContainer}>
-        <h2 className={styles.editProfile}>Edit Profile</h2>
-        <div className={styles.formContainer}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.inputsBox}>
+          <h2 className={styles.editProfile}>Edit Profile</h2>
+          <div className={styles.inputs}>
             <Input
               register={register}
               label="Name"
@@ -75,6 +75,8 @@ const EditEmployeeProfile = () => {
               type="text"
               error={errors.name?.message}
             />
+          </div>
+          <div className={styles.inputs}>
             <Input
               register={register}
               label="Last Name"
@@ -82,6 +84,8 @@ const EditEmployeeProfile = () => {
               type="text"
               error={errors.lastName?.message}
             />
+          </div>
+          <div className={styles.inputs}>
             <Input
               register={register}
               label="Email"
@@ -89,6 +93,8 @@ const EditEmployeeProfile = () => {
               type="text"
               error={errors.email?.message}
             />
+          </div>
+          <div className={styles.inputs}>
             <Input
               register={register}
               label="Phone"
@@ -96,6 +102,8 @@ const EditEmployeeProfile = () => {
               type="text"
               error={errors.phone?.message}
             />
+          </div>
+          <div className={styles.inputs}>
             <Input
               register={register}
               label="Password"
@@ -103,13 +111,13 @@ const EditEmployeeProfile = () => {
               type="password"
               error={errors.password?.message}
             />
-            <div>
-              <Button variant="cancel" name="Cancel" onClick={() => history.goBack()} />
-              <Button type="submit" name="Submit" variant="confirm" />
-            </div>
-          </form>
+          </div>
+          <div className={styles.buttonContainer}>
+            <Button variant="cancel" name="Cancel" onClick={() => history.goBack()} />
+            <Button type="submit" name="Submit" variant="confirm" />
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

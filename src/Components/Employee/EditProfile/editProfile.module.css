@@ -1,32 +1,32 @@
-.container{
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.container {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
-.bodyContainer {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-
-.editProfile{
-  font-size: 30px;
-  color: #373867;
+.buttonContainer{
+  display: flex;
+  justify-content: center;
 }
 
-.formContainer{
-    margin: 5px;
-    padding: 20px;
-    margin: 15px;
-    padding: 30px 100px;
-    border-radius: 4px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  }
+.inputsBox{
+  margin: 30px;
+  padding: 30px 100px;
+  border-radius: 4px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.inputsBox h2 {
+  display: flex;
+  justify-content: center;
+}
+
+.inputsBox .inputs {
+  display: flex;
+  justify-content: center;
+}
 
 .position {
   align-self: center;

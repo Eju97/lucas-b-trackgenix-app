@@ -67,21 +67,21 @@ const TaskForm = () => {
   return (
     <div className={styles.container}>
       <div>{error && <h3>{error}</h3>}</div>
-      <div>
-        <h2>{isEditing ? 'Edit Task' : 'Create New Task'}</h2>
-      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.form}>
-          <Input
-            label="Description"
-            name="description"
-            id={'description'}
-            register={register}
-            required
-            error={errors.description?.message}
-          />
+        <div className={styles.inputsBox}>
+          <h2>{isEditing ? 'Edit Task' : 'Create New Task'}</h2>
+          <div className={styles.inputs}>
+            <Input
+              label="Description"
+              name="description"
+              id={'description'}
+              register={register}
+              required
+              error={errors.description?.message}
+            />
+          </div>
         </div>
-        <div className={styles.input}>
+        <div className={styles.buttonContainer}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
           <Button onClick={() => reset()} variant="reset" name="Reset" />

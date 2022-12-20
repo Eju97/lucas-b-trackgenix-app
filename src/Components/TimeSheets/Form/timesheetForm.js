@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './form.module.css';
 import Input from '../../Shared/Input';
 import Button from '../../Shared/Button';
-import SelectInput from '../../Shared/Select';
+import Select from '../../Shared/Select';
 import { useParams, useHistory } from 'react-router-dom';
 import {
   POST_TIMESHEETS_SUCCESS,
@@ -86,36 +86,42 @@ const Form = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
-        {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
-        {error && <h3>{error.message}</h3>}
-        <div>
-          <Input
-            register={register}
-            label="Description"
-            error={errors.description?.message}
-            name="description"
-            type="text"
-            required
-          />
-          <Input
-            register={register}
-            label="Date"
-            error={errors.date?.message}
-            name="date"
-            type="date"
-          />
-          <Input
-            register={register}
-            label="Hours"
-            error={errors.hours?.message}
-            name="hours"
-            type="number"
-            required
-          />
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.inputsBox}>
+          {!isEditing ? <h2>Create a Timesheet</h2> : <h2>Edit a Timesheet</h2>}
+          {error && <h3>{error.message}</h3>}
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Description"
+              error={errors.description?.message}
+              name="description"
+              type="text"
+              required
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Date"
+              error={errors.date?.message}
+              name="date"
+              type="date"
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Hours"
+              error={errors.hours?.message}
+              name="hours"
+              type="number"
+              required
+            />
+          </div>
           <div>
-            <SelectInput
+            <Select
               register={register}
               name="project"
               label="Projects"
@@ -129,7 +135,9 @@ const Form = () => {
                     }
               )}
             />
-            <SelectInput
+          </div>
+          <div>
+            <Select
               register={register}
               name="employee"
               label="Employee"
@@ -147,7 +155,7 @@ const Form = () => {
             />
           </div>
           <div>
-            <SelectInput
+            <Select
               register={register}
               name="task"
               label="Task"
@@ -163,7 +171,7 @@ const Form = () => {
             />
           </div>
         </div>
-        <div>
+        <div className={styles.buttonContainer}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
           <Button onClick={() => reset()} type="button" variant="reset" name="Reset" />

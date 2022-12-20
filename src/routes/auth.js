@@ -7,8 +7,9 @@ const AuthLogin = lazy(() => import('Components/Auth/Login'));
 const AuthSignUp = lazy(() => import('Components/Auth/SignUp'));
 
 const routes = [
+  { name: 'Home', path: '/home' },
   { name: 'Login', path: '/auth/login' },
-  { name: 'SignUp', path: '/auth/signup' }
+  { name: 'Sign Up', path: '/auth/signup' }
 ];
 
 const AdminRoutes = () => {

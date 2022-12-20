@@ -1,0 +1,86 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 15%;
+  background-color: #AACE9B;
+}
+
+.welcome div {
+  margin-right: 15%;
+}
+.welcome div h2 {
+  font-size: 30px;
+  color: #373867;
+}
+
+.welcome div p {
+  color: #373867;
+  font-size: 20px;
+}
+
+.functionalities {
+  display: flex;
+  align-content: space-between;
+  justify-content: space-around;
+  padding: 50px 15%;
+  background-color: #F0F4F9;
+}
+
+.subFunctionalities{
+  display: flex;
+  flex-wrap: wrap;
+  width: 40%;
+  /* margin-top: 50px;
+  margin-bottom: 50px;
+  padding-bottom: 30px; */
+}
+
+.functionalities h3{
+  color: #373867;
+}
+
+.functionalities p{
+  color: #373867;
+}
+
+.reasons{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  color: #373867;
+}
+
+.reasonsContainer{
+  display: flex;
+}
+
+.reasonsDiv{
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background-color: #F0F4F9;
+  width: 300px;
+  padding: 25px 50px;
+  margin: 20px;
+}
+
+.reasonsDiv div{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about{
+  background-color: #AACE9B;
+}

@@ -9,7 +9,6 @@ import { Spinner } from 'Components/Shared';
 const HomeRoute = lazy(() => import('./home'));
 const Admins = lazy(() => import('./admins'));
 const Employee = lazy(() => import('./employee'));
-const Timesheets = lazy(() => import('./timesheets'));
 const SuperAdmin = lazy(() => import('./superAdmins'));
 const Auth = lazy(() => import('./auth'));
 
@@ -32,10 +31,9 @@ const Routes = () => {
           <PrivateRoute path="/super-admins" role="SUPER_ADMIN" component={SuperAdmin} />
           <PrivateRoute path="/admins" role="ADMIN" component={Admins} />
           <PrivateRoute path="/employee" role="EMPLOYEE" component={Employee} />
-          <Route path="/time-sheets" component={Timesheets} />
-          <Route path="/home" component={HomeRoute} />
+          <Route exact path="/home" component={HomeRoute} />
           <Route path="/auth" component={Auth} />
-          <Redirect to="/auth/login"></Redirect>
+          <Redirect to="/home"></Redirect>
         </Switch>
       </Suspense>
     </BrowserRouter>

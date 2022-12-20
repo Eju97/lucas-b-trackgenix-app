@@ -15,7 +15,7 @@ const Tasks = lazy(() => import('Components/Tasks/index'));
 const TasksForm = lazy(() => import('Components/Tasks/Form'));
 const TimeSheets = lazy(() => import('Components/TimeSheets'));
 const TimeSheetsForm = lazy(() => import('Components/TimeSheets/Form/timesheetForm'));
-const Home = lazy(() => import('Components/Home'));
+const Home = lazy(() => import('Components/Landing'));
 
 const routes = [
   { name: 'Home', path: '/super-admins/home' },
