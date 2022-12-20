@@ -76,8 +76,9 @@ const TaskForm = () => {
           <Input
             label="Description"
             name="description"
-            type="text"
+            id={'description'}
             register={register}
+            required
             error={errors.description?.message}
           />
         </div>

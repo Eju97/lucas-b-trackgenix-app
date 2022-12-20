@@ -110,6 +110,7 @@ const Form = () => {
             <Input
               label="Name"
               id="name"
+              required
               name="name"
               register={register}
               error={errors.name?.message}
@@ -117,6 +118,7 @@ const Form = () => {
             <Input
               label="Client Name"
               id="clientName"
+              required
               name="clientName"
               register={register}
               error={errors.clientName?.message}
@@ -126,6 +128,7 @@ const Form = () => {
             <Input
               label="Description"
               id="description"
+              required
               name="description"
               register={register}
               error={errors.description?.message}
@@ -191,6 +194,7 @@ const Form = () => {
                 <Input
                   name={`employees[${index}].rate`}
                   id="rate"
+                  required
                   register={register}
                   error={errors.employees?.message}
                 />

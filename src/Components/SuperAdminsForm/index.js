@@ -16,7 +16,7 @@ function SuperAdminsForm() {
     formState: { errors },
     reset
   } = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
     resolver: joiResolver(Schema)
   });
 
@@ -73,6 +73,7 @@ function SuperAdminsForm() {
           <Input
             register={register}
             label="Name"
+            required
             name="name"
             type="text"
             error={errors.name?.message}
@@ -83,6 +84,7 @@ function SuperAdminsForm() {
             register={register}
             label="Last Name"
             name="last_name"
+            required
             type="text"
             error={errors.last_name?.message}
           />
@@ -91,6 +93,7 @@ function SuperAdminsForm() {
           <Input
             register={register}
             label="Email"
+            required
             name="email"
             type="email"
             error={errors.email?.message}
@@ -101,6 +104,7 @@ function SuperAdminsForm() {
             register={register}
             label="Password"
             name="password"
+            required
             type="password"
             error={errors.password?.message}
           />
