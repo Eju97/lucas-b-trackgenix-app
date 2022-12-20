@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './form.module.css';
-import Input from '../../Shared/Input';
-import Button from '../../Shared/Button';
-import Select from '../../Shared/Select';
+import { Spinner, Select, Button, Input } from 'Components/Shared';
 import { useParams, useHistory } from 'react-router-dom';
 import {
   POST_TIMESHEETS_SUCCESS,
@@ -82,7 +80,7 @@ const Form = () => {
   };
 
   if (isLoadingTimesheets || isLoadingTasks || isLoadingProjects) {
-    return <h3 className={styles.position}>Loading form...</h3>;
+    return <Spinner></Spinner>;
   }
 
   return (
