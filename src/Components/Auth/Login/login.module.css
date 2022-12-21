@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 50px;
+    font-family: 'Nunito', sans-serif;
   }
 
 .btnContainer{
