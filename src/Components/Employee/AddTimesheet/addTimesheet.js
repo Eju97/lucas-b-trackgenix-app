@@ -53,31 +53,39 @@ const NewTimesheet = () => {
     }
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
-        <div>
-          <Input
-            register={register}
-            label="Description"
-            name="description"
-            type="text"
-            error={errors.description?.message}
-          />
-          <Input
-            register={register}
-            label="Date"
-            name="date"
-            type="date"
-            error={errors.date?.message}
-          />
-          <Input
-            register={register}
-            label="Hours"
-            name="hours"
-            type="number"
-            required
-            error={errors.hours?.message}
-          />
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.inputsBox}>
+          <h2>Create Timesheets</h2>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Description"
+              name="description"
+              required
+              type="text"
+              error={errors.description?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Date"
+              name="date"
+              type="date"
+              error={errors.date?.message}
+            />
+          </div>
+          <div className={styles.inputs}>
+            <Input
+              register={register}
+              label="Hours"
+              name="hours"
+              type="number"
+              required
+              error={errors.hours?.message}
+            />
+          </div>
           <div>
             <Select
               error={errors.project?.message}
@@ -111,7 +119,7 @@ const NewTimesheet = () => {
             />
           </div>
         </div>
-        <div>
+        <div className={styles.buttonContainer}>
           <Button type="submit" variant="confirm" name="Submit" />
           <Button onClick={() => history.goBack()} variant="cancel" name="Cancel" />
         </div>
