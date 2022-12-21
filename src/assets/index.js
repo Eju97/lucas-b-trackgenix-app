@@ -8,3 +8,4 @@ export { default as reasonsClockImg } from 'assets/reasonsClockImg.png';
 export { default as reasonsDecisionImg } from 'assets/reasonsDecisionImg.png';
 export { default as reasonsGraphicImg } from 'assets/reasonsGraphicImg.png';
 export { default as reasonsManagementImg } from 'assets/reasonsManagementImg.png';
+export { default as aboutUsImg } from 'assets/aboutUsImg.jpg';
