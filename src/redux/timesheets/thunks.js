@@ -44,7 +44,7 @@ export const deleteTimesheet = (id) => {
           dispatch(deleteTimesheetsSuccess(id));
         } else throw new Error(response.message);
       })
-      .catc.catch((error) => {
+      .catch((error) => {
         dispatch(deleteTimesheetsError(error));
       });
   };

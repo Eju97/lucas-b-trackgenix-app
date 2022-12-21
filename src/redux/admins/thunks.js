@@ -43,7 +43,7 @@ export const deleteAdmin = (id) => {
           dispatch(deleteAdminsSuccess(id));
         } else throw new Error(response.message);
       })
-      .catc.catch((err) => {
+      .catch((err) => {
         dispatch(deleteAdminsError(err.toString()));
       });
   };

@@ -44,7 +44,7 @@ export const deleteSuperAdmins = (id) => {
           dispatch(deleteSuperAdminsSuccess(id));
         } else throw new Error(response.message);
       })
-      .catc.catch((error) => {
+      .catch((error) => {
         dispatch(deleteSuperAdminsError(error.toString()));
       });
   };
