@@ -1,25 +1,25 @@
 import React from 'react';
-import tableStyles from './index.module.css';
+import styles from './index.module.css';
 import Logo from '../../../assets/logoDelete.png';
 
 const Table = ({ data, headers, onDelete, onRowClick }) => {
   return (
     <div>
-      <table>
+      <table className={styles.tableStyle}>
         <thead>
-          <tr className={tableStyles.trHeader}>
+          <tr>
             {headers.map((header, index) => {
               return <th key={index}>{header}</th>;
             })}
             <th />
           </tr>
         </thead>
-        <tbody className={tableStyles.tbody}>
+        <tbody className={styles.bodyTable}>
           {data.map((row) => {
             if (!row.isDeleted) {
               return (
                 <>
-                  <tr className={tableStyles.tr} key={row._id} onClick={() => onRowClick(row._id)}>
+                  <tr className={styles.tr} key={row._id} onClick={() => onRowClick(row._id)}>
                     {headers.map((header, index) => {
                       return (
                         <>
@@ -29,7 +29,6 @@ const Table = ({ data, headers, onDelete, onRowClick }) => {
                     })}
                     <td>
                       <img
-                        className={tableStyles.logo}
                         src={Logo}
                         onClick={(e) => {
                           e.stopPropagation();
