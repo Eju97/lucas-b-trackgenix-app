@@ -47,7 +47,7 @@ const EmployeeSignUp = () => {
     <div className={styles.container}>
       <Modal isOpen={showModal}>
         <div>
-          <h3>Employee Created Succesfuly</h3>
+          <h3>Account Created Succesfuly</h3>
         </div>
         <div>
           <Button variant="confirm" name="Accept" onClick={closeModal} />
