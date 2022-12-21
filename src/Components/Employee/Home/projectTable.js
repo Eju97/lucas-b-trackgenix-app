@@ -82,7 +82,7 @@ const ProjectTable = () => {
         data={projectsData()}
         headers={['name', 'clientName', 'description', 'startDate', 'endDate']}
       />
-      <h2>My projects PM</h2>
+      <h2>My projects as PM</h2>
       <Table
         data={projectsDataPM()}
         headers={['name', 'clientName', 'description', 'startDate', 'endDate']}

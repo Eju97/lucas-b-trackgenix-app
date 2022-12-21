@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 .errorMessage {
   color: red;
   margin: 0;
@@ -7,6 +9,7 @@
 .group        {
   position:relative;
   margin-bottom:45px;
+  font-family: 'Nunito', sans-serif;
 }
 .input         {
   font-size:18px;

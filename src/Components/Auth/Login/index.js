@@ -50,7 +50,11 @@ const Login = () => {
   return (
     <div className={styles.container}>
       <h2>Welcome</h2>
-      {error && <div>{error}</div>}
+      {error && (
+        <div>
+          <p className={styles.error}>Incorrect Email or Password</p>
+        </div>
+      )}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Email"

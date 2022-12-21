@@ -1,4 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 .container{
+    z-index: 1;
     position: fixed;
     left: 0;
     top: 0;
@@ -8,6 +11,7 @@
     display: flex;
     align-items: center;
     background-color: rgba(0,0,0,0.5);
+    font-family: 'Nunito', sans-serif;
 }
 
 .modal{
