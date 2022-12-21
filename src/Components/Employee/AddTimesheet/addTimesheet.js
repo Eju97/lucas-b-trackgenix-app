@@ -28,6 +28,7 @@ const NewTimesheet = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { list: tasks } = useSelector((state) => state.tasks);
+  const taskList = tasks.filter((task) => !task.isDeleted);
   const currentProject = useSelector((state) =>
     state.projects.list.reduce((acc, project) => {
       const hasEmployee = project.employees.some(
@@ -108,7 +109,7 @@ const NewTimesheet = () => {
               register={register}
               name="task"
               label="Task"
-              data={tasks.map((task) =>
+              data={taskList.map((task) =>
                 !task
                   ? ''
                   : {
