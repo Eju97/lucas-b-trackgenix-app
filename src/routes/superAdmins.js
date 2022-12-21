@@ -20,7 +20,7 @@ const Home = lazy(() => import('Components/Landing'));
 const routes = [
   { name: 'Home', path: '/super-admins/home' },
   { name: 'Profile', path: '/super-admins/profile' },
-  { name: 'Super-Admins', path: '/super-admins' },
+  { name: 'Super-Admins', path: '/super-admins/super-admins' },
   { name: 'Admins', path: '/super-admins/admins' },
   { name: 'Employees', path: '/super-admins/employees' },
   { name: 'Projects', path: '/super-admins/projects' },
@@ -33,10 +33,10 @@ const SuperAdminRoutes = () => {
   return (
     <Layout routes={routes}>
       <Switch>
-        <Route exact path={`${url}/`} component={SuperAdmin} />
+        <Route exact path={`${url}/super-admins`} component={SuperAdmin} />
         <Route exact path={`${url}/home`} component={Home} />
-        <Route exact path={`${url}/form`} component={SuperAdminForm} />
-        <Route exact path={`${url}/form/:id`} component={SuperAdminForm} />
+        <Route exact path={`${url}/super-admins/form`} component={SuperAdminForm} />
+        <Route exact path={`${url}/super-admins/form/:id`} component={SuperAdminForm} />
         <Route exact path={`${url}/admins/form`} component={AdminsForm} />
         <Route exact path={`${url}/admins/form/:id`} component={AdminsForm} />
         <Route exact path={`${url}/profile`} component={SuperAdminProfile} />
