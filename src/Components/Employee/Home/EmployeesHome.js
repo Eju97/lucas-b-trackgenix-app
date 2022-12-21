@@ -31,7 +31,9 @@ const EmployeeHome = () => {
     state.timesheets.list.filter((timesheet) => timesheet?.employee?._id === id)
   );
   const currentTimesheetPM = useSelector((state) =>
-    state.timesheets.list.filter((timesheet) => timesheet?.project._id === currentProjectPM[0]._id)
+    state.timesheets.list.filter(
+      (timesheet) => timesheet?.project?._id === currentProjectPM[0]?._id
+    )
   );
 
   useEffect(() => {
