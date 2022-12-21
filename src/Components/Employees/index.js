@@ -59,14 +59,6 @@ const Employees = () => {
           onDelete={onDelete}
           onRowClick={onRowClick}
         />
-        <div className={styles.containerButton}>
-          <Button
-            type="submit"
-            variant="confirm"
-            name="Create + "
-            onClick={() => history.push(`employees/form`)}
-          />
-        </div>
       </div>
     </section>
   );
