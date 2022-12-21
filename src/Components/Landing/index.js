@@ -1,10 +1,5 @@
 import styles from './landing.module.css';
-// import { Button } from 'Components/Shared';
-// import { useDispatch } from 'react-redux';
-// import { logout } from 'redux/auth/thunks';
-// import { useHistory } from 'react-router-dom';
 import welcomeImg from 'assets/welcomeImg.png';
-// import clockImg from 'assets/functionClockImg.png';
 import {
   functionClockImg,
   functionRolesImg,
@@ -13,15 +8,14 @@ import {
   reasonsClockImg,
   reasonsDecisionImg,
   reasonsGraphicImg,
-  reasonsManagementImg
+  reasonsManagementImg,
+  aboutUsImg
 } from 'assets/index';
 
 function LandingHome() {
-  //   const dispatch = useDispatch();
-  //   const history = useHistory();
   return (
-    <section className={styles.container}>
-      <div className={styles.welcome}>
+    <div className={styles.container}>
+      <section className={styles.welcome}>
         <div>
           <h2>Time tracker for teams</h2>
           <p>
@@ -32,8 +26,8 @@ function LandingHome() {
           </p>
         </div>
         <img src={welcomeImg} alt="Trackgenix" />
-      </div>
-      <div className={styles.functionalities}>
+      </section>
+      <section className={styles.functionalities}>
         <div className={styles.subFunctionalities}>
           <img src={functionReportImg} alt="Reports" />
           <h3>Reports</h3>
@@ -52,8 +46,8 @@ function LandingHome() {
             hours of their employees and to ensure that they are being used efficiently.
           </p>
         </div>
-      </div>
-      <div className={styles.functionalities}>
+      </section>
+      <section className={styles.functionalities}>
         <div className={styles.subFunctionalities}>
           <img src={functionManagementImg} alt="Resource_Management" />
           <h3>Resource Management</h3>
@@ -73,11 +67,11 @@ function LandingHome() {
             employee and project.
           </p>
         </div>
-      </div>
-      <div className={styles.reasons}>
+      </section>
+      <section className={styles.reasonsContainer}>
         <h2>Why use Trackgenix?</h2>
-        <div className={styles.reasonsContainer}>
-          <div className="reasons-subcontainer">
+        <div className={styles.reasons}>
+          <div>
             <div className={styles.reasonsDiv}>
               <div>
                 <h4>Boost Productivity</h4>
@@ -96,7 +90,7 @@ function LandingHome() {
               <p>These processes facilitate and improve the management of work.</p>
             </div>
           </div>
-          <div className="reasons-subcontainer">
+          <div>
             <div className={styles.reasonsDiv}>
               <div>
                 <h4>Team management</h4>
@@ -119,23 +113,20 @@ function LandingHome() {
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.about}>
+      </section>
+      <section className={styles.aboutContainer}>
         <h2>ABOUT US</h2>
-        <div className="about-container">
+        <div className={styles.about}>
           <p>
             Gigatech was founded in Silicon Valley in 2006. It is a privately held company that
-            provides software development services to other businesses.
+            provides software development services to other businesses. The companys primary focus
+            is on providing high quality software development services. However, they also offer
+            other services such as project management, consulting, and training.
           </p>
-          <img src="assets/img/Trackgenix2.jpg" alt="Trackgenix_AboutUs" />
+          <img src={aboutUsImg} alt="Trackgenix_AboutUs" />
         </div>
-        <p className="about-p">
-          The companys primary focus is on providing high quality software development services.
-          However, they also offer other services such as project management, consulting, and
-          training.
-        </p>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
 

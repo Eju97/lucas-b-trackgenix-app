@@ -1,9 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 .container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  font-family: 'Nunito', sans-serif;
 }
 
 .welcome {
@@ -11,7 +9,7 @@
   justify-content: center;
   align-items: center;
   padding: 80px 15%;
-  background-color: #AACE9B;
+  background-color: #aace9b;
 }
 
 .welcome div {
@@ -32,55 +30,120 @@
   align-content: space-between;
   justify-content: space-around;
   padding: 50px 15%;
-  background-color: #F0F4F9;
+  background-color: #f0f4f9;
 }
 
-.subFunctionalities{
+.subFunctionalities {
   display: flex;
   flex-wrap: wrap;
   width: 40%;
-  /* margin-top: 50px;
-  margin-bottom: 50px;
-  padding-bottom: 30px; */
 }
 
-.functionalities h3{
+.functionalities h3 {
   color: #373867;
 }
 
-.functionalities p{
+.functionalities p {
   color: #373867;
 }
 
-.reasons{
+.reasonsContainer {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: space-around;
+  align-items: center;
   color: #373867;
 }
 
-.reasonsContainer{
-  display: flex;
+.reasons h2 {
+  font-size: 32px;
 }
 
-.reasonsDiv{
+.reasons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.reasonsDiv {
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  background-color: #F0F4F9;
+  background-color: #f0f4f9;
   width: 300px;
+  height: 150px;
   padding: 25px 50px;
-  margin: 20px;
+  margin: 30px;
 }
 
-.reasonsDiv div{
+.reasonsDiv div {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
-.about{
-  background-color: #AACE9B;
+.aboutContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 15%;
+  color: #373867;
+  background-color: #aace9b;
+}
+
+.aboutContainer h2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  padding: 0 120px;
+  border-radius: 50px;
+  background-color: #f0f4f9;
+  text-align: center;
+  font-size: 20px;
+}
+
+.aboutContainer img {
+  max-width: 500px;
+  max-height: 400px;
+  border-radius: 20px;
+}
+
+@media screen and (max-width: 1200px) {
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #aace9b;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #aace9b;
+  }
+
+  .welcome img {
+    max-width: 300px;
+  }
+
+  .about {
+    max-width: 300px;
+  }
+  .aboutContainer img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 20px;
+  }
 }
