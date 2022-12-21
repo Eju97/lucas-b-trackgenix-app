@@ -31,7 +31,9 @@ const Form = () => {
   const params = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const error = useSelector((state) => state.projects.error);
-  const employeeList = useSelector((state) => state.employees.list);
+  const employeeList = useSelector((state) => state.employees.list).filter(
+    (employee) => !employee.isDeleted
+  );
   const isLoadingEmployees = useSelector((state) => state.employees.isLoading);
   const isLoadingProjects = useSelector((state) => state.projects.isLoading);
   const dispatch = useDispatch();

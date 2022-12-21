@@ -33,7 +33,9 @@ const Form = () => {
   const { isLoading: isLoadingTimesheets, error } = useSelector((state) => state.timesheets);
   const { list: tasks, isLoading: isLoadingTasks } = useSelector((state) => state.tasks);
   const { list: projects, isLoading: isLoadingProjects } = useSelector((state) => state.projects);
-  const currentProject = projects.find((project) => project._id === watchProject);
+  const projectList = projects.filter((project) => !project.isDeleted);
+  const taskList = tasks.filter((task) => !task.isDeleted);
+  const currentProject = projectList.find((project) => project._id === watchProject);
   const [isEditing, setIsEditing] = useState(false);
   const currentTimesheet = useSelector((state) =>
     state.timesheets.list.find((timesheet) => timesheet._id === params.id)
@@ -124,7 +126,7 @@ const Form = () => {
               name="project"
               label="Projects"
               error={errors.project?.message}
-              data={projects.map((project) =>
+              data={projectList.map((project) =>
                 !project
                   ? ''
                   : {
@@ -158,7 +160,7 @@ const Form = () => {
               name="task"
               label="Task"
               error={errors.task?.message}
-              data={tasks.map((task) =>
+              data={taskList.map((task) =>
                 !task
                   ? ''
                   : {

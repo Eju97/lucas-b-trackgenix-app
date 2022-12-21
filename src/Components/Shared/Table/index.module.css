@@ -29,6 +29,12 @@ th {
 .tr:hover {
     box-shadow: 0px 0px 8px #d8d8e8;
 }
+.tr2:nth-child(even) {
+    background-color: #cee9c2;
+}
+.tr2:hover {
+    box-shadow: 0px 0px 8px #d8d8e8;
+}
 .tableStyle{
     border-radius: 10px;
 }

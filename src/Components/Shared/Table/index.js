@@ -19,7 +19,11 @@ const Table = ({ data, headers, onDelete, onRowClick }) => {
             if (!row.isDeleted) {
               return (
                 <>
-                  <tr className={styles.tr} key={row._id} onClick={() => onRowClick(row._id)}>
+                  <tr
+                    className={onRowClick ? styles.tr : styles.tr2}
+                    key={row._id}
+                    onClick={() => onRowClick && onRowClick(row._id)}
+                  >
                     {headers.map((header, index) => {
                       return (
                         <>
@@ -28,13 +32,15 @@ const Table = ({ data, headers, onDelete, onRowClick }) => {
                       );
                     })}
                     <td>
-                      <img
-                        src={Logo}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onDelete(row._id, true);
-                        }}
-                      />
+                      {onDelete && (
+                        <img
+                          src={Logo}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete(row._id, true);
+                          }}
+                        />
+                      )}
                     </td>
                   </tr>
                 </>
