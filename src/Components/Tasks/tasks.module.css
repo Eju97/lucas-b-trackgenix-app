@@ -6,19 +6,6 @@
   align-items: center;
 }
 
-.table{
-  box-shadow:0 8px 16px 0 rgba(0,0,0,.1);
-}
-
-.head{
-  text-align: center;
-}
-
-.addImg{
-  height: 50px;
-  width: 50px;
-}
-
 .containerButton {
   display: flex;
   justify-content: center;
