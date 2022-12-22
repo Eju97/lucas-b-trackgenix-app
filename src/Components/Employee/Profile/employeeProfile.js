@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './employeeProfile.module.css';
 import { useHistory } from 'react-router-dom';
 import { deleteEmployees } from 'redux/employees/thunks';
@@ -12,24 +12,7 @@ const EmployeeProfile = () => {
   const { isLoading } = useSelector((state) => state.auth);
   const userData = useSelector((state) => state.auth.user);
   const [showModal, setShowModal] = useState(false);
-  const [employeeProfile, setEmployeeProfile] = useState({
-    name: '',
-    lastName: '',
-    email: '',
-    phone: ''
-  });
   const id = userData._id;
-
-  useEffect(() => {
-    if (id && userData) {
-      setEmployeeProfile({
-        name: userData.name,
-        lastName: userData.lastName,
-        email: userData.email,
-        phone: userData.phone
-      });
-    }
-  }, [userData]);
 
   const goBack = () => {
     history.push('/auth/login');
@@ -73,19 +56,19 @@ const EmployeeProfile = () => {
         <div className={styles.profileContainer}>
           <div className={styles.profileRow}>
             <h2 className={styles.header}>Name</h2>
-            <p className={styles.data}>{employeeProfile.name}</p>
+            <p className={styles.data}>{userData.name}</p>
           </div>
           <div className={styles.profileRow}>
             <h2 className={styles.header}>Last Name</h2>
-            <p className={styles.data}>{employeeProfile.lastName}</p>
+            <p className={styles.data}>{userData.lastName}</p>
           </div>
           <div className={styles.profileRow}>
             <h2 className={styles.header}>Email</h2>
-            <p className={styles.data}>{employeeProfile.email}</p>
+            <p className={styles.data}>{userData.email}</p>
           </div>
           <div className={styles.profileRow}>
             <h2 className={styles.header}>Phone Number</h2>
-            <p className={styles.data}>{employeeProfile.phone}</p>
+            <p className={styles.data}>{userData.phone}</p>
           </div>
         </div>
         <div className={styles.btnContainer}>
