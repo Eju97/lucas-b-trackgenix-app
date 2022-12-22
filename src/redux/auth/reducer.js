@@ -23,6 +23,10 @@ const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN_PENDING:
     case GET_USER_PENDING:
+      return {
+        ...state,
+        isLoading: true
+      };
     case LOGOUT_PENDING:
       return {
         ...state,

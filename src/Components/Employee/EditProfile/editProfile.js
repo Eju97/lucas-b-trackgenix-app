@@ -6,7 +6,7 @@ import { PUT_EMPLOYEES_SUCCESS } from 'redux/employees/constants';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { employeeValidation } from './editProfileValidations';
+import { employeeValidationEdit } from './editProfileValidations';
 import { Button, Modal, Input, Spinner } from 'Components/Shared/index';
 
 const EditEmployeeProfile = () => {
@@ -17,7 +17,7 @@ const EditEmployeeProfile = () => {
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
-    resolver: joiResolver(employeeValidation)
+    resolver: joiResolver(employeeValidationEdit)
   });
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
@@ -32,9 +32,7 @@ const EditEmployeeProfile = () => {
       reset({
         name: userData.name,
         lastName: userData.lastName,
-        email: userData.email,
-        phone: userData.phone,
-        password: userData.password
+        phone: userData.phone
       });
     }
   }, [userData]);
@@ -88,28 +86,10 @@ const EditEmployeeProfile = () => {
           <div className={styles.inputs}>
             <Input
               register={register}
-              label="Email"
-              name="email"
-              type="text"
-              error={errors.email?.message}
-            />
-          </div>
-          <div className={styles.inputs}>
-            <Input
-              register={register}
               label="Phone"
               name="phone"
               type="text"
               error={errors.phone?.message}
-            />
-          </div>
-          <div className={styles.inputs}>
-            <Input
-              register={register}
-              label="Password"
-              name="password"
-              type="password"
-              error={errors.password?.message}
             />
           </div>
           <div className={styles.buttonContainer}>
