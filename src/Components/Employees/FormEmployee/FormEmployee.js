@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './FormEmployee.module.css';
-import { Input, Button, Spinner } from 'Components/Shared/index';
+import { Input, Button, Spinner, Modal } from 'Components/Shared/index';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEmployees, postEmployee, putEmployee } from '../../../redux/employees/thunks';
 import { POST_EMPLOYEES_SUCCESS, PUT_EMPLOYEES_SUCCESS } from '../../../redux/employees/constants';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { employeeSchema } from '../validations/validations';
+import { employeeValidationEdit } from 'Components/Employee/EditProfile/editProfileValidations';
 
 const Form = () => {
   const {
@@ -17,8 +17,9 @@ const Form = () => {
     reset
   } = useForm({
     mode: 'onBlur',
-    resolver: joiResolver(employeeSchema)
+    resolver: joiResolver(employeeValidationEdit)
   });
+  const [showModal, setShowModal] = useState(false);
   const history = useHistory();
   const params = useParams();
   const dispatch = useDispatch();
@@ -37,9 +38,7 @@ const Form = () => {
       reset({
         name: currentEmployee.name,
         lastName: currentEmployee.lastName,
-        email: currentEmployee.email,
-        phone: currentEmployee.phone,
-        password: currentEmployee.password
+        phone: currentEmployee.phone
       });
     }
   }, [currentEmployee]);
@@ -49,8 +48,7 @@ const Form = () => {
     if (id) {
       const response = await dispatch(putEmployee(id, data));
       if (response.type === PUT_EMPLOYEES_SUCCESS) {
-        history.goBack();
-        alert('Edited succefully');
+        setShowModal(true);
       }
     } else {
       const response = await dispatch(postEmployee(data));
@@ -60,11 +58,25 @@ const Form = () => {
       }
     }
   };
+
+  const acceptButton = () => {
+    history.goBack();
+    setShowModal(false);
+  };
+
   if (isLoading) {
     return <Spinner></Spinner>;
   }
   return (
     <div className={styles.container}>
+      <Modal isOpen={showModal} handleClose={() => setShowModal(false)}>
+        <div>
+          <h3>Employee edited succesfully</h3>
+        </div>
+        <div>
+          <Button onClick={acceptButton} variant="confirm" name="Accept" />
+        </div>
+      </Modal>
       {error && <h3>{error}</h3>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputsBox}>
@@ -92,32 +104,11 @@ const Form = () => {
           <div className={styles.inputs}>
             <Input
               register={register}
-              label="Email"
-              id="email"
-              name="email"
-              required
-              error={errors.email?.message}
-            />
-          </div>
-          <div className={styles.inputs}>
-            <Input
-              register={register}
               label="Phone"
               id="phone"
               name="phone"
               required
               error={errors.phone?.message}
-            />
-          </div>
-          <div className={styles.inputs}>
-            <Input
-              register={register}
-              label="Password"
-              id="password"
-              name="password"
-              required
-              type={'password'}
-              error={errors.password?.message}
             />
           </div>
         </div>
