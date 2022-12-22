@@ -105,7 +105,7 @@ const EmployeeHome = () => {
         />
       </div>
       <div>
-        <h2>My Timesheets PM</h2>
+        <h2>Project Timesheets</h2>
       </div>
       <div>
         <Table
