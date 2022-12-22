@@ -1,7 +1,7 @@
 import styles from './editProfile.module.css';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { putEmployee } from 'redux/employees/thunks';
+import { getEmployees, putEmployee } from 'redux/employees/thunks';
 import { PUT_EMPLOYEES_SUCCESS } from 'redux/employees/constants';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
@@ -19,6 +19,7 @@ const EditEmployeeProfile = () => {
     mode: 'onBlur',
     resolver: joiResolver(employeeValidationEdit)
   });
+  const { list: employees, isLoading: isLoadingEmployee } = useSelector((state) => state.employees);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -26,16 +27,21 @@ const EditEmployeeProfile = () => {
   const id = params.id;
   const { isLoading } = useSelector((state) => state.auth);
   const userData = useSelector((state) => state.auth.user);
+  const currentEmployee = employees.find((employee) => employee._id === id);
+
+  useEffect(() => {
+    dispatch(getEmployees());
+  }, []);
 
   useEffect(async () => {
-    if (userData) {
+    if (userData && currentEmployee) {
       reset({
-        name: userData.name,
-        lastName: userData.lastName,
-        phone: userData.phone
+        name: currentEmployee.name,
+        lastName: currentEmployee.lastName,
+        phone: currentEmployee.phone
       });
     }
-  }, [userData]);
+  }, [userData, currentEmployee]);
 
   const onSubmit = async (employeeData) => {
     const response = await dispatch(putEmployee(id, employeeData));
@@ -49,7 +55,7 @@ const EditEmployeeProfile = () => {
     setShowModal(false);
   };
 
-  if (isLoading) {
+  if (isLoading || isLoadingEmployee) {
     return <Spinner></Spinner>;
   }
   return (
